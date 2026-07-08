@@ -21,3 +21,34 @@ Further information about the installation of the `fortisoar_sdk` and more were 
 https://fndn.fortinet.net/index.php?/tools/file/101-fortisoar%E2%84%A2-connector-sdk/
 
 More details could be found in the fortisoar_sdk `README.md` file
+
+## Local development with uv
+
+This repository now supports `uv` for local dependency management.
+
+### Python compatibility
+
+The local development environment is configured for Python `>=3.9,<3.15`.
+
+### Quick start
+
+```bash
+uv sync
+```
+
+This creates or updates the local virtual environment and installs dependencies from `pyproject.toml`.
+
+### Add or update dependencies
+
+```bash
+uv add <package>
+uv lock
+```
+
+### Run tests
+
+```bash
+uv run pytest tests/ --color=yes -vv
+```
+
+Note: `fortisoar_sdk` remains an external dependency provided through Fortinet's distribution process.

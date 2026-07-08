@@ -13,9 +13,9 @@ class CountermeasuresTestCase(TestCase):
 
     def test_activate_countermeasure(self):
         settings.configure()
-        from sdk_utils.sekoiaio.activate_countermeasure import activate_countermeasure
+        from connector_sekoia_io_xdr.activate_countermeasure import activate_countermeasure
 
-        with patch("sdk_utils.sekoiaio.utils.GenericAPIAction.run") as query:
+        with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
             query.return_value = {
                 "alert_uuid": "2783b458-fa16-4869-a11e-6e9d505beb24",
                 "uuid": "dc2e68d2-5978-4bd8-8840-89c7453f16f5",
@@ -56,9 +56,9 @@ class CountermeasuresTestCase(TestCase):
 
     def test_deny_countermeasure(self):
         settings.configure()
-        from sdk_utils.sekoiaio.deny_countermeasure import deny_countermeasure
+        from connector_sekoia_io_xdr.deny_countermeasure import deny_countermeasure
 
-        with patch("sdk_utils.sekoiaio.utils.GenericAPIAction.run") as query:
+        with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
             query.return_value = {
                 "alert_uuid": "2783b458-fa16-4869-a11e-6e9d505beb24",
                 "uuid": "dc2e68d2-5978-4bd8-8840-89c7453f16f5",

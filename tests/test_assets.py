@@ -14,9 +14,9 @@ class AssetsTestCase(TestCase):
 
     def test_get_asset(self):
         settings.configure()
-        from sdk_utils.sekoiaio.get_asset import get_asset
+        from connector_sekoia_io_xdr.get_asset import get_asset
 
-        with patch(f"sdk_utils.sekoiaio.utils.GenericAPIAction.run") as query:
+        with patch(f"connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
             query.return_value = {
                 "name": "DMZ-01",
                 "created_at": "2019-11-21T09:40:32.514254+00:00",
@@ -50,9 +50,9 @@ class AssetsTestCase(TestCase):
 
     def test_update_asset(self):
         settings.configure()
-        from sdk_utils.sekoiaio.update_asset import update_asset
+        from connector_sekoia_io_xdr.update_asset import update_asset
 
-        with patch(f"sdk_utils.sekoiaio.utils.GenericAPIAction.run") as query:
+        with patch(f"connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
             query.return_value = {
                 "uuid": "d4e84f5a-877a-41e8-8166-9691a9ecffa3",
                 "name": "test update 1",
@@ -70,13 +70,11 @@ class AssetsTestCase(TestCase):
             result = update_asset(
                 config=self.conf,
                 params={
-                    "asset_type": {
-                        "uuid": "bd64a9d9-a1d6-45ba-979d-d9dc23f12f92",
-                        "name": "host",
-                    },
                     "asset_uuid": "d4e84f5a-877a-41e8-8166-9691a9ecffa3",
-                    "name": "test update 1",
-                    "criticity": 23,
+                    "asset_name": "test update 1",
+                    "asset_type_uuid": "bd64a9d9-a1d6-45ba-979d-d9dc23f12f92",
+                    "asset_type_name": "host",
+                    "asset_criticity": 23,
                 },
             )
             assert result is not None
@@ -84,9 +82,9 @@ class AssetsTestCase(TestCase):
 
     def test_delete_asset(self):
         settings.configure()
-        from sdk_utils.sekoiaio.delete_asset import delete_asset
+        from connector_sekoia_io_xdr.delete_asset import delete_asset
 
-        with patch(f"sdk_utils.sekoiaio.utils.GenericAPIAction.run") as query:
+        with patch(f"connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
             query.return_value = 201
             result = delete_asset(
                 config=self.conf,

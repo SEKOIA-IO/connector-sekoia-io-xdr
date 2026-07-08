@@ -14,9 +14,9 @@ class AlertsTestCase(TestCase):
 
     def test_get_alert(self):
         settings.configure()
-        from sdk_utils.sekoiaio.get_alert import get_alert
+        import connector_sekoia_io_xdr.get_alert as get_alert
 
-        with patch(f"sdk_utils.sekoiaio.utils.GenericAPIAction.run") as query:
+        with patch(f"connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
             query.return_value = {
                 "operation": None,
                 "status": "Success",
@@ -129,7 +129,10 @@ class AlertsTestCase(TestCase):
                 "env": {},
             }
 
-            result = get_alert(config=self.conf, params={"alert_uuid": "ALfghiw34ax"})
+            result = get_alert.get_alert(
+                config=self.conf,
+                params={"alert_uuid": "ALfghiw34ax"},
+            )
 
             assert result is not None
             assert query.call_count == 1
@@ -138,9 +141,9 @@ class AlertsTestCase(TestCase):
 
     def test_list_alerts(self):
         settings.configure()
-        from sdk_utils.sekoiaio.list_alerts import list_alerts
+        from connector_sekoia_io_xdr.list_alerts import list_alerts
 
-        with patch(f"sdk_utils.sekoiaio.utils.GenericAPIAction.run") as query:
+        with patch(f"connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
             query.return_value = {
                 "items": [
                     {
@@ -215,12 +218,9 @@ class AlertsTestCase(TestCase):
 
     def test_update_alert_status(self):
         settings.configure()
-        from sdk_utils.sekoiaio.update_alert_status import (
-            ACTION_VALIDATE,
-            update_alert_status,
-        )
+        from connector_sekoia_io_xdr.update_alert_status import update_alert_status
 
-        with patch(f"sdk_utils.sekoiaio.utils.GenericAPIAction.run") as query:
+        with patch(f"connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
             query.return_value = 200
 
             result = update_alert_status(
@@ -228,16 +228,16 @@ class AlertsTestCase(TestCase):
                 params={
                     "alert_uuid": "Ahytv57q55F",
                     "comment": "Validate",
-                    "action_uuid": ACTION_VALIDATE.uuid,
+                    "action_uuid": "c39a0a95-aa2c-4d0d-8d2e-d3decf426eea",
                 },
             )
             assert result == 200
 
     def test_add_comment_to_alert(self):
         settings.configure()
-        from sdk_utils.sekoiaio.add_comment_to_alert import add_comment_to_alert
+        from connector_sekoia_io_xdr.add_comment_to_alert import add_comment_to_alert
 
-        with patch(f"sdk_utils.sekoiaio.utils.GenericAPIAction.run") as query:
+        with patch(f"connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
             query.return_value = {
                 "unseen": False,
                 "created_by_type": "apikey",
