@@ -26,11 +26,11 @@ def _register_connectors_stub() -> None:
     core_pkg.__path__ = []
 
     connector_mod = types.ModuleType("connectors.core.connector")
-    connector_mod.ConnectorError = ConnectorError
-    connector_mod.get_logger = get_logger
+    setattr(connector_mod, "ConnectorError", ConnectorError)
+    setattr(connector_mod, "get_logger", get_logger)
 
     base_connector_mod = types.ModuleType("connectors.core.base_connector")
-    base_connector_mod.ConnectorError = ConnectorError
+    setattr(base_connector_mod, "ConnectorError", ConnectorError)
 
     sys.modules.setdefault("connectors", connectors_pkg)
     sys.modules.setdefault("connectors.core", core_pkg)

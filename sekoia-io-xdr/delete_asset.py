@@ -5,6 +5,7 @@ from .utils import GenericAPIAction
 
 logger = get_logger("sekoia-io-xdr")
 
+
 def delete_asset(config, params):
     """
     Delete a specific asset

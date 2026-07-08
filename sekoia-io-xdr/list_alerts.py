@@ -10,12 +10,16 @@ def list_alerts(config, params):
     url: str = OPERATION_CENTER_BASE_URL
 
     if params.get("creation_start_date") or params.get("creation_end_date"):
-        created_at = f"{params['creation_start_date'] or ''},{params['creation_end_date'] or ''}"
+        created_at = (
+            f"{params['creation_start_date'] or ''},{params['creation_end_date'] or ''}"
+        )
     else:
         created_at = None
 
     if params.get("updated_start_date") or params.get("updated_end_date"):
-        updated_at = f"{params['updated_start_date'] or ''},{params['updated_end_date'] or ''}"
+        updated_at = (
+            f"{params['updated_start_date'] or ''},{params['updated_end_date'] or ''}"
+        )
     else:
         updated_at = None
 

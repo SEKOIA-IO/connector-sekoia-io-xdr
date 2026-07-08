@@ -19,3 +19,15 @@ dev = [
     "django>=4.2,<5",
     "pytest>=8.4.2",
 ]
+lint = [
+    "black>=25.11.0",
+    "isort>=6.1.0",
+    "mypy>=1.19.1",
+    "ruff>=0.15.20",
+]
+
+# Restrict mypy discovery to importable targets and skip non-package SDK/source folders.
+[tool.mypy]
+python_version = "3.10"
+files = ["connector_sekoia_io_xdr", "tests"]
+exclude = "(^|/)sekoia-io-xdr/|(^|/)\\.venv/|(^|/)\\.pytest_cache/"
