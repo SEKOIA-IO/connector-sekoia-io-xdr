@@ -30,4 +30,12 @@ lint = [
 [tool.mypy]
 python_version = "3.10"
 files = ["connector_sekoia_io_xdr", "tests"]
-exclude = "(^|/)sekoia-io-xdr/|(^|/)\\.venv/|(^|/)\\.pytest_cache/"
+exclude = "(^|/)sekoia-io-xdr/|(^|/)Sekoia\\.io/|(^|/)\\.venv/|(^|/)\\.pytest_cache/"
+ignore_missing_imports = true
+show_column_numbers = true
+
+[tool.black]
+target-version = ["py39"]
+
+[tool.ruff.lint]
+select = ["F401"]

@@ -5,7 +5,8 @@ from django.conf import settings
 
 def test_update_alert_status(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.alerts.update_alert_status import update_alert_status
+    from connector_sekoia_io_xdr.alerts.update_alert_status import \
+        update_alert_status
 
     with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = 200

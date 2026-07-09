@@ -1,5 +1,8 @@
 # connector-sekoia-io-xdr
 
+[![Lint](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/lint.yml/badge.svg)](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/lint.yml)
+[![Tests](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/tests.yml/badge.svg)](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/tests.yml)
+
 This connector enable you to make full use of the SEKOIA.IO XDR platform.
 
 It includes the following actions:
@@ -51,6 +54,40 @@ uv lock
 uv run pytest tests/ --color=yes -vv
 ```
 
+### Run linters (uv)
+
+Install dev and lint tools first:
+
+```bash
+uv sync --group dev --group lint
+```
+
+Run formatting/fix commands locally on connector and tests:
+
+```bash
+uv run black .
+uv run isort .
+uv run mypy .
+uv run ruff check . --fix
+uv run python scripts/sort_info_json.py
+```
+
+Run lint checks in read-only mode (CI-equivalent):
+
+```bash
+uv run black --check .
+uv run isort --check-only .
+uv run mypy .
+uv run ruff check .
+uv run python scripts/sort_info_json.py --check
+```
+
+Notes:
+
+- `mypy` defaults are configured in `pyproject.toml` (`ignore_missing_imports`, column numbers).
+- `ruff` defaults to `F401` selection from `pyproject.toml`.
+- If needed, replace `.` with your own target paths.
+
 ### Sort connector manifest
 
 ```bash
@@ -58,6 +95,21 @@ uv run python scripts/sort_info_json.py
 ```
 
 This sorts `configuration.fields` and `operations` alphabetically in `sekoia-io-xdr/info.json`.
+
+For CI-style validation without writing changes:
+
+```bash
+uv run python scripts/sort_info_json.py --check
+```
+
+## CI pipeline
+
+GitHub Actions currently uses two workflows:
+
+- `lint.yml`: runs lint checks in parallel (one check per matrix job) using direct `uv run` linter commands, and verifies `info.json` is already sorted.
+- `tests.yml`: runs the unit test suite on multiple Python versions (`3.9` to `3.14`).
+
+Any failure in either job marks the workflow as failed.
 
 ### Current test limitations
 

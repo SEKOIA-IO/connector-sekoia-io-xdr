@@ -5,7 +5,8 @@ from django.conf import settings
 
 def test_add_comment_to_alert(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.alerts.add_comment_to_alert import add_comment_to_alert
+    from connector_sekoia_io_xdr.alerts.add_comment_to_alert import \
+        add_comment_to_alert
 
     with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = {

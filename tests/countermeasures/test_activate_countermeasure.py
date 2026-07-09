@@ -5,9 +5,8 @@ from django.conf import settings
 
 def test_activate_countermeasure(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.countermeasures.activate_countermeasure import (
-        activate_countermeasure,
-    )
+    from connector_sekoia_io_xdr.countermeasures.activate_countermeasure import \
+        activate_countermeasure
 
     with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = {

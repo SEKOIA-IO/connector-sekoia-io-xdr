@@ -1,0 +1,48 @@
+name: Connector Sekoia XDR Lint
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  # Run each lint check in parallel using a matrix.
+  lint:
+    name: "lint / ${{ matrix.check }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Each entry defines one independent lint command.
+        include:
+          - check: black
+            command: uv run black --check .
+          - check: isort
+            command: uv run isort --check-only .
+          - check: mypy
+            command: uv run mypy .
+          - check: ruff
+            command: uv run ruff check .
+          - check: info-json-sort
+            command: uv run python scripts/sort_info_json.py --check
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+
+      # Install both development and lint toolchains.
+      - name: Sync dependencies
+        run: uv sync --group dev --group lint
+
+      # Execute only the command for the current matrix entry.
+      - name: Run lint check
+        run: ${{ matrix.command }}

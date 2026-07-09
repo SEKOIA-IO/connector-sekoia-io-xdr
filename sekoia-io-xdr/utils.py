@@ -7,13 +7,8 @@ from requests import Response, Session, Timeout
 from requests.adapters import HTTPAdapter
 from requests.structures import CaseInsensitiveDict
 from requests_toolbelt.utils import dump
-from tenacity import (
-    RetryError,
-    Retrying,
-    retry_if_exception_type,
-    stop_after_attempt,
-    wait_exponential,
-)
+from tenacity import (RetryError, Retrying, retry_if_exception_type,
+                      stop_after_attempt, wait_exponential)
 from urllib3.util.retry import Retry
 
 from .constants import BASE_URL, INTEGRATION_NAME
