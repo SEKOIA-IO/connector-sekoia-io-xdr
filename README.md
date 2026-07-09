@@ -51,4 +51,14 @@ uv lock
 uv run pytest tests/ --color=yes -vv
 ```
 
+### Current test limitations
+
+The current test suite is unit-test oriented and uses mocks extensively:
+
+- Sekoia API calls are mocked (no live HTTP calls to `app.sekoia.io`).
+- FortiSOAR SDK/runtime dependencies are stubbed or mocked for local execution.
+
+As a result, tests validate connector logic, payload construction, and operation routing,
+but they do not validate end-to-end behavior against a real Sekoia tenant or a real FortiSOAR runtime.
+
 Note: `fortisoar_sdk` remains an external dependency provided through Fortinet's distribution process.
