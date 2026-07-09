@@ -7,11 +7,11 @@ from .alerts.update_alert_status import update_alert_status
 from .assets.delete_asset import delete_asset
 from .assets.get_asset import get_asset
 from .assets.update_asset import update_asset
+from .cases.get_case import get_case
+from .cases.search_cases import search_cases
 from .countermeasures.activate_countermeasure import activate_countermeasure
 from .countermeasures.deny_countermeasure import deny_countermeasure
 from .events.get_events import get_events
-from .cases.get_case import get_case
-from .cases.search_cases import search_cases
 from .health_check import check
 
 logger = get_logger("sekoia-io-xdr")

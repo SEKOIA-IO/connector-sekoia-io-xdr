@@ -45,13 +45,16 @@ def test_search_cases(connector_config):
         assert result["items"][0]["short_id"] == "CASE-42"
 
 
-
 def test_search_cases_defaults(connector_config):
     settings.configure()
     from connector_sekoia_io_xdr.cases.search_cases import search_cases
 
     with patch("connector_sekoia_io_xdr.cases.search_cases.GenericAPIAction") as action:
-        action.return_value.run.return_value = {"total": 0, "has_more": False, "items": []}
+        action.return_value.run.return_value = {
+            "total": 0,
+            "has_more": False,
+            "items": [],
+        }
 
         search_cases(config=connector_config, params={})
 

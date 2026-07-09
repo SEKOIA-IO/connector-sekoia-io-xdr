@@ -47,7 +47,9 @@ def test_get_case_default_render(connector_config):
     from connector_sekoia_io_xdr.cases.get_case import get_case
 
     with patch("connector_sekoia_io_xdr.cases.get_case.GenericAPIAction") as action:
-        action.return_value.run.return_value = {"uuid": "b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11"}
+        action.return_value.run.return_value = {
+            "uuid": "b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11"
+        }
 
         get_case(
             config=connector_config,

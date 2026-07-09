@@ -10,9 +10,7 @@ def deny_countermeasure(config, params):
     """
     Deny a countermeasure
     """
-    url: str = (
-        f"{ALERTS_BASE_URL}/countermeasures/{params['countermeasure_uuid']}/deny"
-    )
+    url: str = f"{ALERTS_BASE_URL}/countermeasures/{params['countermeasure_uuid']}/deny"
     data: dict = {
         "comment": {"content": params["content"], "author": params.get("author")}
     }
