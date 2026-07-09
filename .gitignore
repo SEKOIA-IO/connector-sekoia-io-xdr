@@ -17,5 +17,10 @@
 .devcontainer/
 .vscode/
 
-# FortiSOAR SDK
+# SDK
+# FortiSOAR
 integrations_sdk/
+
+# Automation modules
+# Sekoia.io
+Sekoia.io/*
