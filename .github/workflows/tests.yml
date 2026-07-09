@@ -37,4 +37,4 @@ jobs:
 
       # Execute tests through uv to ensure the selected Python is used.
       - name: Run tests
-        run: uv run pytest tests -q
+        run: uv run pytest tests/ --color=yes -vv
