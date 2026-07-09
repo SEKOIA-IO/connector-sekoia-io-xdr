@@ -20,18 +20,18 @@ logger = get_logger("sekoia-io-xdr")
 class Sekoiaio(Connector):
     def execute(self, config, operation, params, **kwargs):
         supported_operations = {
-            "update_alert_status": update_alert_status,
-            "get_events": get_events,
+            "activate_countermeasure": activate_countermeasure,
             "add_comment_to_alert": add_comment_to_alert,
+            "delete_asset": delete_asset,
+            "deny_countermeasure": deny_countermeasure,
             "get_alert": get_alert,
+            "get_asset": get_asset,
             "get_case": get_case,
+            "get_events": get_events,
             "list_alerts": list_alerts,
             "search_cases": search_cases,
-            "get_asset": get_asset,
+            "update_alert_status": update_alert_status,
             "update_asset": update_asset,
-            "delete_asset": delete_asset,
-            "activate_countermeasure": activate_countermeasure,
-            "deny_countermeasure": deny_countermeasure,
         }
         return supported_operations[operation](config, params)
 

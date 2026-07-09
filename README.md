@@ -51,6 +51,14 @@ uv lock
 uv run pytest tests/ --color=yes -vv
 ```
 
+### Sort connector manifest
+
+```bash
+uv run python scripts/sort_info_json.py
+```
+
+This sorts `configuration.fields` and `operations` alphabetically in `sekoia-io-xdr/info.json`.
+
 ### Current test limitations
 
 The current test suite is unit-test oriented and uses mocks extensively:
