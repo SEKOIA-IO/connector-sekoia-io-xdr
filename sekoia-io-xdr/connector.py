@@ -10,6 +10,7 @@ from .assets.update_asset import update_asset
 from .countermeasures.activate_countermeasure import activate_countermeasure
 from .countermeasures.deny_countermeasure import deny_countermeasure
 from .events.get_events import get_events
+from .cases.get_case import get_case
 from .health_check import check
 
 logger = get_logger("sekoia-io-xdr")
@@ -22,6 +23,7 @@ class Sekoiaio(Connector):
             "get_events": get_events,
             "add_comment_to_alert": add_comment_to_alert,
             "get_alert": get_alert,
+            "get_case": get_case,
             "list_alerts": list_alerts,
             "get_asset": get_asset,
             "update_asset": update_asset,

@@ -276,6 +276,45 @@
       "output_schema": {}
     },
     {
+      "operation": "get_case",
+      "title": "Get Case",
+      "description": "Retrieve the properties of a case from SEKOIA.IO XDR based on the case UUID you have specified.",
+      "category": "investigation",
+      "annotation": "get_case",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Case UUID",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "uuid",
+          "description": "UUID of the case"
+        },
+        {
+          "title": "Community UUID",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "community_uuid",
+          "description": "Identifier of the community"
+        },
+        {
+          "title": "Render",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "checkbox",
+          "name": "render",
+          "description": "If set, the case is rendered without placeholder text in the description.",
+          "value": false
+        }
+      ],
+      "output_schema": {}
+    },
+    {
       "operation": "get_events",
       "title": "Get Events",
       "description": "Search events according the query from SEKOIA.IO XDR based on the query, earliest time, and latest time you have specified.",

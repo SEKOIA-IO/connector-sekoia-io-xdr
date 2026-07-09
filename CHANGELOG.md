@@ -11,7 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add operation parameters, based on Sekoia API 3.1 documentation and automation-library playbook action JSON files:
+- Add new operations, based on Sekoia API 3.1 documentation and automation-library playbook action JSON files:
+    - `get_case` operation
+- Update existing operations, based on Sekoia API 3.1 documentation and automation-library playbook action JSON files:
     - `get_alert` operation:
         - add `include_cases` parameter
         - add `include_custom_status` parameter
