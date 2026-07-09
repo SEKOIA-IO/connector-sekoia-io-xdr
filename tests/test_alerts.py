@@ -16,8 +16,8 @@ class AlertsTestCase(TestCase):
         settings.configure()
         import connector_sekoia_io_xdr.get_alert as get_alert
 
-        with patch(f"connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
-            query.return_value = {
+        with patch("connector_sekoia_io_xdr.get_alert.GenericAPIAction") as action:
+            action.return_value.run.return_value = {
                 "operation": None,
                 "status": "Success",
                 "message": "",
@@ -131,13 +131,59 @@ class AlertsTestCase(TestCase):
 
             result = get_alert.get_alert(
                 config=self.conf,
-                params={"alert_uuid": "ALfghiw34ax"},
+                params={
+                    "alert_uuid": "ALfghiw34ax",
+                    "include_stix": True,
+                    "include_comments": False,
+                    "include_history": False,
+                    "include_countermeasures": False,
+                    "include_cases": True,
+                    "include_custom_status": True,
+                },
             )
 
             assert result is not None
-            assert query.call_count == 1
+            action.assert_called_once_with(
+                self.conf,
+                "get",
+                "https://app.sekoia.io/api/v1/sic/alerts/ALfghiw34ax",
+                params={
+                    "stix": True,
+                    "comments": False,
+                    "history": False,
+                    "countermeasures": False,
+                    "cases": True,
+                    "custom_status": True,
+                },
+            )
             assert "data" in result
             assert result["data"] is not None
+
+    def test_get_alert_include_defaults(self):
+        settings.configure()
+        import connector_sekoia_io_xdr.get_alert as get_alert
+
+        with patch("connector_sekoia_io_xdr.get_alert.GenericAPIAction") as action:
+            action.return_value.run.return_value = {"data": {}}
+
+            get_alert.get_alert(
+                config=self.conf,
+                params={"alert_uuid": "ALfghiw34ax"},
+            )
+
+            action.assert_called_once_with(
+                self.conf,
+                "get",
+                "https://app.sekoia.io/api/v1/sic/alerts/ALfghiw34ax",
+                params={
+                    "stix": False,
+                    "comments": True,
+                    "history": True,
+                    "countermeasures": True,
+                    "cases": False,
+                    "custom_status": False,
+                },
+            )
 
     def test_list_alerts(self):
         settings.configure()

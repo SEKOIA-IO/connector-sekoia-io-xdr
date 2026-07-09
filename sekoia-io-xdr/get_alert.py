@@ -16,6 +16,8 @@ def get_alert(config, params: dict):
         comments=params.get("include_comments", True),
         history=params.get("include_history", True),
         countermeasures=params.get("include_countermeasures", True),
+        cases=params.get("include_cases", False),
+        custom_status=params.get("include_custom_status", False),
     )
 
     try:

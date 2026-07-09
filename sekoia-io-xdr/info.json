@@ -206,7 +206,7 @@
     {
       "operation": "get_alert",
       "title": "Get Alert",
-      "description": "Retrieves an specific alert from SEKOIA.IO XDR based on the alert uuid and other input parameters that you have specified. ",
+      "description": "Retrieves a specific alert from SEKOIA.IO XDR based on the alert UUID and other input parameters that you have specified.",
       "category": "investigation",
       "annotation": "get_alert",
       "enabled": true,
@@ -255,6 +255,24 @@
           "type": "checkbox",
           "name": "include_countermeasures",
           "description": "Option to include the countermeasures of the alert"
+        },
+        {
+          "title": "Include Cases",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "checkbox",
+          "name": "include_cases",
+          "description": "Option to include related cases of the alert"
+        },
+        {
+          "title": "Include Custom Status",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "checkbox",
+          "name": "include_custom_status",
+          "description": "Option to include custom status and verdict information"
         }
       ],
       "output_schema": {}
