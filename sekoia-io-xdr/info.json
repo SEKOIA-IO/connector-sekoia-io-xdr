@@ -27,15 +27,6 @@
         "description": "Specify the API key used to access the SEKOIA.IO XDR server to which you will connect and perform the automated operations."
       },
       {
-        "title": "Verify Certificate",
-        "name": "verify_certificate",
-        "required": false,
-        "editable": true,
-        "visible": true,
-        "type": "checkbox",
-        "description": "Specifies whether the SSL certificate for the server is to be verified or not."
-      },
-      {
         "title": "Proxy",
         "name": "proxy",
         "required": false,
@@ -43,10 +34,247 @@
         "visible": true,
         "type": "checkbox",
         "description": "Specifies whether the proxy for the server is to be verified or not."
+      },
+      {
+        "title": "Verify Certificate",
+        "name": "verify_certificate",
+        "required": false,
+        "editable": true,
+        "visible": true,
+        "type": "checkbox",
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not."
       }
     ]
   },
   "operations": [
+    {
+      "operation": "activate_countermeasure",
+      "title": "Activate a Countermeasure",
+      "description": "Activate a countermeasure in SEKOIA.IO XDR based on the countermeasure uuid, comment and other input parameters that you have specified.",
+      "category": "investigation",
+      "annotation": "activate_countermeasure",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Countermeasure UUID",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "countermeasure_uuid",
+          "description": "The unique identifier of the countermeasure"
+        },
+        {
+          "title": "Comment",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "content",
+          "description": "The content of the comment to associate to the countermeasure"
+        },
+        {
+          "title": "Author",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "author",
+          "description": "The author of the comment to associate to the countermeasure"
+        }
+      ],
+      "output_schema": {}
+    },
+    {
+      "operation": "add_comment_to_alert",
+      "title": "Add Comment to Alert",
+      "description": "Add a new comment to the specific alert in SEKOIA.IO XDR based on the alert identifier, comment, and other input parameter you have specified.",
+      "category": "investigation",
+      "annotation": "add_comment_to_alert",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Alert Identifier",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "alert_uuid",
+          "description": "The unique identifier of the alert (uuid or short_id)"
+        },
+        {
+          "title": "Comment",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "comment",
+          "description": "The content of the comment"
+        },
+        {
+          "title": "Author",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "author",
+          "description": "The author of the comment"
+        }
+      ],
+      "output_schema": {}
+    },
+    {
+      "operation": "delete_asset",
+      "title": "Delete Asset",
+      "description": "Delete an specific asset from SEKOIA.IO XDR based on the asset uuid you have specified.",
+      "category": "investigation",
+      "annotation": "delete_asset",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Asset UUID",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "asset_uuid",
+          "description": "The unique identifier of the asset"
+        }
+      ],
+      "output_schema": {}
+    },
+    {
+      "operation": "deny_countermeasure",
+      "title": "Deny a Countermeasure",
+      "description": "Deny a countermeasure in SEKOIA.IO XDR based on the countermeasure uuid, comment and other input parameters that you have specified.",
+      "category": "investigation",
+      "annotation": "deny_countermeasure",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Countermeasure UUID",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "countermeasure_uuid",
+          "description": "The unique identifier of the countermeasure"
+        },
+        {
+          "title": "Comment",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "content",
+          "description": "The content of the comment to associate to the countermeasure"
+        },
+        {
+          "title": "Author",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "author",
+          "description": "The author of the comment to associate to the countermeasure"
+        }
+      ],
+      "output_schema": {}
+    },
+    {
+      "operation": "get_alert",
+      "title": "Get Alert",
+      "description": "Retrieves a specific alert from SEKOIA.IO XDR based on the alert UUID and other input parameters that you have specified.",
+      "category": "investigation",
+      "annotation": "get_alert",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Alert UUID",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "alert_uuid",
+          "description": "The unique identifier of the alert (uuid or short_id)"
+        },
+        {
+          "title": "Include Comments",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "checkbox",
+          "name": "include_comments",
+          "description": "Option to include comments of the alert"
+        },
+        {
+          "title": "Include STIX",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "checkbox",
+          "name": "include_stix",
+          "description": "Option to include the stix of the alert"
+        },
+        {
+          "title": "Include History",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "checkbox",
+          "name": "include_history",
+          "description": "Option to include the history of the alert"
+        },
+        {
+          "title": "Include Countermeasures",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "checkbox",
+          "name": "include_countermeasures",
+          "description": "Option to include the countermeasures of the alert"
+        },
+        {
+          "title": "Include Cases",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "checkbox",
+          "name": "include_cases",
+          "description": "Option to include related cases of the alert"
+        },
+        {
+          "title": "Include Custom Status",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "checkbox",
+          "name": "include_custom_status",
+          "description": "Option to include custom status and verdict information"
+        }
+      ],
+      "output_schema": {}
+    },
+    {
+      "operation": "get_asset",
+      "title": "Get Asset",
+      "description": "Retrieves an specific asset from SEKOIA.IO XDR based on the asset uuid you have specified.",
+      "category": "investigation",
+      "annotation": "get_asset",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Asset UUID",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "type": "text",
+          "name": "asset_uuid",
+          "description": "The unique identifier of the asset"
+        }
+      ],
+      "output_schema": {}
+    },
     {
       "operation": "get_events",
       "title": "Get Events",
@@ -204,80 +432,6 @@
       "output_schema": {}
     },
     {
-      "operation": "get_alert",
-      "title": "Get Alert",
-      "description": "Retrieves a specific alert from SEKOIA.IO XDR based on the alert UUID and other input parameters that you have specified.",
-      "category": "investigation",
-      "annotation": "get_alert",
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Alert UUID",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "type": "text",
-          "name": "alert_uuid",
-          "description": "The unique identifier of the alert (uuid or short_id)"
-        },
-        {
-          "title": "Include Comments",
-          "required": false,
-          "visible": true,
-          "editable": true,
-          "type": "checkbox",
-          "name": "include_comments",
-          "description": "Option to include comments of the alert"
-        },
-        {
-          "title": "Include STIX",
-          "required": false,
-          "visible": true,
-          "editable": true,
-          "type": "checkbox",
-          "name": "include_stix",
-          "description": "Option to include the stix of the alert"
-        },
-        {
-          "title": "Include History",
-          "required": false,
-          "visible": true,
-          "editable": true,
-          "type": "checkbox",
-          "name": "include_history",
-          "description": "Option to include the history of the alert"
-        },
-        {
-          "title": "Include Countermeasures",
-          "required": false,
-          "visible": true,
-          "editable": true,
-          "type": "checkbox",
-          "name": "include_countermeasures",
-          "description": "Option to include the countermeasures of the alert"
-        },
-        {
-          "title": "Include Cases",
-          "required": false,
-          "visible": true,
-          "editable": true,
-          "type": "checkbox",
-          "name": "include_cases",
-          "description": "Option to include related cases of the alert"
-        },
-        {
-          "title": "Include Custom Status",
-          "required": false,
-          "visible": true,
-          "editable": true,
-          "type": "checkbox",
-          "name": "include_custom_status",
-          "description": "Option to include custom status and verdict information"
-        }
-      ],
-      "output_schema": {}
-    },
-    {
       "operation": "update_alert_status",
       "title": "Update Alert Status",
       "description": "Updates a specific alert in SEKOIA.IO XDR based on the alert identifier and other input parameters that you have specified.",
@@ -311,64 +465,6 @@
           "type": "text",
           "name": "comment",
           "description": "The comment to associate to the action"
-        }
-      ],
-      "output_schema": {}
-    },
-    {
-      "operation": "add_comment_to_alert",
-      "title": "Add Comment to Alert",
-      "description": "Add a new comment to the specific alert in SEKOIA.IO XDR based on the alert identifier, comment, and other input parameter you have specified.",
-      "category": "investigation",
-      "annotation": "add_comment_to_alert",
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Alert Identifier",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "type": "text",
-          "name": "alert_uuid",
-          "description": "The unique identifier of the alert (uuid or short_id)"
-        },
-        {
-          "title": "Comment",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "type": "text",
-          "name": "comment",
-          "description": "The content of the comment"
-        },
-        {
-          "title": "Author",
-          "required": false,
-          "visible": true,
-          "editable": true,
-          "type": "text",
-          "name": "author",
-          "description": "The author of the comment"
-        }
-      ],
-      "output_schema": {}
-    },
-    {
-      "operation": "get_asset",
-      "title": "Get Asset",
-      "description": "Retrieves an specific asset from SEKOIA.IO XDR based on the asset uuid you have specified.",
-      "category": "investigation",
-      "annotation": "get_asset",
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Asset UUID",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "type": "text",
-          "name": "asset_uuid",
-          "description": "The unique identifier of the asset"
         }
       ],
       "output_schema": {}
@@ -461,102 +557,6 @@
           "type": "text",
           "name": "asset_owners",
           "description": "the owners of the assets"
-        }
-      ],
-      "output_schema": {}
-    },
-    {
-      "operation": "delete_asset",
-      "title": "Delete Asset",
-      "description": "Delete an specific asset from SEKOIA.IO XDR based on the asset uuid you have specified.",
-      "category": "investigation",
-      "annotation": "delete_asset",
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Asset UUID",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "type": "text",
-          "name": "asset_uuid",
-          "description": "The unique identifier of the asset"
-        }
-      ],
-      "output_schema": {}
-    },
-    {
-      "operation": "activate_countermeasure",
-      "title": "Activate a Countermeasure",
-      "description": "Activate a countermeasure in SEKOIA.IO XDR based on the countermeasure uuid, comment and other input parameters that you have specified.",
-      "category": "investigation",
-      "annotation": "activate_countermeasure",
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Countermeasure UUID",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "type": "text",
-          "name": "countermeasure_uuid",
-          "description": "The unique identifier of the countermeasure"
-        },
-        {
-          "title": "Comment",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "type": "text",
-          "name": "content",
-          "description": "The content of the comment to associate to the countermeasure"
-        },
-        {
-          "title": "Author",
-          "required": false,
-          "visible": true,
-          "editable": true,
-          "type": "text",
-          "name": "author",
-          "description": "The author of the comment to associate to the countermeasure"
-        }
-      ],
-      "output_schema": {}
-    },
-    {
-      "operation": "deny_countermeasure",
-      "title": "Deny a Countermeasure",
-      "description": "Deny a countermeasure in SEKOIA.IO XDR based on the countermeasure uuid, comment and other input parameters that you have specified.",
-      "category": "investigation",
-      "annotation": "deny_countermeasure",
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Countermeasure UUID",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "type": "text",
-          "name": "countermeasure_uuid",
-          "description": "The unique identifier of the countermeasure"
-        },
-        {
-          "title": "Comment",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "type": "text",
-          "name": "content",
-          "description": "The content of the comment to associate to the countermeasure"
-        },
-        {
-          "title": "Author",
-          "required": false,
-          "visible": true,
-          "editable": true,
-          "type": "text",
-          "name": "author",
-          "description": "The author of the comment to associate to the countermeasure"
         }
       ],
       "output_schema": {}
