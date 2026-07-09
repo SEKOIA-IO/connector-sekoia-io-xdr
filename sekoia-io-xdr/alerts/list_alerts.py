@@ -1,13 +1,13 @@
 from connectors.core.connector import ConnectorError, get_logger
 
-from ..constants import OPERATION_CENTER_BASE_URL
+from ..constants import ALERTS_BASE_URL
 from ..utils import GenericAPIAction
 
 logger = get_logger("sekoia-io-xdr")
 
 
 def list_alerts(config, params):
-    url: str = OPERATION_CENTER_BASE_URL
+    url: str = ALERTS_BASE_URL
 
     if params.get("creation_start_date") or params.get("creation_end_date"):
         created_at = (

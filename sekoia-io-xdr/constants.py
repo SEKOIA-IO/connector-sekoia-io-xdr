@@ -2,7 +2,7 @@ INTEGRATION_NAME = "SEKOIAOperationCenter"
 
 BASE_URL = "https://app.sekoia.io"
 
-OPERATION_CENTER_BASE_URL = f"{BASE_URL}/api/v1/sic/alerts"
+ALERTS_BASE_URL = f"{BASE_URL}/api/v1/sic/alerts"
 
 ASSETS_BASE_URL = f"{BASE_URL}/api/v1/asset-management/assets"
 

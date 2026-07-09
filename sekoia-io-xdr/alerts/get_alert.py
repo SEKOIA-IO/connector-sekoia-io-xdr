@@ -1,6 +1,6 @@
 from connectors.core.connector import ConnectorError, get_logger
 
-from ..constants import OPERATION_CENTER_BASE_URL
+from ..constants import ALERTS_BASE_URL
 from ..utils import GenericAPIAction
 
 logger = get_logger("sekoia-io-xdr")
@@ -10,7 +10,7 @@ def get_alert(config, params: dict):
     """
     Retrieve a specific alert
     """
-    url = f"{OPERATION_CENTER_BASE_URL}/{params['alert_uuid']}"
+    url = f"{ALERTS_BASE_URL}/{params['alert_uuid']}"
     payload = dict(
         stix=params.get("include_stix", False),
         comments=params.get("include_comments", True),
