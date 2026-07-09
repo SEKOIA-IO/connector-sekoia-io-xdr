@@ -471,6 +471,118 @@
       "output_schema": {}
     },
     {
+      "operation": "search_cases",
+      "title": "Search Cases",
+      "description": "Find cases from SEKOIA.IO XDR that match the input filters.",
+      "category": "investigation",
+      "annotation": "search_cases",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Community UUID",
+          "name": "community_uuid",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "description": "Match cases by their community UUID."
+        },
+        {
+          "title": "Status UUID",
+          "name": "status_uuid",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "description": "Match cases by their status UUID."
+        },
+        {
+          "title": "Status Name",
+          "name": "status_name",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "description": "Match cases by their status name."
+        },
+        {
+          "title": "Creation Date Range",
+          "name": "created_at",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "description": "Creation date range in RFC3339 date-range format: start,end."
+        },
+        {
+          "title": "Created By",
+          "name": "created_by",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "description": "Match cases by their creators."
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "description": "Match cases by tags."
+        },
+        {
+          "title": "Assignees",
+          "name": "assignees",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "description": "Match cases by assigned subscribers."
+        },
+        {
+          "title": "Records Per Page",
+          "name": "limit",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "value": 20,
+          "description": "Number of records to return per call (1-100)."
+        },
+        {
+          "title": "Records Offset",
+          "name": "offset",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "value": 0,
+          "description": "Number of records to skip."
+        },
+        {
+          "title": "Sort",
+          "name": "sort",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "description": "Sort returned cases, for example created_at or title."
+        },
+        {
+          "title": "Direction",
+          "name": "direction",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "description": "Sort direction: asc or desc."
+        }
+      ],
+      "output_schema": {}
+    },
+    {
       "operation": "update_alert_status",
       "title": "Update Alert Status",
       "description": "Updates a specific alert in SEKOIA.IO XDR based on the alert identifier and other input parameters that you have specified.",

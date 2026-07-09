@@ -11,6 +11,7 @@ from .countermeasures.activate_countermeasure import activate_countermeasure
 from .countermeasures.deny_countermeasure import deny_countermeasure
 from .events.get_events import get_events
 from .cases.get_case import get_case
+from .cases.search_cases import search_cases
 from .health_check import check
 
 logger = get_logger("sekoia-io-xdr")
@@ -25,6 +26,7 @@ class Sekoiaio(Connector):
             "get_alert": get_alert,
             "get_case": get_case,
             "list_alerts": list_alerts,
+            "search_cases": search_cases,
             "get_asset": get_asset,
             "update_asset": update_asset,
             "delete_asset": delete_asset,
