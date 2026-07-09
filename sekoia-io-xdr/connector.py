@@ -1,16 +1,16 @@
 from connectors.core.connector import Connector, get_logger
 
-from .activate_countermeasure import activate_countermeasure
-from .add_comment_to_alert import add_comment_to_alert
-from .delete_asset import delete_asset
-from .deny_countermeasure import deny_countermeasure
-from .get_alert import get_alert
-from .get_asset import get_asset
-from .get_events import get_events
+from .alerts.add_comment_to_alert import add_comment_to_alert
+from .alerts.get_alert import get_alert
+from .alerts.list_alerts import list_alerts
+from .alerts.update_alert_status import update_alert_status
+from .assets.delete_asset import delete_asset
+from .assets.get_asset import get_asset
+from .assets.update_asset import update_asset
+from .countermeasures.activate_countermeasure import activate_countermeasure
+from .countermeasures.deny_countermeasure import deny_countermeasure
+from .events.get_events import get_events
 from .health_check import check
-from .list_alerts import list_alerts
-from .update_alert_status import update_alert_status
-from .update_asset import update_asset
 
 logger = get_logger("sekoia-io-xdr")
 

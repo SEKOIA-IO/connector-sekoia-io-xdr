@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 import types
 from pathlib import Path
@@ -47,3 +48,12 @@ def _reset_django_settings():
     settings._wrapped = empty
     yield
     settings._wrapped = empty
+
+
+@pytest.fixture
+def connector_config() -> dict:
+    return {
+        "api_key": os.getenv("api_key"),
+        "verify_certificate": True,
+        "proxy": True,
+    }

@@ -23,3 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Move test execution to `uv run pytest` and aligned CI to run tests across supported Python versions
 - Standardize Python support window for this connector package to match the FortiSOAR SDK compatibility baseline used by this repository
 - Align `get_alert` operation parameters with Sekoia API 3.1 by adding support for related cases and custom status details
+- Refactor source code and tests into operation-specific files organized under feature subdirectories:
+    - `alerts`
+    - `assets`
+    - `countermeasures`
+    - `events`

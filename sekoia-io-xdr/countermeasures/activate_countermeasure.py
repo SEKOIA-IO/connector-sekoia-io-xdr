@@ -1,8 +1,8 @@
 from connectors.core.base_connector import ConnectorError
 from connectors.core.connector import get_logger
 
-from .constants import OPERATION_CENTER_BASE_URL
-from .utils import GenericAPIAction
+from ..constants import OPERATION_CENTER_BASE_URL
+from ..utils import GenericAPIAction
 
 logger = get_logger("sekoia-io-xdr")
 

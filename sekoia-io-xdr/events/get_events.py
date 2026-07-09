@@ -2,7 +2,7 @@ from typing import Optional
 
 from connectors.core.connector import get_logger
 
-from .utils import BaseGetEvents
+from ..utils import BaseGetEvents
 
 logger = get_logger("sekoia-io-xdr")
 
