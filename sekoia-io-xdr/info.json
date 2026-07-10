@@ -392,13 +392,23 @@
     {
       "annotation": "list_alerts",
       "category": "investigation",
-      "description": "Retrieves all alerts from SEKOIA.IO XDR based on the input parameters that you have specified.",
+      "description": "Search alerts in SEKOIA.IO XDR based on the input filters you provide.",
       "enabled": true,
       "operation": "list_alerts",
       "output_schema": {},
       "parameters": [
         {
-          "description": "Filter alerts according to their last creation date. Time in ISO format (rfc3339)",
+          "description": "If set, include related case information in each alert.",
+          "editable": true,
+          "name": "cases",
+          "required": false,
+          "title": "Include Cases",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Deprecated alias. Use date[created_at] instead.",
           "editable": true,
           "name": "creation_end_date",
           "required": false,
@@ -408,7 +418,7 @@
           "visible": true
         },
         {
-          "description": "Filter alerts according to their first creation date. Time in ISO format (rfc3339)",
+          "description": "Deprecated alias. Use date[created_at] instead.",
           "editable": true,
           "name": "creation_start_date",
           "required": false,
@@ -418,74 +428,181 @@
           "visible": true
         },
         {
-          "description": "Number of records to return per call",
+          "description": "Filter alerts by creation date range in RFC3339 format: start,end.",
+          "editable": true,
+          "name": "date[created_at]",
+          "required": false,
+          "title": "Created At Range",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter alerts by update date range in RFC3339 format: start,end.",
+          "editable": true,
+          "name": "date[updated_at]",
+          "required": false,
+          "title": "Updated At Range",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Direction of sort: asc or desc.",
+          "editable": true,
+          "name": "direction",
+          "required": false,
+          "title": "Direction",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter alerts assigned to a case.",
+          "editable": true,
+          "name": "is_assigned_to_case",
+          "required": false,
+          "title": "Assigned To Case",
+          "type": "checkbox",
+          "visible": true
+        },
+        {
+          "description": "Maximum number of alerts to return (1-100).",
           "editable": true,
           "name": "limit",
           "required": false,
           "title": "Records Per Page",
-          "tooltip": "Number of records to return per call",
           "type": "integer",
-          "value": 100,
+          "value": 20,
           "visible": true
         },
         {
-          "description": "A number of records to skip, default is 0",
+          "description": "Match alerts by rule name.",
+          "editable": true,
+          "name": "match[rule_name]",
+          "required": false,
+          "title": "Match Rule Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Match alerts by rule UUID.",
+          "editable": true,
+          "name": "match[rule_uuid]",
+          "required": false,
+          "title": "Match Rule UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Match alerts by short ID.",
+          "editable": true,
+          "name": "match[short_id]",
+          "required": false,
+          "title": "Match Short ID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Match alerts by status name.",
+          "editable": true,
+          "name": "match[status_name]",
+          "required": false,
+          "title": "Match Status Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Match alerts by status UUID.",
+          "editable": true,
+          "name": "match[status_uuid]",
+          "required": false,
+          "title": "Match Status UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Number of records to skip.",
           "editable": true,
           "name": "offset",
           "required": false,
           "title": "Records Offset",
-          "tooltip": "A number of records to skip, default is 0",
           "type": "integer",
           "value": 0,
           "visible": true
         },
         {
-          "description": "Filter alerts according the names of rules that raised them",
+          "description": "Deprecated alias. Use match[rule_name] instead.",
           "editable": true,
           "name": "rule_name",
           "required": false,
-          "title": "Rule Name",
+          "title": "Rule Name (Deprecated)",
           "type": "text",
           "visible": true
         },
         {
-          "description": "Filter alerts according the identifiers of rules that raised them",
+          "description": "Deprecated alias. Use match[rule_uuid] instead.",
           "editable": true,
           "name": "rule_uuid",
           "required": false,
-          "title": "Rule UUID",
+          "title": "Rule UUID (Deprecated)",
           "type": "text",
           "visible": true
         },
         {
-          "description": "Filter alerts according their short_id.",
+          "description": "Deprecated alias. Use match[short_id] instead.",
           "editable": true,
           "name": "short_id",
           "required": false,
-          "title": "Short ID",
+          "title": "Short ID (Deprecated)",
           "type": "text",
           "visible": true
         },
         {
-          "description": "Filter alerts according the name of their status.",
+          "description": "Filter alerts similar to the provided alert short ID.",
+          "editable": true,
+          "name": "similar_to",
+          "required": false,
+          "title": "Similar To",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Sort field for returned alerts.",
+          "editable": true,
+          "name": "sort",
+          "required": false,
+          "title": "Sort",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Deprecated alias. Use match[status_name] instead.",
           "editable": true,
           "name": "status_name",
           "required": false,
-          "title": "Filter by Status Name",
+          "title": "Status Name (Deprecated)",
           "type": "text",
           "visible": true
         },
         {
-          "description": "Filter alerts according the identifiers of their status.",
+          "description": "Deprecated alias. Use match[status_uuid] instead.",
           "editable": true,
           "name": "status_uuid",
           "required": false,
-          "title": "Filter by Status Identifier",
+          "title": "Status UUID (Deprecated)",
           "type": "text",
           "visible": true
         },
         {
-          "description": "Filter alerts according to their last updation date. Time in ISO format (rfc3339)",
+          "description": "If set, include STIX bundle object in the response.",
+          "editable": true,
+          "name": "stix",
+          "required": false,
+          "title": "Include STIX",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Deprecated alias. Use date[updated_at] instead.",
           "editable": true,
           "name": "updated_end_date",
           "required": false,
@@ -495,13 +612,33 @@
           "visible": true
         },
         {
-          "description": "Filter alerts according to their first updation date. Time in ISO format (rfc3339)",
+          "description": "Deprecated alias. Use date[updated_at] instead.",
           "editable": true,
           "name": "updated_start_date",
           "required": false,
           "title": "Updated Start Date",
           "tooltip": "Time in ISO format (rfc3339)",
           "type": "datetime",
+          "visible": true
+        },
+        {
+          "description": "Filter alerts according to their visibility.",
+          "editable": true,
+          "name": "visible",
+          "required": false,
+          "title": "Visible",
+          "type": "checkbox",
+          "value": true,
+          "visible": true
+        },
+        {
+          "description": "Whether total count should be returned in the response.",
+          "editable": true,
+          "name": "with_count",
+          "required": false,
+          "title": "With Count",
+          "type": "checkbox",
+          "value": true,
           "visible": true
         }
       ],

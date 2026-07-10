@@ -32,6 +32,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         - deprecate `asset_uuid` parameter
     - `get_events` operation:
         - add `limit` parameter
+    - `list_alerts` operation:
+        - add `date[created_at]` parameter
+        - add `date[updated_at]` parameter
+        - add `match[rule_uuid]` parameter
+        - add `match[status_uuid]` parameter
+        - deprecate `creation_end_date` parameter
+        - deprecate `creation_start_date` parameter
+        - deprecate `rule_uuid` parameter
+        - deprecate `status_uuid` parameter
+        - deprecate `updated_end_date` parameter
+        - deprecate `updated_start_date` parameter
+
 - Refactor source code and tests into operation-specific files organized under feature subdirectories:
     - `alerts`
     - `assets`
