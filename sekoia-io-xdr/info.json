@@ -359,6 +359,16 @@
           "visible": true
         },
         {
+          "description": "Maximum number of events to retrieve (1-100).",
+          "editable": true,
+          "name": "limit",
+          "required": false,
+          "title": "Records Per Page",
+          "type": "integer",
+          "value": 100,
+          "visible": true
+        },
+        {
           "description": "The query to search events",
           "editable": true,
           "name": "query",

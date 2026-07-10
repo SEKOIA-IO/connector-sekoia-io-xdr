@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `get_asset` operation:
         - add `with_compliance` parameter
         - add `with_telemetry` parameter
+    - `get_events` operation:
+        - add `limit` parameter
 
 ### Changed
 

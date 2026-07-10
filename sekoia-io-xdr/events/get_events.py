@@ -21,22 +21,15 @@ def get_events(config, params: dict):
         event_search_job_uuid=event_search_job_uuid
     )
 
-    results: Optional[list] = None
-    response_content: dict = {}
-    limit: int = 1000
-    offset: int = 0
+    requested_limit = params.get("limit", 100)
+    limit = max(1, min(int(requested_limit), 100))
 
-    while results is None or response_content["total"] > offset + limit:
-        response_events = base_get_events.http_session.get(
-            f"{base_get_events.events_api_path}/search/jobs/{event_search_job_uuid}/events",
-            params={"limit": limit, "offset": offset},
-        )
-        response_events.raise_for_status()
-        response_content = response_events.json()
+    response_events = base_get_events.http_session.get(
+        f"{base_get_events.events_api_path}/search/jobs/{event_search_job_uuid}/events",
+        params={"limit": limit, "offset": 0},
+    )
+    response_events.raise_for_status()
+    response_content: dict = response_events.json()
 
-        if results is None:
-            results = []
-        results += response_content["items"]
-        offset += limit
-        # raise ConnectorError for scenarios where the operation should fail
+    results: Optional[list] = response_content.get("items", [])
     return {"events": results}
