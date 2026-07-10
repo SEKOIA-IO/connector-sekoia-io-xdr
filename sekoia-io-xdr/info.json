@@ -258,7 +258,7 @@
     {
       "operation": "get_asset",
       "title": "Get Asset",
-      "description": "Retrieves an specific asset from SEKOIA.IO XDR based on the asset uuid you have specified.",
+      "description": "Retrieve an asset from SEKOIA.IO XDR based on the asset UUID you have specified.",
       "category": "investigation",
       "annotation": "get_asset",
       "enabled": true,
@@ -271,6 +271,26 @@
           "type": "text",
           "name": "asset_uuid",
           "description": "The unique identifier of the asset"
+        },
+        {
+          "title": "With Telemetry",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "checkbox",
+          "name": "with_telemetry",
+          "description": "Include telemetry and hygiene details in the response.",
+          "value": false
+        },
+        {
+          "title": "With Compliance",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "type": "checkbox",
+          "name": "with_compliance",
+          "description": "Include compliance details in the response.",
+          "value": false
         }
       ],
       "output_schema": {}

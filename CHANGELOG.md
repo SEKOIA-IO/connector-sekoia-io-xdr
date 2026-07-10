@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `get_alert` operation:
         - add `include_cases` parameter
         - add `include_custom_status` parameter
+    - `get_asset` operation:
+        - add `with_compliance` parameter
+        - add `with_telemetry` parameter
 
 ### Changed
 
