@@ -18,14 +18,19 @@ jobs:
         include:
           - check: black
             command: uv run black --check .
+            fix_command: uv run black .
           - check: isort
             command: uv run isort --check-only .
+            fix_command: uv run isort .
           - check: mypy
             command: uv run mypy .
+            fix_command: uv run mypy .
           - check: ruff
             command: uv run ruff check .
+            fix_command: uv run ruff check . --fix
           - check: info-json-sort
             command: uv run python scripts/sort_info_json.py --check
+            fix_command: uv run python scripts/sort_info_json.py
 
     steps:
       - name: Checkout
@@ -45,4 +50,8 @@ jobs:
 
       # Execute only the command for the current matrix entry.
       - name: Run lint check
-        run: ${{ matrix.command }}
+        run: |
+          if ! ${{ matrix.command }}; then
+            printf '\033[1;31mPlease run this command locally to fix the errors above:\033[0m %s\n' "${{ matrix.fix_command }}"
+            exit 1
+          fi
