@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sort selected arrays in connector info.json for stable diffs."""
+"""Normalize connector info.json ordering for stable diffs."""
 
 from __future__ import annotations
 
@@ -10,23 +10,36 @@ from pathlib import Path
 
 GREEN_BOLD = "\033[1;32m"
 RESET = "\033[0m"
+DEFAULT_PATH = "sekoia-io-xdr/info.json"
+
+# Most lists keep their original order. Only these business lists are sorted.
+LIST_SORT_KEYS = {
+    ("configuration", "fields"): "name",
+    ("operations",): "operation",
+    ("operations", "parameters"): "name",
+}
+
+
+def sort_value(value, path: tuple[str, ...] = ()):
+    # Sort every dict by key, recursively.
+    if isinstance(value, dict):
+        return {key: sort_value(value[key], path + (key,)) for key in sorted(value)}
+
+    if isinstance(value, list):
+        items = [sort_value(item, path) for item in value]
+
+        # Apply explicit ordering rules only where the manifest needs them.
+        sort_key = LIST_SORT_KEYS.get(path)
+        if sort_key:
+            return sorted(items, key=lambda item: item.get(sort_key, ""))
+
+        return items
+
+    return value
 
 
 def build_sorted_content(raw_content: str) -> str:
-    content = json.loads(raw_content)
-
-    configuration = content.get("configuration", {})
-    fields = configuration.get("fields")
-    if isinstance(fields, list):
-        configuration["fields"] = sorted(fields, key=lambda item: item.get("name", ""))
-
-    operations = content.get("operations")
-    if isinstance(operations, list):
-        content["operations"] = sorted(
-            operations, key=lambda item: item.get("operation", "")
-        )
-
-    return json.dumps(content, indent=2, ensure_ascii=False) + "\n"
+    return json.dumps(sort_value(json.loads(raw_content)), indent=2, ensure_ascii=False) + "\n"
 
 
 def sort_info_json(file_path: Path, check_only: bool = False) -> int:
@@ -50,15 +63,16 @@ def sort_info_json(file_path: Path, check_only: bool = False) -> int:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description=(
-            "Sort `configuration.fields` by `name` and `operations` by `operation` "
-            "in a connector info.json file."
+            "Sort all dict keys alphabetically, sort `configuration.fields` and "
+            "each operation's `parameters` by `name`, and sort `operations` by "
+            "`operation` in a connector info.json file."
         )
     )
     parser.add_argument(
         "path",
         nargs="?",
-        default="sekoia-io-xdr/info.json",
-        help="Path to info.json (default: sekoia-io-xdr/info.json)",
+        default=DEFAULT_PATH,
+        help=f"Path to info.json (default: {DEFAULT_PATH})",
     )
     parser.add_argument(
         "--check",
