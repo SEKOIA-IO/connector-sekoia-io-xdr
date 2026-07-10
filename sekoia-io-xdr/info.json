@@ -489,6 +489,250 @@
       "title": "List Alerts"
     },
     {
+      "annotation": "list_assets",
+      "category": "investigation",
+      "description": "Return a list of assets from SEKOIA.IO XDR according to the input filters.",
+      "enabled": true,
+      "operation": "list_assets",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Search by attached detection properties too.",
+          "editable": true,
+          "name": "also_search_in_detection_properties",
+          "required": false,
+          "title": "Also Search In Detection Properties",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Search by asset tags too.",
+          "editable": true,
+          "name": "also_search_in_tags",
+          "required": false,
+          "title": "Also Search In Tags",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of asset categories.",
+          "editable": true,
+          "name": "category",
+          "required": false,
+          "title": "Category",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of community UUIDs.",
+          "editable": true,
+          "name": "community_uuids",
+          "required": false,
+          "title": "Community UUIDs",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of connector UUIDs.",
+          "editable": true,
+          "name": "connectors",
+          "required": false,
+          "title": "Connectors",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of connector configuration UUIDs.",
+          "editable": true,
+          "name": "connectors_configuration",
+          "required": false,
+          "title": "Connectors Configuration",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter assets with higher criticality.",
+          "editable": true,
+          "name": "criticality",
+          "required": false,
+          "title": "Criticality",
+          "type": "integer",
+          "visible": true
+        },
+        {
+          "description": "Sort order: asc or desc.",
+          "editable": true,
+          "name": "direction",
+          "required": false,
+          "title": "Direction",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Return assets using legacy API v1 format.",
+          "editable": true,
+          "name": "format",
+          "required": false,
+          "title": "Format",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Enrich returned assets with their intake formats UUIDs.",
+          "editable": true,
+          "name": "include_intake_formats",
+          "required": false,
+          "title": "Include Intake Formats",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Include revoked assets in the search results.",
+          "editable": true,
+          "name": "include_revoked",
+          "required": false,
+          "title": "Include Revoked",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Enrich returned assets with their detection properties.",
+          "editable": true,
+          "name": "incorporate_atoms",
+          "required": false,
+          "title": "Incorporate Atoms",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of intake format UUIDs.",
+          "editable": true,
+          "name": "intake_format_uuids",
+          "required": false,
+          "title": "Intake Format UUIDs",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The number of assets to return (1-100).",
+          "editable": true,
+          "name": "limit",
+          "required": false,
+          "title": "Records Per Page",
+          "type": "integer",
+          "value": 20,
+          "visible": true
+        },
+        {
+          "description": "The position of the first asset to return.",
+          "editable": true,
+          "name": "offset",
+          "required": false,
+          "title": "Records Offset",
+          "type": "integer",
+          "value": 0,
+          "visible": true
+        },
+        {
+          "description": "Filter reviewed assets only.",
+          "editable": true,
+          "name": "reviewed",
+          "required": false,
+          "title": "Reviewed",
+          "type": "checkbox",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of asset discovery rule UUIDs.",
+          "editable": true,
+          "name": "rule_uuid",
+          "required": false,
+          "title": "Rule UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of asset discovery rule versions.",
+          "editable": true,
+          "name": "rule_version",
+          "required": false,
+          "title": "Rule Version",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Search assets by name.",
+          "editable": true,
+          "name": "search",
+          "required": false,
+          "title": "Search",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Sort criterion. Supported: name, type, created_at, criticality.",
+          "editable": true,
+          "name": "sort",
+          "required": false,
+          "title": "Sort",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of asset sources.",
+          "editable": true,
+          "name": "source",
+          "required": false,
+          "title": "Source",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of tags.",
+          "editable": true,
+          "name": "tags",
+          "required": false,
+          "title": "Tags",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of asset types.",
+          "editable": true,
+          "name": "type",
+          "required": false,
+          "title": "Type",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of asset UUIDs.",
+          "editable": true,
+          "name": "uuids",
+          "required": false,
+          "title": "Asset UUIDs",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Enrich returned assets with telemetry statistics.",
+          "editable": true,
+          "name": "with_telemetry",
+          "required": false,
+          "title": "With Telemetry",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        }
+      ],
+      "title": "List Assets"
+    },
+    {
       "annotation": "search_cases",
       "category": "investigation",
       "description": "Find cases from SEKOIA.IO XDR that match the input filters.",

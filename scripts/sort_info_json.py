@@ -39,7 +39,10 @@ def sort_value(value, path: tuple[str, ...] = ()):
 
 
 def build_sorted_content(raw_content: str) -> str:
-    return json.dumps(sort_value(json.loads(raw_content)), indent=2, ensure_ascii=False) + "\n"
+    return (
+        json.dumps(sort_value(json.loads(raw_content)), indent=2, ensure_ascii=False)
+        + "\n"
+    )
 
 
 def sort_info_json(file_path: Path, check_only: bool = False) -> int:
@@ -49,7 +52,7 @@ def sort_info_json(file_path: Path, check_only: bool = False) -> int:
     if check_only:
         if original != sorted_content:
             print(
-                f"{file_path} is not sorted. Run: uv run python scripts/sort_info_json.py",
+                f"Failed: file {file_path} is not sorted\nRun this command to fix it:\nuv run python scripts/sort_info_json.py",
                 file=sys.stderr,
             )
             return 1

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add new operations, based on Sekoia API 3.1 documentation and automation-library playbook action JSON files:
     - `get_case` operation
+    - `list_assets` operation
     - `search_cases` operation
 - Update existing operations, based on Sekoia API 3.1 documentation and automation-library playbook action JSON files:
     - `get_alert` operation:

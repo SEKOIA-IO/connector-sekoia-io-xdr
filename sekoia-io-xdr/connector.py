@@ -8,6 +8,7 @@ from .assets.delete_asset import delete_asset
 from .assets.get_asset import get_asset
 from .assets.update_asset import update_asset
 from .cases.get_case import get_case
+from .cases.list_assets import list_assets
 from .cases.search_cases import search_cases
 from .countermeasures.activate_countermeasure import activate_countermeasure
 from .countermeasures.deny_countermeasure import deny_countermeasure
@@ -29,6 +30,7 @@ class Sekoiaio(Connector):
             "get_case": get_case,
             "get_events": get_events,
             "list_alerts": list_alerts,
+            "list_assets": list_assets,
             "search_cases": search_cases,
             "update_alert_status": update_alert_status,
             "update_asset": update_asset,

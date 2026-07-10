@@ -58,7 +58,9 @@ def test_get_asset_defaults(connector_config):
     from connector_sekoia_io_xdr.assets.get_asset import get_asset
 
     with patch("connector_sekoia_io_xdr.assets.get_asset.GenericAPIAction") as action:
-        action.return_value.run.return_value = {"uuid": "82aa4cea-41fd-4381-8bb9-7100e7f97460"}
+        action.return_value.run.return_value = {
+            "uuid": "82aa4cea-41fd-4381-8bb9-7100e7f97460"
+        }
 
         get_asset(
             config=connector_config,
