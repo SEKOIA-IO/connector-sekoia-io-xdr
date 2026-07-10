@@ -112,6 +112,11 @@ To minimize remapping in FortiSOAR, this connector follows a simple naming polic
 
 In short: action `slug` drives operation keys, and OpenAPI drives request/response contract details.
 
+Scope rule:
+
+- Prefer adding or updating operations that map to existing Sekoia actions.
+- Add an OpenAPI-only operation only when no action definition exists and the need is explicit.
+
 Example:
 
 - The action file can be named `action_lists_cases.json`, while its action `slug` is `search_cases`.
