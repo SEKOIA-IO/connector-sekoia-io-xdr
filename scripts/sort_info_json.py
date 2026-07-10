@@ -5,12 +5,27 @@ from __future__ import annotations
 
 import argparse
 import json
-import sys
+import logging
 from pathlib import Path
 
 GREEN_BOLD = "\033[1;32m"
+RED_BOLD = "\033[1;31m"
 RESET = "\033[0m"
 DEFAULT_PATH = "sekoia-io-xdr/info.json"
+
+logger = logging.getLogger(Path(__file__).name)
+
+
+class ColorFormatter(logging.Formatter):
+    def format(self, record: logging.LogRecord) -> str:
+        message = super().format(record)
+        color = getattr(record, "color", None)
+
+        if color == "green":
+            return f"{GREEN_BOLD}{message}{RESET}"
+        if color == "red":
+            return f"{RED_BOLD}{message}{RESET}"
+        return message
 
 # Most lists keep their original order. Only these business lists are sorted.
 LIST_SORT_KEYS = {
@@ -51,19 +66,38 @@ def sort_info_json(file_path: Path, check_only: bool = False) -> int:
 
     if check_only:
         if original != sorted_content:
-            print(
-                f"Failed: file {file_path} is not sorted\nRun this command to fix it:\nuv run python scripts/sort_info_json.py",
-                file=sys.stderr,
+            logger.error(f"Failed: file {file_path} is not sorted", extra={"color": "red"})
+            logger.info(
+                "Run this command to fix it:\n"
+                "uv run python scripts/sort_info_json.py",
+                extra={"color": None},
             )
             return 1
-        print(f"{GREEN_BOLD}Success: {file_path} is already sorted.{RESET}")
+        logger.info(
+            f"Succeeded: file {file_path} is already sorted",
+            extra={"color": "green"},
+        )
         return 0
 
     file_path.write_text(sorted_content, encoding="utf-8")
+    logger.info(
+        f"Succeeded: file {file_path} has been sorted",
+        extra={"color": "green"},
+    )
     return 0
 
 
 if __name__ == "__main__":
+    handler = logging.StreamHandler()
+    handler.setFormatter(
+        ColorFormatter(
+            "[%(asctime)s] [%(name)s] %(levelname)s: %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
+    )
+    logger.setLevel(logging.INFO)
+    logger.handlers = [handler]
+    logger.propagate = False
     parser = argparse.ArgumentParser(
         description=(
             "Sort all dict keys alphabetically, sort `configuration.fields` and "
