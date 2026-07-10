@@ -102,6 +102,22 @@ For CI-style validation without writing changes:
 uv run python scripts/sort_info_json.py --check
 ```
 
+## Operation naming convention
+
+To minimize remapping in FortiSOAR, this connector follows a simple naming policy:
+
+- `operation` in `sekoia-io-xdr/info.json` is derived from the action `slug` in [automation-library/Sekoia.io/action_*.json](https://github.com/SEKOIA-IO/automation-library/tree/develop/Sekoia.io).
+- `title` and `description` are aligned with action metadata (`name` and `description`) whenever possible.
+- The [Sekoia.io full OpenAPI 3.1 schema in JSON format](https://docs.sekoia.com/developer/api/) is the source of truth for HTTP method, endpoint, parameters, and constraints.
+
+In short: action `slug` drives operation keys, and OpenAPI drives request/response contract details.
+
+Example:
+
+- The action file can be named `action_lists_cases.json`, while its action `slug` is `search_cases`.
+- The connector operation key is therefore `search_cases` in `sekoia-io-xdr/info.json`.
+- The Python module name can differ over time during refactors; the stable key exposed to FortiSOAR remains the action `slug`.
+
 ## CI pipeline
 
 GitHub Actions currently uses two workflows:
@@ -122,3 +138,7 @@ As a result, tests validate connector logic, payload construction, and operation
 but they do not validate end-to-end behavior against a real Sekoia tenant or a real FortiSOAR runtime.
 
 Note: `fortisoar_sdk` remains an external dependency provided through Fortinet's distribution process.
+
+## Authors
+
+- [Clement Burtscher](https://github.com/clement-burtscher-sekoia)
