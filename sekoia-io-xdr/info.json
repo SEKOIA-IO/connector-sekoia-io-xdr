@@ -533,7 +533,7 @@
           "editable": true,
           "name": "rule_name",
           "required": false,
-          "title": "Rule Name (Deprecated)",
+          "title": "[Deprecated] Rule Name",
           "type": "text",
           "visible": true
         },
@@ -542,7 +542,7 @@
           "editable": true,
           "name": "rule_uuid",
           "required": false,
-          "title": "Rule UUID (Deprecated)",
+          "title": "[Deprecated] Rule UUID",
           "type": "text",
           "visible": true
         },
@@ -551,7 +551,7 @@
           "editable": true,
           "name": "short_id",
           "required": false,
-          "title": "Short ID (Deprecated)",
+          "title": "[Deprecated] Short ID",
           "type": "text",
           "visible": true
         },
@@ -578,7 +578,7 @@
           "editable": true,
           "name": "status_name",
           "required": false,
-          "title": "Status Name (Deprecated)",
+          "title": "[Deprecated] Status Name",
           "type": "text",
           "visible": true
         },
@@ -587,7 +587,7 @@
           "editable": true,
           "name": "status_uuid",
           "required": false,
-          "title": "Status UUID (Deprecated)",
+          "title": "[Deprecated] Status UUID",
           "type": "text",
           "visible": true
         },

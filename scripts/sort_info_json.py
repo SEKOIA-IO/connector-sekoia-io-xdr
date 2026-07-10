@@ -68,7 +68,7 @@ def sort_info_json(file_path: Path, check_only: bool = False) -> int:
     if check_only:
         if original != sorted_content:
             logger.error(
-                f"Failed: file {file_path} is not sorted", extra={"color": "red"}
+                f"Fail: file {file_path} is not sorted", extra={"color": "red"}
             )
             logger.info(
                 "Run this command to fix it:\n"
@@ -77,14 +77,21 @@ def sort_info_json(file_path: Path, check_only: bool = False) -> int:
             )
             return 1
         logger.info(
-            f"Succeeded: file {file_path} is already sorted",
+            f"Success: file {file_path} is already sorted",
+            extra={"color": "green"},
+        )
+        return 0
+
+    if original == sorted_content:
+        logger.info(
+            f"Success: file {file_path} is already sorted",
             extra={"color": "green"},
         )
         return 0
 
     file_path.write_text(sorted_content, encoding="utf-8")
     logger.info(
-        f"Succeeded: file {file_path} has been sorted",
+        f"Success: file {file_path} has been sorted",
         extra={"color": "green"},
     )
     return 0
