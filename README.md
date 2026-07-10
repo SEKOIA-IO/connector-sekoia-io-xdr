@@ -107,6 +107,7 @@ uv run python scripts/sort_info_json.py --check
 To minimize remapping in FortiSOAR, this connector follows a simple naming policy:
 
 - `operation` in `sekoia-io-xdr/info.json` is derived from the action `slug` in [automation-library/Sekoia.io/action_*.json](https://github.com/SEKOIA-IO/automation-library/tree/develop/Sekoia.io).
+- When multiple action definitions exist for the same capability, prefer the non-deprecated action as the functional source of truth.
 - `title` and `description` are aligned with action metadata (`name` and `description`) whenever possible.
 - The [Sekoia.io full OpenAPI 3.1 schema in JSON format](https://docs.sekoia.com/developer/api/) is the source of truth for HTTP method, endpoint, parameters, and constraints.
 

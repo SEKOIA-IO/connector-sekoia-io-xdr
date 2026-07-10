@@ -73,3 +73,25 @@ def test_get_asset_defaults(connector_config):
             "https://app.sekoia.io/api/v2/asset-management/assets/82aa4cea-41fd-4381-8bb9-7100e7f97460",
             params={"with_telemetry": False, "with_compliance": False},
         )
+
+
+def test_get_asset_accepts_uuid(connector_config):
+    settings.configure()
+    from connector_sekoia_io_xdr.assets.get_asset import get_asset
+
+    with patch("connector_sekoia_io_xdr.assets.get_asset.GenericAPIAction") as action:
+        action.return_value.run.return_value = {
+            "uuid": "82aa4cea-41fd-4381-8bb9-7100e7f97460"
+        }
+
+        get_asset(
+            config=connector_config,
+            params={"uuid": "82aa4cea-41fd-4381-8bb9-7100e7f97460"},
+        )
+
+        action.assert_called_once_with(
+            connector_config,
+            "GET",
+            "https://app.sekoia.io/api/v2/asset-management/assets/82aa4cea-41fd-4381-8bb9-7100e7f97460",
+            params={"with_telemetry": False, "with_compliance": False},
+        )

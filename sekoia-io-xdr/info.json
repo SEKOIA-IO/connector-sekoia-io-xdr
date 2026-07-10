@@ -262,11 +262,20 @@
       "output_schema": {},
       "parameters": [
         {
-          "description": "The unique identifier of the asset",
+          "description": "Deprecated: use UUID instead. The unique identifier of the asset. One of UUID or Asset UUID is required.",
           "editable": true,
           "name": "asset_uuid",
-          "required": true,
+          "required": false,
           "title": "Asset UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The unique identifier of the asset. One of UUID or Asset UUID is required.",
+          "editable": true,
+          "name": "uuid",
+          "required": false,
+          "title": "UUID",
           "type": "text",
           "visible": true
         },

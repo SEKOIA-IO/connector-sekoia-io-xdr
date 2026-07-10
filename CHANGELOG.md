@@ -15,26 +15,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `get_case` operation
     - `list_assets` operation
     - `search_cases` operation
+- Add runtime, development, and lint dependency groups in `pyproject.toml` for reproducible local and CI environments
+- Add a GitHub Actions `lint` stage to run `black`, `isort`, `mypy`, `ruff`, and the `info.json` sorting check
+- Add a GitHub Actions `tests` stage to run the unit test suite across multiple supported Python versions
+
+### Changed
+
 - Update existing operations, based on Sekoia API 3.1 documentation and automation-library playbook action JSON files:
     - `get_alert` operation:
         - add `include_cases` parameter
         - add `include_custom_status` parameter
     - `get_asset` operation:
+        - add `uuid` parameter
         - add `with_compliance` parameter
         - add `with_telemetry` parameter
+        - deprecate `asset_uuid` parameter
     - `get_events` operation:
         - add `limit` parameter
-
-### Changed
-
-- Modernize dependency management with uv (`pyproject.toml` + `uv.lock`)
-- Add runtime and development dependency groups for reproducible local and CI environments
-- Move test execution to `uv run pytest` and aligned CI to run tests across supported Python versions
-- Standardize Python support window for this connector package to match the FortiSOAR SDK compatibility baseline used by this repository
-- Align `get_alert` operation parameters with Sekoia API 3.1 by adding support for related cases and custom status details
 - Refactor source code and tests into operation-specific files organized under feature subdirectories:
     - `alerts`
     - `assets`
     - `cases`
     - `countermeasures`
     - `events`
+- Modernize dependency management with uv (`pyproject.toml` + `uv.lock`)
+- Move test execution to `uv run pytest` and align CI to run tests across supported Python versions

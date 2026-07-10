@@ -27,6 +27,7 @@ class ColorFormatter(logging.Formatter):
             return f"{RED_BOLD}{message}{RESET}"
         return message
 
+
 # Most lists keep their original order. Only these business lists are sorted.
 LIST_SORT_KEYS = {
     ("configuration", "fields"): "name",
@@ -66,7 +67,9 @@ def sort_info_json(file_path: Path, check_only: bool = False) -> int:
 
     if check_only:
         if original != sorted_content:
-            logger.error(f"Failed: file {file_path} is not sorted", extra={"color": "red"})
+            logger.error(
+                f"Failed: file {file_path} is not sorted", extra={"color": "red"}
+            )
             logger.info(
                 "Run this command to fix it:\n"
                 "uv run python scripts/sort_info_json.py",
