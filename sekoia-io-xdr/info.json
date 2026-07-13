@@ -180,6 +180,134 @@
       "title": "Deny a Countermeasure"
     },
     {
+      "annotation": "edit_case",
+      "category": "investigation",
+      "description": "Edit the properties of a case in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "edit_case",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Priority of the case.",
+          "editable": true,
+          "name": "custom_priority_uuid",
+          "required": false,
+          "title": "Custom Priority UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Custom status of the case.",
+          "editable": true,
+          "name": "custom_status_uuid",
+          "required": false,
+          "title": "Custom Status UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Description of the case.",
+          "editable": true,
+          "name": "description",
+          "required": false,
+          "title": "Description",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Priority of the case.",
+          "editable": true,
+          "name": "priority",
+          "required": false,
+          "title": "Priority",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Name of the status of the case.",
+          "editable": true,
+          "name": "status_name",
+          "required": false,
+          "title": "Status Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Identifier of the status of the case.",
+          "editable": true,
+          "name": "status_uuid",
+          "required": false,
+          "title": "Status UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "List of subscribers as a JSON array of objects with avatar_uuid and type.",
+          "editable": true,
+          "name": "subscribers",
+          "required": false,
+          "title": "Subscribers",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "List of tags to associate to the case (comma-separated).",
+          "editable": true,
+          "name": "tags",
+          "required": false,
+          "title": "Tags",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Title of the case.",
+          "editable": true,
+          "name": "title",
+          "required": false,
+          "title": "Title",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "UUID of the case.",
+          "editable": true,
+          "name": "uuid",
+          "required": true,
+          "title": "Case UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Description of the case verdict.",
+          "editable": true,
+          "name": "verdict_analysis",
+          "required": false,
+          "title": "Verdict Analysis",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Confidence level of the case verdict (0-100).",
+          "editable": true,
+          "name": "verdict_confidence",
+          "required": false,
+          "title": "Verdict Confidence",
+          "type": "integer",
+          "visible": true
+        },
+        {
+          "description": "Verdict of the case.",
+          "editable": true,
+          "name": "verdict_uuid",
+          "required": false,
+          "title": "Verdict UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Edit Case"
+    },
+    {
       "annotation": "get_alert",
       "category": "investigation",
       "description": "Retrieves a specific alert from SEKOIA.IO XDR based on the alert UUID and other input parameters that you have specified.",
