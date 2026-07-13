@@ -1,0 +1,45 @@
+{
+  "operations": [
+    {
+      "title": "B operation",
+      "operation": "b_op",
+      "parameters": [
+        {
+          "title": "Z",
+          "name": "z"
+        },
+        {
+          "name": "a",
+          "title": "A"
+        }
+      ]
+    },
+    {
+      "operation": "a_op",
+      "title": "A operation",
+      "parameters": [
+        {
+          "name": "b",
+          "title": "B"
+        },
+        {
+          "name": "a",
+          "title": "A"
+        }
+      ]
+    }
+  ],
+  "configuration": {
+    "fields": [
+      {
+        "title": "Z field",
+        "name": "z"
+      },
+      {
+        "name": "a",
+        "title": "A field"
+      }
+    ]
+  },
+  "name": "demo"
+}

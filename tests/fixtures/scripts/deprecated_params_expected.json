@@ -1,0 +1,39 @@
+{
+  "operations": [
+    {
+      "operation": "get_asset",
+      "parameters": [
+        {
+          "name": "asset_uuid",
+          "title": "[Deprecated] Asset UUID",
+          "description": "Deprecated alias. Use UUID instead."
+        },
+        {
+          "name": "uuid",
+          "title": "UUID",
+          "description": "The unique identifier of the asset."
+        }
+      ]
+    },
+    {
+      "operation": "list_alerts",
+      "parameters": [
+        {
+          "name": "status_uuid",
+          "title": "[Deprecated] Status UUID",
+          "description": "Deprecated alias. Use match[status_uuid] instead."
+        },
+        {
+          "name": "legacy",
+          "title": "[Deprecated] Legacy Field",
+          "description": "Deprecated alias. There is no replacement."
+        },
+        {
+          "name": "regular",
+          "title": "Regular",
+          "description": "Normal"
+        }
+      ]
+    }
+  ]
+}

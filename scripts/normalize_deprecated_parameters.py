@@ -81,7 +81,9 @@ def normalize_deprecated_parameters(data: dict) -> bool:
                 parameter["description"] = expected_description
                 changed = True
 
-            expected_title = normalize_title(title, str(parameter.get("name", "Parameter")))
+            expected_title = normalize_title(
+                title, str(parameter.get("name", "Parameter"))
+            )
             if parameter.get("title") != expected_title:
                 parameter["title"] = expected_title
                 changed = True
