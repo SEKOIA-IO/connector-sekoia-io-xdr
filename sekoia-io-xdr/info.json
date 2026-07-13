@@ -1003,13 +1003,13 @@
     {
       "annotation": "update_alert_status",
       "category": "investigation",
-      "description": "Updates a specific alert in SEKOIA.IO XDR based on the alert identifier and other input parameters that you have specified.",
+      "description": "Triggers an action on an alert workflow in SEKOIA.IO XDR to update its status.",
       "enabled": true,
       "operation": "update_alert_status",
       "output_schema": {},
       "parameters": [
         {
-          "description": "The unique identifier of the action",
+          "description": "UUID of the action to trigger.",
           "editable": true,
           "name": "action_uuid",
           "required": true,
@@ -1018,20 +1018,29 @@
           "visible": true
         },
         {
-          "description": "The unique identifier of the alert (uuid or short_id)",
+          "description": "Deprecated: use UUID instead. The unique identifier of the alert. One of UUID or Alert Identifier is required.",
           "editable": true,
           "name": "alert_uuid",
-          "required": true,
-          "title": "Alert Identifier",
+          "required": false,
+          "title": "[Deprecated] Alert Identifier",
           "type": "text",
           "visible": true
         },
         {
-          "description": "The comment to associate to the action",
+          "description": "A comment to describe why the alert status has changed.",
           "editable": true,
           "name": "comment",
           "required": false,
           "title": "Comment",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The unique identifier of the alert. One of UUID or Alert Identifier is required.",
+          "editable": true,
+          "name": "uuid",
+          "required": false,
+          "title": "UUID",
           "type": "text",
           "visible": true
         }

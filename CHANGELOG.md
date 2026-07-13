@@ -43,6 +43,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         - deprecate `status_uuid` parameter
         - deprecate `updated_end_date` parameter
         - deprecate `updated_start_date` parameter
+    - `update_alert_status` operation:
+        - add `uuid` parameter
+        - deprecate `alert_uuid` parameter
 
 - Refactor source code and tests into operation-specific files organized under feature subdirectories:
     - `alerts`

@@ -11,7 +11,13 @@ def update_alert_status(config, params):
     Performs an action on the alert and changes the status of the alert
     according to the performed action and the workflow.
     """
-    url = f"{ALERTS_BASE_URL}/{params['alert_uuid']}/workflow"
+    alert_uuid = params.get("uuid") or params.get("alert_uuid")
+    if not alert_uuid:
+        raise ConnectorError(
+            "Error: Missing required parameter 'uuid' (or deprecated 'alert_uuid')."
+        )
+
+    url = f"{ALERTS_BASE_URL}/{alert_uuid}/workflow"
     body = {"action_uuid": params["action_uuid"], "comment": params.get("comment")}
 
     try:
