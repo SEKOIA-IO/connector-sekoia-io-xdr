@@ -5,6 +5,7 @@ description = "Development environment for the SEKOIA.IO XDR connector"
 readme = "README.md"
 requires-python = ">=3.9,<3.15"
 dependencies = [
+    "pydantic>=2.11.7",
     "requests>=2.32.5",
     "requests-toolbelt>=1.0.0",
     "tenacity>=9.1.2",
@@ -22,6 +23,7 @@ dev = [
 lint = [
     "black>=25.11.0",
     "isort>=6.1.0",
+    "libcst>=1.8.2",
     "mypy>=1.19.1",
     "ruff>=0.15.20",
 ]

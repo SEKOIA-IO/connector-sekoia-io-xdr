@@ -1,20 +1,20 @@
 from connectors.core.connector import Connector, get_logger
 
-from .alerts.add_comment_to_alert import add_comment_to_alert
-from .alerts.get_alert import get_alert
-from .alerts.list_alerts import list_alerts
-from .alerts.update_alert_status import update_alert_status
-from .assets.delete_asset import delete_asset
-from .assets.get_asset import get_asset
-from .assets.update_asset import update_asset
-from .cases.edit_case import edit_case
-from .cases.get_case import get_case
-from .cases.list_assets import list_assets
-from .cases.search_cases import search_cases
-from .countermeasures.activate_countermeasure import activate_countermeasure
-from .countermeasures.deny_countermeasure import deny_countermeasure
-from .events.get_events import get_events
 from .health_check import check
+from .operations.alerts.add_comment_to_alert import add_comment_to_alert
+from .operations.alerts.get_alert import get_alert
+from .operations.alerts.list_alerts import list_alerts
+from .operations.alerts.update_alert_status import update_alert_status
+from .operations.assets.delete_asset import delete_asset
+from .operations.assets.get_asset import get_asset
+from .operations.assets.update_asset import update_asset
+from .operations.cases.edit_case import edit_case
+from .operations.cases.get_case import get_case
+from .operations.cases.list_assets import list_assets
+from .operations.cases.search_cases import search_cases
+from .operations.countermeasures.activate_countermeasure import activate_countermeasure
+from .operations.countermeasures.deny_countermeasure import deny_countermeasure
+from .operations.events.get_events import get_events
 
 logger = get_logger("sekoia-io-xdr")
 

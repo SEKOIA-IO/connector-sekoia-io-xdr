@@ -45,7 +45,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `update_alert_status` operation:
         - add `uuid` parameter
         - deprecate `alert_uuid` parameter
-
 - Refactor source code and tests into operation-specific files organized under feature subdirectories:
     - `alerts`
     - `assets`
@@ -54,3 +53,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `events`
 - Modernize dependency management with uv (`pyproject.toml` + `uv.lock`)
 - Move test execution to `uv run pytest` and align CI to run tests across supported Python versions
+- Refactor operation Python modules to a unified class-based architecture using Pydantic v2 input models
