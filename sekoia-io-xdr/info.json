@@ -262,11 +262,11 @@
       "output_schema": {},
       "parameters": [
         {
-          "description": "Deprecated: use UUID instead. The unique identifier of the asset. One of UUID or Asset UUID is required.",
+          "description": "Deprecated alias. Use UUID instead.",
           "editable": true,
           "name": "asset_uuid",
           "required": false,
-          "title": "Asset UUID",
+          "title": "[Deprecated] Asset UUID",
           "type": "text",
           "visible": true
         },
@@ -412,7 +412,7 @@
           "editable": true,
           "name": "creation_end_date",
           "required": false,
-          "title": "Creation End Date",
+          "title": "[Deprecated] Creation End Date",
           "tooltip": "Time in ISO format (rfc3339)",
           "type": "text",
           "visible": true
@@ -422,7 +422,7 @@
           "editable": true,
           "name": "creation_start_date",
           "required": false,
-          "title": "Creation Start Date",
+          "title": "[Deprecated] Creation Start Date",
           "tooltip": "Time in ISO format (rfc3339)",
           "type": "text",
           "visible": true
@@ -606,7 +606,7 @@
           "editable": true,
           "name": "updated_end_date",
           "required": false,
-          "title": "Updated End Date",
+          "title": "[Deprecated] Updated End Date",
           "tooltip": "Time in ISO format (rfc3339)",
           "type": "datetime",
           "visible": true
@@ -616,7 +616,7 @@
           "editable": true,
           "name": "updated_start_date",
           "required": false,
-          "title": "Updated Start Date",
+          "title": "[Deprecated] Updated Start Date",
           "tooltip": "Time in ISO format (rfc3339)",
           "type": "datetime",
           "visible": true
@@ -1018,7 +1018,7 @@
           "visible": true
         },
         {
-          "description": "Deprecated: use UUID instead. The unique identifier of the alert. One of UUID or Alert Identifier is required.",
+          "description": "Deprecated alias. Use UUID instead.",
           "editable": true,
           "name": "alert_uuid",
           "required": false,

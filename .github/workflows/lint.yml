@@ -31,6 +31,9 @@ jobs:
           - check: info-json-sort
             command: uv run python scripts/sort_info_json.py --check
             fix_command: uv run python scripts/sort_info_json.py
+          - check: info-json-deprecated-params
+            command: uv run python scripts/normalize_deprecated_parameters.py --check
+            fix_command: uv run python scripts/normalize_deprecated_parameters.py
 
     steps:
       - name: Checkout
