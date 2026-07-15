@@ -11,6 +11,7 @@ from .operations.assets.update_asset import update_asset
 from .operations.cases.edit_case import edit_case
 from .operations.cases.get_case import get_case
 from .operations.cases.list_assets import list_assets
+from .operations.cases.revoke_assetv2 import revoke_assetv2
 from .operations.cases.search_cases import search_cases
 from .operations.countermeasures.activate_countermeasure import activate_countermeasure
 from .operations.countermeasures.deny_countermeasure import deny_countermeasure
@@ -33,6 +34,7 @@ class Sekoiaio(Connector):
             "get_events": get_events,
             "list_alerts": list_alerts,
             "list_assets": list_assets,
+            "revoke_assetv2": revoke_assetv2,
             "search_cases": search_cases,
             "update_alert_status": update_alert_status,
             "update_asset": update_asset,

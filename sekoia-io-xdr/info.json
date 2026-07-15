@@ -1017,6 +1017,26 @@
       "title": "List Assets"
     },
     {
+      "annotation": "revoke_assetv2",
+      "category": "investigation",
+      "description": "Revoke the requested asset (soft-delete). Replaces the deprecated Delete an asset actions.",
+      "enabled": true,
+      "operation": "revoke_assetv2",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "The identifier of the asset",
+          "editable": true,
+          "name": "uuid",
+          "required": true,
+          "title": "Asset UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Revoke an Asset (V2)"
+    },
+    {
       "annotation": "search_cases",
       "category": "investigation",
       "description": "Find cases from SEKOIA.IO XDR that match the input filters.",

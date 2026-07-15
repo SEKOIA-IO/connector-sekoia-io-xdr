@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `edit_case` operation
     - `get_case` operation
     - `list_assets` operation
+    - `revoke_assetv2` operation
     - `search_cases` operation
 - Add runtime, development, and lint dependency groups in `pyproject.toml` for reproducible local and CI environments
 - Add a GitHub Actions `lint` stage to run `black`, `isort`, `mypy`, `ruff`, and the `info.json` normalization checks
