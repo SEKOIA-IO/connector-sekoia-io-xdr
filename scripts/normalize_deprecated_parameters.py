@@ -54,10 +54,12 @@ def normalize_deprecated_parameters(data: dict) -> bool:
 
         operation_description = str(operation.get("description", ""))
         operation_title = str(operation.get("title", ""))
+        normalized_description = operation_description.strip().lower()
+        normalized_title = operation_title.strip().lower()
         is_operation_deprecated = (
-            "deprecated" in operation_description.lower()
-            or operation_title.lower().startswith("[deprecated]")
-            or "(deprecated)" in operation_title.lower()
+            normalized_description.startswith("deprecated")
+            or normalized_title.startswith("[deprecated]")
+            or normalized_title.startswith("(deprecated)")
         )
         if is_operation_deprecated and operation_name:
             replacement_operation = extract_replacement_operation(operation_description)

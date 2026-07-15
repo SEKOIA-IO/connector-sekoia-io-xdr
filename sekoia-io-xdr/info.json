@@ -1019,7 +1019,7 @@
     {
       "annotation": "revoke_assetv2",
       "category": "investigation",
-      "description": "Deprecated operation. There is no replacement.",
+      "description": "Revoke an asset in SEKOIA.IO XDR based on the asset UUID you have specified.",
       "enabled": true,
       "operation": "revoke_assetv2",
       "output_schema": {},
@@ -1034,7 +1034,7 @@
           "visible": true
         }
       ],
-      "title": "[Deprecated] Revoke an Asset (V2)"
+      "title": "Revoke an Asset (V2)"
     },
     {
       "annotation": "search_cases",

@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Deprecate existing operations, based on Sekoia API 3.1 documentation and automation-library playbook action JSON files:
+    - `delete_asset` operation in favor of `revoke_assetv2` operation
     - `update_asset` operation in favor of `update_assets` operation
 - Update existing operations, based on Sekoia API 3.1 documentation and automation-library playbook action JSON files:
     - `get_alert` operation:
