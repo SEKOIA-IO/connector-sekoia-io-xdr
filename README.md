@@ -182,7 +182,22 @@ Example:
 - The connector operation key is therefore `search_cases` in `sekoia-io-xdr/info.json`.
 - The Python module name can differ over time during refactors; the stable key exposed to FortiSOAR remains the action `slug`.
 
-## Deprecation conventions
+## Deprecation
+
+### Deprecated operation migration
+
+Use this migration rule when replacing an existing connector operation:
+
+1. Create the new operation using the current action slug.
+2. Deprecate the old operation in `sekoia-io-xdr/info.json` with a replacement message.
+3. Keep the old operation implementation available until removal.
+
+Parameter compatibility policy:
+
+- If the operation slug does not change, parameter aliases can be used to preserve backward compatibility during migration.
+- If the operation slug changes, do not carry over legacy parameter aliases to the new operation unless the action definition explicitly documents backward-compatible aliases.
+
+### Deprecation conventions
 
 This repository uses explicit conventions for deprecated metadata in
 `sekoia-io-xdr/info.json`.
