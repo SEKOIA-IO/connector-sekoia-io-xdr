@@ -5,27 +5,12 @@ from __future__ import annotations
 
 import argparse
 import json
-import logging
 from pathlib import Path
 
-GREEN_BOLD = "\033[1;32m"
-RED_BOLD = "\033[1;31m"
-RESET = "\033[0m"
+from scripts.cli_utils import configure_script_logger
+
 DEFAULT_PATH = "sekoia-io-xdr/info.json"
-
-logger = logging.getLogger(Path(__file__).name)
-
-
-class ColorFormatter(logging.Formatter):
-    def format(self, record: logging.LogRecord) -> str:
-        message = super().format(record)
-        color = getattr(record, "color", None)
-
-        if color == "green":
-            return f"{GREEN_BOLD}{message}{RESET}"
-        if color == "red":
-            return f"{RED_BOLD}{message}{RESET}"
-        return message
+logger = configure_script_logger(Path(__file__).name)
 
 
 # Most lists keep their original order. Only these business lists are sorted.
@@ -72,7 +57,7 @@ def sort_info_json(file_path: Path, check_only: bool = False) -> int:
             )
             logger.info(
                 "Run this command to fix it:\n"
-                "uv run python scripts/sort_info_json.py",
+                "uv run python -m scripts.sort_info_json",
                 extra={"color": None},
             )
             return 1
@@ -98,16 +83,6 @@ def sort_info_json(file_path: Path, check_only: bool = False) -> int:
 
 
 if __name__ == "__main__":
-    handler = logging.StreamHandler()
-    handler.setFormatter(
-        ColorFormatter(
-            "[%(asctime)s] [%(name)s] %(levelname)s: %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S",
-        )
-    )
-    logger.setLevel(logging.INFO)
-    logger.handlers = [handler]
-    logger.propagate = False
     parser = argparse.ArgumentParser(
         description=(
             "Sort all dict keys alphabetically, sort `configuration.fields` and "

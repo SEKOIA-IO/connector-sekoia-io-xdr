@@ -16,8 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `revoke_assetv2` operation
     - `search_cases` operation
 - Add runtime, development, and lint dependency groups in `pyproject.toml` for reproducible local and CI environments
-- Add a GitHub Actions `lint` stage to run `black`, `isort`, `mypy`, `ruff`, and the `info.json` normalization checks
-- Add a GitHub Actions `tests` stage to run the unit test suite across multiple supported Python versions
+- Add GitHub Actions:
+    - `lint` stage to run `black`, `isort`, `mypy` and `ruff`
+    - `normalize_info_json` stage to run read-only checks dedicated to `info.json`
+    - `normalize_operations` stage to run read-only checks dedicated to operation source normalization
+    - `tests` stage to run the unit test suite across multiple supported Python versions
 
 ### Changed
 

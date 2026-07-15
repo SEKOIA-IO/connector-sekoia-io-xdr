@@ -124,7 +124,7 @@
     {
       "annotation": "delete_asset",
       "category": "investigation",
-      "description": "Delete an specific asset from SEKOIA.IO XDR based on the asset uuid you have specified.",
+      "description": "Deprecated operation. Use revoke_assetv2 operation instead.",
       "enabled": true,
       "operation": "delete_asset",
       "output_schema": {},
@@ -139,7 +139,7 @@
           "visible": true
         }
       ],
-      "title": "Delete Asset"
+      "title": "[Deprecated] Delete Asset"
     },
     {
       "annotation": "deny_countermeasure",
@@ -390,7 +390,7 @@
       "output_schema": {},
       "parameters": [
         {
-          "description": "Deprecated alias. Use UUID instead.",
+          "description": "Deprecated parameter. Use UUID parameter instead.",
           "editable": true,
           "name": "asset_uuid",
           "required": false,
@@ -536,7 +536,7 @@
           "visible": true
         },
         {
-          "description": "Deprecated alias. Use date[created_at] instead.",
+          "description": "Deprecated parameter. Use date[created_at] parameter instead.",
           "editable": true,
           "name": "creation_end_date",
           "required": false,
@@ -546,7 +546,7 @@
           "visible": true
         },
         {
-          "description": "Deprecated alias. Use date[created_at] instead.",
+          "description": "Deprecated parameter. Use date[created_at] parameter instead.",
           "editable": true,
           "name": "creation_start_date",
           "required": false,
@@ -657,7 +657,7 @@
           "visible": true
         },
         {
-          "description": "Deprecated alias. Use match[rule_name] instead.",
+          "description": "Deprecated parameter. Use match[rule_name] parameter instead.",
           "editable": true,
           "name": "rule_name",
           "required": false,
@@ -666,7 +666,7 @@
           "visible": true
         },
         {
-          "description": "Deprecated alias. Use match[rule_uuid] instead.",
+          "description": "Deprecated parameter. Use match[rule_uuid] parameter instead.",
           "editable": true,
           "name": "rule_uuid",
           "required": false,
@@ -675,7 +675,7 @@
           "visible": true
         },
         {
-          "description": "Deprecated alias. Use match[short_id] instead.",
+          "description": "Deprecated parameter. Use match[short_id] parameter instead.",
           "editable": true,
           "name": "short_id",
           "required": false,
@@ -702,7 +702,7 @@
           "visible": true
         },
         {
-          "description": "Deprecated alias. Use match[status_name] instead.",
+          "description": "Deprecated parameter. Use match[status_name] parameter instead.",
           "editable": true,
           "name": "status_name",
           "required": false,
@@ -711,7 +711,7 @@
           "visible": true
         },
         {
-          "description": "Deprecated alias. Use match[status_uuid] instead.",
+          "description": "Deprecated parameter. Use match[status_uuid] parameter instead.",
           "editable": true,
           "name": "status_uuid",
           "required": false,
@@ -730,7 +730,7 @@
           "visible": true
         },
         {
-          "description": "Deprecated alias. Use date[updated_at] instead.",
+          "description": "Deprecated parameter. Use date[updated_at] parameter instead.",
           "editable": true,
           "name": "updated_end_date",
           "required": false,
@@ -740,7 +740,7 @@
           "visible": true
         },
         {
-          "description": "Deprecated alias. Use date[updated_at] instead.",
+          "description": "Deprecated parameter. Use date[updated_at] parameter instead.",
           "editable": true,
           "name": "updated_start_date",
           "required": false,
@@ -1019,7 +1019,7 @@
     {
       "annotation": "revoke_assetv2",
       "category": "investigation",
-      "description": "Revoke the requested asset (soft-delete). Replaces the deprecated Delete an asset actions.",
+      "description": "Deprecated operation. There is no replacement.",
       "enabled": true,
       "operation": "revoke_assetv2",
       "output_schema": {},
@@ -1034,7 +1034,7 @@
           "visible": true
         }
       ],
-      "title": "Revoke an Asset (V2)"
+      "title": "[Deprecated] Revoke an Asset (V2)"
     },
     {
       "annotation": "search_cases",
@@ -1166,7 +1166,7 @@
           "visible": true
         },
         {
-          "description": "Deprecated alias. Use UUID instead.",
+          "description": "Deprecated parameter. Use UUID parameter instead.",
           "editable": true,
           "name": "alert_uuid",
           "required": false,

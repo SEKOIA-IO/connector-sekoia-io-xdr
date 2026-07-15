@@ -21,4 +21,6 @@ class RevokeAssetV2Operation(Operation):
 
 def revoke_assetv2(config, params):
     """Revoke an asset (v2)."""
-    return RevokeAssetV2Operation(api_action_cls=GenericAPIAction).execute(config, params)
+    return RevokeAssetV2Operation(api_action_cls=GenericAPIAction).execute(
+        config, params
+    )

@@ -16,12 +16,18 @@
       ]
     },
     {
+      "operation": "delete_asset",
+      "title": "Delete Asset",
+      "description": "Deprecated: use revoke_assetv2 operation instead.",
+      "parameters": []
+    },
+    {
       "operation": "list_alerts",
       "parameters": [
         {
           "name": "status_uuid",
           "title": "[Deprecated] Status UUID",
-          "description": "Deprecated alias. Use match[status_uuid] instead."
+          "description": "Deprecated parameter. Use match[status_uuid] parameter instead."
         },
         {
           "name": "legacy",

@@ -3,9 +3,9 @@ from pathlib import Path
 
 from scripts.normalize_deprecated_parameters import (
     extract_replacement_alias,
+    extract_replacement_operation,
     normalize_deprecated_parameters,
     normalize_file,
-    normalize_title,
 )
 
 FIXTURES_DIR = Path(__file__).resolve().parents[1] / "fixtures" / "scripts"
@@ -21,7 +21,9 @@ def _fixture_json(name: str) -> dict:
 
 def test_extract_replacement_alias_supports_multiple_deprecated_patterns():
     assert (
-        extract_replacement_alias("Deprecated alias. Use match[status_uuid] instead.")
+        extract_replacement_alias(
+            "Deprecated parameter. Use match[status_uuid] parameter instead."
+        )
         == "match[status_uuid]"
     )
     assert (
@@ -31,16 +33,16 @@ def test_extract_replacement_alias_supports_multiple_deprecated_patterns():
     assert extract_replacement_alias("Deprecated alias with no suggestion") is None
 
 
-def test_normalize_title_handles_deprecated_prefixes():
+def test_extract_replacement_operation_supports_canonical_pattern():
     assert (
-        normalize_title("[Deprecated] Status UUID", "status_uuid")
-        == "[Deprecated] Status UUID"
+        extract_replacement_operation(
+            "Deprecated operation. Use revoke_assetv2 operation instead."
+        )
+        == "revoke_assetv2"
     )
     assert (
-        normalize_title("(deprecated) Legacy Field", "legacy")
-        == "[Deprecated] Legacy Field"
+        extract_replacement_operation("Deprecated operation with no suggestion") is None
     )
-    assert normalize_title("", "legacy") == "[Deprecated] legacy"
 
 
 def test_normalize_deprecated_parameters_matches_expected_fixture():

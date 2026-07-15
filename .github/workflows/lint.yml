@@ -28,15 +28,6 @@ jobs:
           - check: ruff
             command: uv run ruff check .
             fix_command: uv run ruff check . --fix
-          - check: info-json-sort
-            command: uv run python scripts/sort_info_json.py --check
-            fix_command: uv run python scripts/sort_info_json.py
-          - check: info-json-deprecated-params
-            command: uv run python scripts/normalize_deprecated_parameters.py --check
-            fix_command: uv run python scripts/normalize_deprecated_parameters.py
-          - check: operation-payload-key-sort
-            command: uv run python scripts/sort_operation_payload_keys.py --check
-            fix_command: uv run python scripts/sort_operation_payload_keys.py
 
     steps:
       - name: Checkout

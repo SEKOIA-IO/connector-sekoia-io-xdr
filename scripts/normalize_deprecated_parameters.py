@@ -5,34 +5,25 @@ from __future__ import annotations
 
 import argparse
 import json
-import logging
 import re
 from pathlib import Path
 
-GREEN_BOLD = "\033[1;32m"
-RED_BOLD = "\033[1;31m"
-RESET = "\033[0m"
+from scripts.cli_utils import configure_script_logger
+from scripts.deprecate_operation import deprecate_operation
+from scripts.deprecate_operation_parameter import deprecate_operation_parameter
+
 DEFAULT_PATH = "sekoia-io-xdr/info.json"
-
-logger = logging.getLogger(Path(__file__).name)
-
-
-class ColorFormatter(logging.Formatter):
-    def format(self, record: logging.LogRecord) -> str:
-        message = super().format(record)
-        color = getattr(record, "color", None)
-
-        if color == "green":
-            return f"{GREEN_BOLD}{message}{RESET}"
-        if color == "red":
-            return f"{RED_BOLD}{message}{RESET}"
-        return message
+logger = configure_script_logger(Path(__file__).name)
 
 
 def extract_replacement_alias(description: str) -> str | None:
-    # Example: "Deprecated alias. Use match[status_uuid] instead."
+    # Example: "Deprecated parameter. Use match[status_uuid] parameter instead."
     # Example: "Deprecated: use UUID instead. ..."
-    match = re.search(r"\buse\s+(.+?)\s+instead\b", description, flags=re.IGNORECASE)
+    match = re.search(
+        r"\buse\s+(.+?)\s+(?:parameter\s+)?instead\b",
+        description,
+        flags=re.IGNORECASE,
+    )
     if not match:
         return None
 
@@ -41,23 +32,41 @@ def extract_replacement_alias(description: str) -> str | None:
     return alias or None
 
 
-def normalize_title(title: str, fallback_name: str) -> str:
-    cleaned = title.strip()
+def extract_replacement_operation(description: str) -> str | None:
+    # Example: "Deprecated operation. Use revoke_assetv2 operation instead."
+    match = re.search(
+        r"\buse\s+(.+?)\s+operation\s+instead\b",
+        description,
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return None
 
-    cleaned = re.sub(r"^\[\s*deprecated\s*\]\s*", "", cleaned, flags=re.IGNORECASE)
-    cleaned = re.sub(r"^\(\s*deprecated\s*\)\s*", "", cleaned, flags=re.IGNORECASE)
-    cleaned = re.sub(r"^deprecated\s*[:\-]?\s*", "", cleaned, flags=re.IGNORECASE)
-
-    if not cleaned:
-        cleaned = fallback_name
-
-    return f"[Deprecated] {cleaned}"
+    replacement = match.group(1).strip().strip("`\"' ")
+    return replacement or None
 
 
 def normalize_deprecated_parameters(data: dict) -> bool:
     changed = False
 
     for operation in data.get("operations", []):
+        operation_name = str(operation.get("operation", ""))
+
+        operation_description = str(operation.get("description", ""))
+        operation_title = str(operation.get("title", ""))
+        is_operation_deprecated = (
+            "deprecated" in operation_description.lower()
+            or operation_title.lower().startswith("[deprecated]")
+            or "(deprecated)" in operation_title.lower()
+        )
+        if is_operation_deprecated and operation_name:
+            replacement_operation = extract_replacement_operation(operation_description)
+            changed |= deprecate_operation(
+                data,
+                operation_name=operation_name,
+                replacement=replacement_operation,
+            )
+
         for parameter in operation.get("parameters", []):
             description = str(parameter.get("description", ""))
             title = str(parameter.get("title", ""))
@@ -71,22 +80,17 @@ def normalize_deprecated_parameters(data: dict) -> bool:
             if not is_deprecated:
                 continue
 
+            parameter_name = str(parameter.get("name", ""))
+            if not operation_name or not parameter_name:
+                continue
+
             replacement = extract_replacement_alias(description)
-            if replacement:
-                expected_description = f"Deprecated alias. Use {replacement} instead."
-            else:
-                expected_description = "Deprecated alias. There is no replacement."
-
-            if parameter.get("description") != expected_description:
-                parameter["description"] = expected_description
-                changed = True
-
-            expected_title = normalize_title(
-                title, str(parameter.get("name", "Parameter"))
+            changed |= deprecate_operation_parameter(
+                data,
+                operation_name=operation_name,
+                parameter_name=parameter_name,
+                replacement=replacement,
             )
-            if parameter.get("title") != expected_title:
-                parameter["title"] = expected_title
-                changed = True
 
     return changed
 
@@ -106,7 +110,7 @@ def normalize_file(file_path: Path, check_only: bool = False) -> int:
             )
             logger.info(
                 "Run this command to fix it:\n"
-                "uv run python scripts/normalize_deprecated_parameters.py",
+                "uv run python -m scripts.normalize_deprecated_parameters",
                 extra={"color": None},
             )
             return 1
@@ -133,21 +137,10 @@ def normalize_file(file_path: Path, check_only: bool = False) -> int:
 
 
 if __name__ == "__main__":
-    handler = logging.StreamHandler()
-    handler.setFormatter(
-        ColorFormatter(
-            "[%(asctime)s] [%(name)s] %(levelname)s: %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S",
-        )
-    )
-    logger.setLevel(logging.INFO)
-    logger.handlers = [handler]
-    logger.propagate = False
-
     parser = argparse.ArgumentParser(
         description=(
-            "Normalize deprecated operation parameters in connector info.json by "
-            "enforcing canonical description/title conventions."
+            "Normalize deprecated operation and parameter metadata in connector "
+            "info.json by enforcing canonical description/title conventions."
         )
     )
     parser.add_argument(

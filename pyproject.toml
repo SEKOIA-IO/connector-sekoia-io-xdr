@@ -18,12 +18,12 @@ package = false
 [dependency-groups]
 dev = [
     "django>=4.2,<5",
+    "libcst>=1.8.2",
     "pytest>=8.4.2",
 ]
 lint = [
     "black>=25.11.0",
     "isort>=6.1.0",
-    "libcst>=1.8.2",
     "mypy>=1.19.1",
     "ruff>=0.15.20",
 ]

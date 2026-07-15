@@ -2,6 +2,8 @@
 
 [![Lint](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/lint.yml/badge.svg)](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/lint.yml)
 [![Tests](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/tests.yml/badge.svg)](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/tests.yml)
+[![Normalize Info JSON](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_info_json.yml/badge.svg)](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_info_json.yml)
+[![Normalize Operations](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_operations.yml/badge.svg)](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_operations.yml)
 
 This connector enable you to make full use of the SEKOIA.IO XDR platform.
 
@@ -69,7 +71,6 @@ uv run black .
 uv run isort .
 uv run mypy .
 uv run ruff check . --fix
-uv run python scripts/sort_info_json.py
 ```
 
 Run lint checks in read-only mode (CI-equivalent):
@@ -79,7 +80,6 @@ uv run black --check .
 uv run isort --check-only .
 uv run mypy .
 uv run ruff check .
-uv run python scripts/sort_info_json.py --check
 ```
 
 Notes:
@@ -88,10 +88,14 @@ Notes:
 - `ruff` defaults to `F401` selection from `pyproject.toml`.
 - If needed, replace `.` with your own target paths.
 
-### Sort connector manifest
+### Scripts (uv)
+
+This repository includes utility scripts to normalize metadata and source files.
+
+#### Sort connector manifest
 
 ```bash
-uv run python scripts/sort_info_json.py
+uv run python -m scripts.sort_info_json
 ```
 
 This sorts `configuration.fields` and `operations` alphabetically in `sekoia-io-xdr/info.json`.
@@ -99,7 +103,61 @@ This sorts `configuration.fields` and `operations` alphabetically in `sekoia-io-
 For CI-style validation without writing changes:
 
 ```bash
-uv run python scripts/sort_info_json.py --check
+uv run python -m scripts.sort_info_json --check
+```
+
+#### Sort operation payload keys
+
+Sort operation `build_payload` dict keys in operation modules:
+
+```bash
+uv run python -m scripts.sort_operation_payload_keys
+```
+
+Check-only mode:
+
+```bash
+uv run python -m scripts.sort_operation_payload_keys --check
+```
+
+#### Deprecation actions
+
+##### Deprecate one operation
+
+```bash
+uv run python -m scripts.deprecate_operation <operation> --replacement <new_operation>
+```
+
+Without replacement:
+
+```bash
+uv run python -m scripts.deprecate_operation <operation>
+```
+
+##### Deprecate one operation parameter
+
+```bash
+uv run python -m scripts.deprecate_operation_parameter <operation> <parameter> --replacement <new_parameter>
+```
+
+Without replacement:
+
+```bash
+uv run python -m scripts.deprecate_operation_parameter <operation> <parameter>
+```
+
+##### Normalize deprecated metadata
+
+Normalize deprecated operation and parameter metadata in `sekoia-io-xdr/info.json`:
+
+```bash
+uv run python -m scripts.normalize_deprecated_parameters
+```
+
+Check-only mode:
+
+```bash
+uv run python -m scripts.normalize_deprecated_parameters --check
 ```
 
 ## Operation naming convention
@@ -124,14 +182,74 @@ Example:
 - The connector operation key is therefore `search_cases` in `sekoia-io-xdr/info.json`.
 - The Python module name can differ over time during refactors; the stable key exposed to FortiSOAR remains the action `slug`.
 
+## Deprecation conventions
+
+This repository uses explicit conventions for deprecated metadata in
+`sekoia-io-xdr/info.json`.
+
+### Deprecated operation
+
+- `description`: `Deprecated operation. Use <new_operation> operation instead.`
+- `description` (no replacement): `Deprecated operation. There is no replacement.`
+- `title`: `[Deprecated] <Title>`
+
+Script:
+
+```bash
+uv run python -m scripts.deprecate_operation <operation> --replacement <new_operation>
+```
+
+Without replacement:
+
+```bash
+uv run python -m scripts.deprecate_operation <operation>
+```
+
+### Deprecated operation parameter
+
+- `description`: `Deprecated parameter. Use <new_parameter> parameter instead.`
+- `description` (no replacement): `Deprecated alias. There is no replacement.`
+- `title`: `[Deprecated] <Title>`
+
+Script:
+
+```bash
+uv run python -m scripts.deprecate_operation_parameter <operation> <parameter> --replacement <new_parameter>
+```
+
+Without replacement:
+
+```bash
+uv run python -m scripts.deprecate_operation_parameter <operation> <parameter>
+```
+
+### Normalize deprecated metadata
+
+Use one command to normalize both deprecated operation and parameter metadata in
+`info.json`:
+
+```bash
+uv run python -m scripts.normalize_deprecated_parameters
+```
+
+Check-only mode:
+
+```bash
+uv run python -m scripts.normalize_deprecated_parameters --check
+```
+
 ## CI pipeline
 
-GitHub Actions currently uses two workflows:
+GitHub Actions currently uses four independent workflows:
 
-- `lint.yml`: runs lint checks in parallel (one check per matrix job) using direct `uv run` linter commands, and verifies `info.json` is already sorted.
+- `lint.yml`: runs code linting and static quality checks in parallel.
 - `tests.yml`: runs the unit test suite on multiple Python versions (`3.9` to `3.14`).
+- `normalize_info_json.yml`: runs read-only validation on `sekoia-io-xdr/info.json` metadata rules.
+- `normalize_operations.yml`: runs read-only normalization checks on operation source files.
 
-Any failure in either job marks the workflow as failed.
+The `normalize_info_json` and `normalize_operations` stages are intentionally separated from linting, so repository normalization checks can evolve independently as new rules are added.
+
+Any failure in one workflow marks the CI pipeline as failed.
 
 ### Current test limitations
 

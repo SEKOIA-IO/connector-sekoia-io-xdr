@@ -1,0 +1,94 @@
+from scripts.deprecate_operation import deprecate_operation, deprecate_operation_in_file
+
+
+def test_deprecate_operation_with_replacement():
+    data = {
+        "operations": [
+            {
+                "operation": "delete_asset",
+                "title": "Delete Asset",
+                "description": "Delete an asset",
+                "parameters": [],
+            }
+        ]
+    }
+
+    changed = deprecate_operation(
+        data,
+        operation_name="delete_asset",
+        replacement="revoke_assetv2",
+    )
+
+    assert changed is True
+    operation = data["operations"][0]
+    assert (
+        operation["description"]
+        == "Deprecated operation. Use revoke_assetv2 operation instead."
+    )
+    assert operation["title"] == "[Deprecated] Delete Asset"
+
+
+def test_deprecate_operation_without_replacement():
+    data = {
+        "operations": [
+            {
+                "operation": "legacy_operation",
+                "title": "Legacy Operation",
+                "description": "deprecated old operation",
+                "parameters": [],
+            }
+        ]
+    }
+
+    changed = deprecate_operation(
+        data,
+        operation_name="legacy_operation",
+        replacement=None,
+    )
+
+    assert changed is True
+    operation = data["operations"][0]
+    assert operation["description"] == "Deprecated operation. There is no replacement."
+    assert operation["title"] == "[Deprecated] Legacy Operation"
+
+
+def test_deprecate_operation_in_file_check_then_write_then_check(tmp_path):
+    file_path = tmp_path / "info.json"
+    file_path.write_text(
+        """
+{
+    "operations": [
+        {
+            "operation": "delete_asset",
+            "title": "Delete Asset",
+            "description": "Delete an asset",
+            "parameters": []
+        }
+    ]
+}
+""".strip() + "\n",
+        encoding="utf-8",
+    )
+
+    check_before = deprecate_operation_in_file(
+        file_path,
+        operation_name="delete_asset",
+        replacement="revoke_assetv2",
+        check_only=True,
+    )
+    write_exit = deprecate_operation_in_file(
+        file_path,
+        operation_name="delete_asset",
+        replacement="revoke_assetv2",
+        check_only=False,
+    )
+    check_after = deprecate_operation_in_file(
+        file_path,
+        operation_name="delete_asset",
+        replacement="revoke_assetv2",
+        check_only=True,
+    )
+
+    assert check_before == 1
+    assert write_exit == 0
+    assert check_after == 0
