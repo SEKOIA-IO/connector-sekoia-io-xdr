@@ -8,6 +8,7 @@ from .operations.alerts.update_alert_status import update_alert_status
 from .operations.assets.delete_asset import delete_asset
 from .operations.assets.get_asset import get_asset
 from .operations.assets.update_asset import update_asset
+from .operations.assets.update_assets import update_assets
 from .operations.cases.edit_case import edit_case
 from .operations.cases.get_case import get_case
 from .operations.cases.list_assets import list_assets
@@ -38,6 +39,7 @@ class Sekoiaio(Connector):
             "search_cases": search_cases,
             "update_alert_status": update_alert_status,
             "update_asset": update_asset,
+            "update_assets": update_assets,
         }
         return supported_operations[operation](config, params)
 

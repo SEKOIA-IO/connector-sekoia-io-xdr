@@ -1198,7 +1198,7 @@
     {
       "annotation": "update_asset",
       "category": "investigation",
-      "description": "Updates a specific asset in SEKOIA.IO XDR based on the asset uuid, asset type uuid, asset type name, and other input parameters that you have specified.",
+      "description": "Deprecated operation. Use update_assets operation instead.",
       "enabled": true,
       "operation": "update_asset",
       "output_schema": {},
@@ -1218,7 +1218,7 @@
           "name": "asset_criticity",
           "required": true,
           "title": "Asset Criticity",
-          "type": "text",
+          "type": "integer",
           "visible": true
         },
         {
@@ -1285,7 +1285,126 @@
           "visible": true
         }
       ],
-      "title": "Update Asset"
+      "title": "[Deprecated] Update Asset"
+    },
+    {
+      "annotation": "update_assets",
+      "category": "investigation",
+      "description": "Edit the given asset attributes in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "update_assets",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Attach detection properties as a JSON object.",
+          "editable": true,
+          "name": "atoms",
+          "required": false,
+          "title": "Atoms",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Category of the asset.",
+          "editable": true,
+          "name": "category",
+          "required": false,
+          "title": "Category",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Criticality of the asset (0-100).",
+          "editable": true,
+          "name": "criticality",
+          "required": false,
+          "title": "Criticality",
+          "type": "integer",
+          "visible": true
+        },
+        {
+          "description": "Description of the asset.",
+          "editable": true,
+          "name": "description",
+          "required": false,
+          "title": "Description",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Entity UUID linked to the asset.",
+          "editable": true,
+          "name": "entity_uuid",
+          "required": false,
+          "title": "Entity UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Name of the asset.",
+          "editable": true,
+          "name": "name",
+          "required": false,
+          "title": "Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Attach contextual properties as a JSON object.",
+          "editable": true,
+          "name": "props",
+          "required": false,
+          "title": "Props",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Mark the asset as reviewed.",
+          "editable": true,
+          "name": "reviewed",
+          "required": false,
+          "title": "Reviewed",
+          "type": "checkbox",
+          "visible": true
+        },
+        {
+          "description": "Mark the asset as revoked.",
+          "editable": true,
+          "name": "revoked",
+          "required": false,
+          "title": "Revoked",
+          "type": "checkbox",
+          "visible": true
+        },
+        {
+          "description": "Tags to associate to the asset (comma-separated or JSON array).",
+          "editable": true,
+          "name": "tags",
+          "required": false,
+          "title": "Tags",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Type of the asset (host, account, network).",
+          "editable": true,
+          "name": "type",
+          "required": false,
+          "title": "Type",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "UUID of the asset.",
+          "editable": true,
+          "name": "uuid",
+          "required": true,
+          "title": "UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Update Assets"
     }
   ],
   "publisher": "SEKOIA.IO",

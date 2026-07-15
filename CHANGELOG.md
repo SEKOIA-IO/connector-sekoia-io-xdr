@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `list_assets` operation
     - `revoke_assetv2` operation
     - `search_cases` operation
+    - `update_assets` operation
 - Add runtime, development, and lint dependency groups in `pyproject.toml` for reproducible local and CI environments
 - Add GitHub Actions:
     - `lint` stage to run `black`, `isort`, `mypy` and `ruff`
@@ -24,6 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Deprecate existing operations, based on Sekoia API 3.1 documentation and automation-library playbook action JSON files:
+    - `update_asset` operation in favor of `update_assets` operation
 - Update existing operations, based on Sekoia API 3.1 documentation and automation-library playbook action JSON files:
     - `get_alert` operation:
         - add `include_cases` parameter
