@@ -1,6 +1,6 @@
 from typing import Optional
 
-from ...constants import ALERTS_BASE_URL
+from ...constants import ALERTS_V1_BASE_URL
 from ...utils import GenericAPIAction
 from ..base import InputModel, Operation
 
@@ -17,7 +17,7 @@ class AddCommentToAlertOperation(Operation):
     input_model = AddCommentToAlertParams
 
     def build_endpoint(self, parsed_input: AddCommentToAlertParams) -> str:
-        return f"{ALERTS_BASE_URL}/{parsed_input.alert_uuid}/comments"
+        return f"{ALERTS_V1_BASE_URL}/{parsed_input.alert_uuid}/comments"
 
     def build_payload(self, parsed_input: AddCommentToAlertParams) -> dict:
         params = parsed_input.model_dump()

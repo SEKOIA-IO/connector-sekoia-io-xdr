@@ -3,7 +3,7 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel, field_validator
 
-from ...constants import CASES_BASE_URL
+from ...constants import CASES_V1_BASE_URL
 from ...utils import GenericAPIAction
 from ..base import InputModel, Operation
 
@@ -65,7 +65,7 @@ class EditCaseOperation(Operation):
     input_model = EditCaseParams
 
     def build_endpoint(self, parsed_input: EditCaseParams) -> str:
-        return f"{CASES_BASE_URL}/{parsed_input.uuid}"
+        return f"{CASES_V1_BASE_URL}/{parsed_input.uuid}"
 
     def build_payload(self, parsed_input: EditCaseParams) -> dict:
         params = parsed_input.model_dump()

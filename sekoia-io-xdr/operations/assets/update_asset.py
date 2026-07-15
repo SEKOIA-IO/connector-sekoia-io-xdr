@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import field_validator
 
-from ...constants import ASSETS_BASE_URL
+from ...constants import ASSETS_V1_BASE_URL
 from ...utils import GenericAPIAction
 from ..base import InputModel, Operation
 
@@ -36,7 +36,7 @@ class UpdateAssetOperation(Operation):
     input_model = UpdateAssetParams
 
     def build_endpoint(self, parsed_input: UpdateAssetParams) -> str:
-        return f"{ASSETS_BASE_URL}/{parsed_input.asset_uuid}"
+        return f"{ASSETS_V1_BASE_URL}/{parsed_input.asset_uuid}"
 
     def build_payload(self, parsed_input: UpdateAssetParams) -> dict:
         params = parsed_input.model_dump()

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from ...constants import ALERTS_BASE_URL
+from ...constants import ALERTS_V1_BASE_URL
 from ...utils import GenericAPIAction
 from ..base import InputModel, Operation
 
@@ -17,7 +17,7 @@ class ActivateCountermeasureOperation(Operation):
     input_model = ActivateCountermeasureParams
 
     def build_endpoint(self, parsed_input: ActivateCountermeasureParams) -> str:
-        return f"{ALERTS_BASE_URL}/countermeasures/{parsed_input.countermeasure_uuid}/activate"
+        return f"{ALERTS_V1_BASE_URL}/countermeasures/{parsed_input.countermeasure_uuid}/activate"
 
     def build_payload(self, parsed_input: ActivateCountermeasureParams) -> dict:
         params = parsed_input.model_dump()

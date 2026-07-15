@@ -1,4 +1,4 @@
-from ...constants import ALERTS_BASE_URL
+from ...constants import ALERTS_V1_BASE_URL
 from ...utils import GenericAPIAction
 from ..base import InputModel, Operation
 
@@ -19,7 +19,7 @@ class GetAlertOperation(Operation):
     input_model = GetAlertParams
 
     def build_endpoint(self, parsed_input: GetAlertParams) -> str:
-        return f"{ALERTS_BASE_URL}/{parsed_input.alert_uuid}"
+        return f"{ALERTS_V1_BASE_URL}/{parsed_input.alert_uuid}"
 
     def build_payload(self, parsed_input: GetAlertParams) -> dict:
         params = parsed_input.model_dump()

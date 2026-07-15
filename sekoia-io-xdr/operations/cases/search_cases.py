@@ -1,4 +1,4 @@
-from ...constants import CASES_BASE_URL
+from ...constants import CASES_V1_BASE_URL
 from ...utils import GenericAPIAction
 from ..base import InputModel, Operation
 
@@ -13,7 +13,7 @@ class SearchCasesOperation(Operation):
     input_model = SearchCasesParams
 
     def build_endpoint(self, parsed_input: SearchCasesParams) -> str:
-        return CASES_BASE_URL
+        return CASES_V1_BASE_URL
 
     def build_payload(self, parsed_input: SearchCasesParams) -> dict:
         params = parsed_input.model_dump()

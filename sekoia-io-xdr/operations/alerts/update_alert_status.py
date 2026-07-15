@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import AliasChoices, Field
 
-from ...constants import ALERTS_BASE_URL
+from ...constants import ALERTS_V1_BASE_URL
 from ...utils import GenericAPIAction
 from ..base import DeprecatedAliases, InputModel, Operation
 
@@ -20,7 +20,7 @@ class UpdateAlertStatusOperation(Operation):
     deprecated_aliases = DeprecatedAliases(single={"uuid": "alert_uuid"})
 
     def build_endpoint(self, parsed_input: UpdateAlertStatusParams) -> str:
-        return f"{ALERTS_BASE_URL}/{parsed_input.uuid}/workflow"
+        return f"{ALERTS_V1_BASE_URL}/{parsed_input.uuid}/workflow"
 
     def build_payload(self, parsed_input: UpdateAlertStatusParams) -> dict:
         params = parsed_input.model_dump()

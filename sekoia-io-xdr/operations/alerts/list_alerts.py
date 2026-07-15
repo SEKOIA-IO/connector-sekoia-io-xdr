@@ -1,4 +1,4 @@
-from ...constants import ALERTS_BASE_URL
+from ...constants import ALERTS_V1_BASE_URL
 from ...utils import GenericAPIAction
 from ..base import DeprecatedAliases, InputModel, Operation
 
@@ -28,7 +28,7 @@ class ListAlertsOperation(Operation):
     )
 
     def build_endpoint(self, parsed_input: ListAlertsParams) -> str:
-        return ALERTS_BASE_URL
+        return ALERTS_V1_BASE_URL
 
     def build_payload(self, parsed_input: ListAlertsParams) -> dict:
         params = parsed_input.model_dump()

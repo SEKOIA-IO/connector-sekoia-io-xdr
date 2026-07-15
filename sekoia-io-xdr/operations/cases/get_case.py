@@ -1,6 +1,6 @@
 from typing import Optional
 
-from ...constants import CASES_BASE_URL
+from ...constants import CASES_V1_BASE_URL
 from ...utils import GenericAPIAction
 from ..base import InputModel, Operation
 
@@ -17,7 +17,7 @@ class GetCaseOperation(Operation):
     input_model = GetCaseParams
 
     def build_endpoint(self, parsed_input: GetCaseParams) -> str:
-        return f"{CASES_BASE_URL}/{parsed_input.uuid}"
+        return f"{CASES_V1_BASE_URL}/{parsed_input.uuid}"
 
     def build_payload(self, parsed_input: GetCaseParams) -> dict:
         params = parsed_input.model_dump()
