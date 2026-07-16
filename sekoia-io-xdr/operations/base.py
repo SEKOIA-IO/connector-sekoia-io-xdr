@@ -37,12 +37,12 @@ class Operation(ABC):
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
-        aliases = getattr(cls, "deprecated_aliases", DeprecatedAliases())
-        cls.deprecated_aliases = DeprecatedAliases(
-            single=dict(getattr(aliases, "single", {})),
-            range=dict(getattr(aliases, "range", {})),
+        # Copy alias mappings per subclass to avoid mutable shared state.
+        cls.deprecated_aliases = cls._normalize_deprecated_aliases(
+            getattr(cls, "deprecated_aliases", DeprecatedAliases())
         )
 
+        # Build warning map once: deprecated_name -> canonical_name.
         auto_mapped = cls._build_deprecated_parameters()
         explicit = getattr(cls, "deprecated_parameters", {}) or {}
         cls.deprecated_parameters = {**auto_mapped, **explicit}
@@ -50,19 +50,32 @@ class Operation(ABC):
     def __init__(self, api_action_cls: Type[GenericAPIAction] = GenericAPIAction):
         self.api_action_cls = api_action_cls
 
+    @staticmethod
+    def _normalize_deprecated_aliases(aliases: DeprecatedAliases) -> DeprecatedAliases:
+        """Clone alias mappings to avoid sharing mutable defaults across subclasses."""
+        return DeprecatedAliases(
+            single=dict(getattr(aliases, "single", {})),
+            range=dict(getattr(aliases, "range", {})),
+        )
+
     @classmethod
     def _build_deprecated_parameters(cls) -> dict[str, str]:
-        mapping: dict[str, str] = {}
-
-        for field_name, deprecated in cls.deprecated_aliases.single.items():
-            mapping[deprecated] = field_name
-
-        for field_name, pair in cls.deprecated_aliases.range.items():
-            start_name, end_name = pair
-            mapping[start_name] = field_name
-            mapping[end_name] = field_name
-
-        return mapping
+        """Build deprecated->canonical mapping used for warning logs."""
+        # Example: single={"uuid": "asset_uuid"} -> {"asset_uuid": "uuid"}
+        single_mapping = {
+            deprecated: field_name
+            for field_name, deprecated in cls.deprecated_aliases.single.items()
+        }
+        # Example: range={"date[created_at]": ("creation_start_date", "creation_end_date")}
+        range_mapping = {
+            alias: field_name
+            for field_name, (
+                start_name,
+                end_name,
+            ) in cls.deprecated_aliases.range.items()
+            for alias in (start_name, end_name)
+        }
+        return {**single_mapping, **range_mapping}
 
     @staticmethod
     def _has_value(value: Any) -> bool:
@@ -74,11 +87,12 @@ class Operation(ABC):
             return None
         return value
 
-    def _resolve_deprecated_range_value(
+    def _resolve_range_alias(
         self,
         params: dict[str, Any],
         field_name: str,
     ) -> Any:
+        # If canonical date-range is missing, rebuild it from legacy start/end fields.
         pair = self.deprecated_aliases.range.get(field_name)
         if not pair:
             return None
@@ -91,12 +105,14 @@ class Operation(ABC):
 
         return None
 
-    def _resolve_deprecated_single_value(
+    def _resolve_single_alias(
         self,
         params: dict[str, Any],
         field_name: str,
         treat_falsy_as_missing: bool,
     ) -> Any:
+        # Resolve old parameter name for a canonical field.
+        # Example: field_name='uuid' with alias 'asset_uuid'.
         deprecated = self.deprecated_aliases.single.get(field_name)
         if not deprecated:
             return None
@@ -118,6 +134,8 @@ class Operation(ABC):
         *,
         treat_falsy_as_missing: bool = False,
     ) -> Any:
+        """Resolve canonical field value, then fallback to deprecated aliases."""
+        # 1) Prefer canonical input when present.
         current = self._coerce_missing(
             params.get(field_name),
             treat_falsy_as_missing,
@@ -126,11 +144,13 @@ class Operation(ABC):
         if self._has_value(current):
             return current
 
-        range_value = self._resolve_deprecated_range_value(params, field_name)
+        # 2) Then try legacy range aliases (start/end -> "start,end").
+        range_value = self._resolve_range_alias(params, field_name)
         if self._has_value(range_value):
             return range_value
 
-        single_value = self._resolve_deprecated_single_value(
+        # 3) Finally try legacy single alias.
+        single_value = self._resolve_single_alias(
             params,
             field_name,
             treat_falsy_as_missing,
@@ -138,6 +158,7 @@ class Operation(ABC):
         if self._has_value(single_value):
             return single_value
 
+        # 4) Fallback default used by operation payload builders.
         return default
 
     def payload_value(
@@ -149,6 +170,7 @@ class Operation(ABC):
         treat_falsy_as_missing: bool = False,
     ) -> Any:
         """Small readability wrapper for payload builders in operations."""
+        # Alias-aware helper used by most build_payload implementations.
         return self.resolve_payload_value(
             params,
             field_name,
@@ -156,7 +178,9 @@ class Operation(ABC):
             treat_falsy_as_missing=treat_falsy_as_missing,
         )
 
-    def _warn_deprecated_parameters(self, raw_input: dict[str, Any]) -> None:
+    def _warn_on_deprecated_inputs(self, raw_input: dict[str, Any]) -> None:
+        """Emit warning logs when deprecated parameter names are used."""
+        # Warning only: legacy inputs are still accepted when aliases are configured.
         for deprecated, field_name in self.deprecated_parameters.items():
             if deprecated in raw_input:
                 logger.warning(
@@ -166,17 +190,20 @@ class Operation(ABC):
                 )
 
     def parse_input(self, raw_input: dict[str, Any]) -> InputModel:
-        self._warn_deprecated_parameters(raw_input)
+        # Validate user input against the operation-specific pydantic model.
+        self._warn_on_deprecated_inputs(raw_input)
         try:
             return self.input_model.model_validate(raw_input)
         except ValidationError as e:
             raise ConnectorError(f"Error: Invalid parameters: {e}") from e
 
     def execute(self, config: dict[str, Any], raw_input: dict[str, Any]) -> Any:
+        # Public execution entrypoint used by operation functions.
         parsed_input = self.parse_input(raw_input)
         return self.perform(config, parsed_input)
 
     def perform(self, config: dict[str, Any], parsed_input: InputModel) -> Any:
+        # Build endpoint + payload, then forward request to the shared API action.
         endpoint = self.build_endpoint(parsed_input)
         payload = self.build_payload(parsed_input)
 
