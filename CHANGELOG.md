@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `get_custom_status` operation
     - `get_custom_verdict` operation
     - `list_assets` operation
+    - `list_case_comments` operation
     - `revoke_assetv2` operation
     - `search_cases` operation
     - `update_assets` operation

@@ -1268,6 +1268,82 @@
       "title": "List Assets"
     },
     {
+      "annotation": "list_case_comments",
+      "category": "investigation",
+      "description": "List all comments of a case in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "list_case_comments",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "UUID of the case.",
+          "editable": true,
+          "name": "case_uuid",
+          "required": true,
+          "title": "Case UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter comments by creation date range in RFC3339 format: start,end.",
+          "editable": true,
+          "name": "date[created_at]",
+          "required": false,
+          "title": "Created At Range",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Direction of the sort (asc, desc).",
+          "editable": true,
+          "name": "direction",
+          "required": false,
+          "title": "Direction",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Maximum number of comments to return (1-100).",
+          "editable": true,
+          "name": "limit",
+          "required": false,
+          "title": "Limit",
+          "type": "integer",
+          "value": 20,
+          "visible": true
+        },
+        {
+          "description": "Match comments by their creator identifier.",
+          "editable": true,
+          "name": "match[created_by]",
+          "required": false,
+          "title": "Match Created By",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Number of comments to skip.",
+          "editable": true,
+          "name": "offset",
+          "required": false,
+          "title": "Offset",
+          "type": "integer",
+          "value": 0,
+          "visible": true
+        },
+        {
+          "description": "Sort returned comments (created_at, created_by, updated_at).",
+          "editable": true,
+          "name": "sort",
+          "required": false,
+          "title": "Sort",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "List Case Comments"
+    },
+    {
       "annotation": "revoke_assetv2",
       "category": "investigation",
       "description": "Revoke an asset in SEKOIA.IO XDR based on the asset UUID you have specified.",
