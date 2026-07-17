@@ -202,56 +202,25 @@ Parameter compatibility policy:
 This repository uses explicit conventions for deprecated metadata in
 `sekoia-io-xdr/info.json`.
 
-### Deprecated operation
+#### Deprecated operation
 
 - `description`: `Deprecated operation. Use <new_operation> operation instead.`
 - `description` (no replacement): `Deprecated operation. There is no replacement.`
 - `title`: `[Deprecated] <Title>`
 
-Script:
+Use the script `scripts.deprecate_operation` (see `Scripts (uv)` > `Deprecation actions`).
 
-```bash
-uv run python -m scripts.deprecate_operation <operation> --replacement <new_operation>
-```
-
-Without replacement:
-
-```bash
-uv run python -m scripts.deprecate_operation <operation>
-```
-
-### Deprecated operation parameter
+#### Deprecated operation parameter
 
 - `description`: `Deprecated parameter. Use <new_parameter> parameter instead.`
 - `description` (no replacement): `Deprecated alias. There is no replacement.`
 - `title`: `[Deprecated] <Title>`
 
-Script:
+Use the script `scripts.deprecate_operation_parameter` (see `Scripts (uv)` > `Deprecation actions`).
 
-```bash
-uv run python -m scripts.deprecate_operation_parameter <operation> <parameter> --replacement <new_parameter>
-```
+#### Normalize deprecated metadata
 
-Without replacement:
-
-```bash
-uv run python -m scripts.deprecate_operation_parameter <operation> <parameter>
-```
-
-### Normalize deprecated metadata
-
-Use one command to normalize both deprecated operation and parameter metadata in
-`info.json`:
-
-```bash
-uv run python -m scripts.normalize_deprecated_parameters
-```
-
-Check-only mode:
-
-```bash
-uv run python -m scripts.normalize_deprecated_parameters --check
-```
+Use the script `scripts.normalize_deprecated_parameters` (see `Scripts (uv)` > `Deprecation actions`).
 
 ## CI pipeline
 
