@@ -234,6 +234,143 @@
       "title": "Deny a Countermeasure"
     },
     {
+      "annotation": "edit_alert",
+      "category": "investigation",
+      "description": "Edit the details of an alert in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "edit_alert",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Category of the alert type.",
+          "editable": true,
+          "name": "alert_type_category",
+          "required": false,
+          "title": "Alert Type Category",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Name of the alert type.",
+          "editable": true,
+          "name": "alert_type_value",
+          "required": false,
+          "title": "Alert Type Value",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "User UUID assigned to the alert.",
+          "editable": true,
+          "name": "assignee",
+          "required": false,
+          "title": "Assignee UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "A comment to describe why the alert was updated.",
+          "editable": true,
+          "name": "comment",
+          "required": false,
+          "title": "Comment",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Custom status of the alert.",
+          "editable": true,
+          "name": "custom_status_uuid",
+          "required": false,
+          "title": "Custom Status UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Description of the alert.",
+          "editable": true,
+          "name": "details",
+          "required": false,
+          "title": "Details",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The ID of the kill chain step this alert denotes.",
+          "editable": true,
+          "name": "kill_chain_short_id",
+          "required": false,
+          "title": "Kill Chain Short ID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "UUID of the new alert status.",
+          "editable": true,
+          "name": "status_uuid",
+          "required": false,
+          "title": "Status UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Title of the alert.",
+          "editable": true,
+          "name": "title",
+          "required": false,
+          "title": "Title",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The urgency of the alert.",
+          "editable": true,
+          "name": "urgency",
+          "required": false,
+          "title": "Urgency",
+          "type": "integer",
+          "visible": true
+        },
+        {
+          "description": "UUID of the alert.",
+          "editable": true,
+          "name": "uuid",
+          "required": true,
+          "title": "Alert UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Description of the alert verdict.",
+          "editable": true,
+          "name": "verdict_analysis",
+          "required": false,
+          "title": "Verdict Analysis",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Confidence level of the alert verdict (0-100).",
+          "editable": true,
+          "name": "verdict_confidence",
+          "required": false,
+          "title": "Verdict Confidence",
+          "type": "integer",
+          "visible": true
+        },
+        {
+          "description": "Verdict of the alert.",
+          "editable": true,
+          "name": "verdict_uuid",
+          "required": false,
+          "title": "Verdict UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Edit Alert"
+    },
+    {
       "annotation": "edit_case",
       "category": "investigation",
       "description": "Edit the properties of a case in SEKOIA.IO XDR.",

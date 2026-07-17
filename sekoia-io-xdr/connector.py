@@ -2,6 +2,7 @@ from connectors.core.connector import Connector, get_logger
 
 from .health_check import check
 from .operations.alerts.add_comment_to_alert import add_comment_to_alert
+from .operations.alerts.edit_alert import edit_alert
 from .operations.alerts.get_alert import get_alert
 from .operations.alerts.list_alerts import list_alerts
 from .operations.alerts.update_alert_status import update_alert_status
@@ -31,6 +32,7 @@ class Sekoiaio(Connector):
             "add_comment_to_alert": add_comment_to_alert,
             "delete_asset": delete_asset,
             "deny_countermeasure": deny_countermeasure,
+            "edit_alert": edit_alert,
             "edit_case": edit_case,
             "get_alert": get_alert,
             "get_asset": get_asset,
