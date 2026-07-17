@@ -564,6 +564,26 @@
       "title": "Get custom status"
     },
     {
+      "annotation": "get_custom_verdict",
+      "category": "investigation",
+      "description": "Get a single custom verdict based on its UUID.",
+      "enabled": true,
+      "operation": "get_custom_verdict",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "UUID of the custom verdict.",
+          "editable": true,
+          "name": "verdict_uuid",
+          "required": true,
+          "title": "Verdict UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Get custom verdict"
+    },
+    {
       "annotation": "get_events",
       "category": "investigation",
       "description": "Search events according the query from SEKOIA.IO XDR based on the query, earliest time, and latest time you have specified.",

@@ -18,6 +18,7 @@ from .operations.countermeasures.activate_countermeasure import activate_counter
 from .operations.countermeasures.deny_countermeasure import deny_countermeasure
 from .operations.custom_fields.get_custom_priority import get_custom_priority
 from .operations.custom_fields.get_custom_status import get_custom_status
+from .operations.custom_fields.get_custom_verdict import get_custom_verdict
 from .operations.events.get_events import get_events
 
 logger = get_logger("sekoia-io-xdr")
@@ -36,6 +37,7 @@ class Sekoiaio(Connector):
             "get_case": get_case,
             "get_custom_priority": get_custom_priority,
             "get_custom_status": get_custom_status,
+            "get_custom_verdict": get_custom_verdict,
             "get_events": get_events,
             "list_alerts": list_alerts,
             "list_assets": list_assets,

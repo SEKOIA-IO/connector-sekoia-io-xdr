@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `get_case` operation
     - `get_custom_priority` operation
     - `get_custom_status` operation
+    - `get_custom_verdict` operation
     - `list_assets` operation
     - `revoke_assetv2` operation
     - `search_cases` operation
