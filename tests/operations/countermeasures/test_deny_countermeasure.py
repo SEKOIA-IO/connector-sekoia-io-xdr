@@ -1,3 +1,4 @@
+import json
 from unittest.mock import patch
 
 from django.conf import settings
@@ -46,3 +47,54 @@ def test_deny_countermeasure(connector_config):
         assert result["uuid"] == "dc2e68d2-5978-4bd8-8840-89c7453f16f5"
         assert result["activated_at"] is None
         assert result["denied_at"] is not None
+
+
+def test_deny_countermeasure_with_canonical_comment_json(connector_config):
+    settings.configure()
+    from connector_sekoia_io_xdr.operations.countermeasures.deny_countermeasure import (
+        deny_countermeasure,
+    )
+
+    with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+        query.return_value = {
+            "uuid": "dc2e68d2-5978-4bd8-8840-89c7453f16f5",
+            "denied_at": "2026-07-17T00:00:00Z",
+        }
+
+        result = deny_countermeasure(
+            config=connector_config,
+            params={
+                "cm_uuid": "dc2e68d2-5978-4bd8-8840-89c7453f16f5",
+                "comment": json.dumps({"content": "Reject", "author": "ydi"}),
+            },
+        )
+
+        assert result is not None
+        assert result["uuid"] == "dc2e68d2-5978-4bd8-8840-89c7453f16f5"
+        assert result["denied_at"] == "2026-07-17T00:00:00Z"
+
+
+def test_deny_countermeasure_with_deprecated_parameters(connector_config):
+    settings.configure()
+    from connector_sekoia_io_xdr.operations.countermeasures.deny_countermeasure import (
+        deny_countermeasure,
+    )
+
+    with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+        query.return_value = {
+            "uuid": "dc2e68d2-5978-4bd8-8840-89c7453f16f5",
+            "denied_at": "2026-07-17T00:00:00Z",
+        }
+
+        result = deny_countermeasure(
+            config=connector_config,
+            params={
+                "countermeasure_uuid": "dc2e68d2-5978-4bd8-8840-89c7453f16f5",
+                "content": "Reject",
+                "author": "ydi",
+            },
+        )
+
+        assert result is not None
+        assert result["uuid"] == "dc2e68d2-5978-4bd8-8840-89c7453f16f5"
+        assert result["denied_at"] == "2026-07-17T00:00:00Z"

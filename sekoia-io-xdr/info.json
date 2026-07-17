@@ -180,35 +180,53 @@
     {
       "annotation": "deny_countermeasure",
       "category": "investigation",
-      "description": "Deny a countermeasure in SEKOIA.IO XDR based on the countermeasure uuid, comment and other input parameters that you have specified.",
+      "description": "Deny a countermeasure in SEKOIA.IO XDR based on the countermeasure UUID and comment you have specified.",
       "enabled": true,
       "operation": "deny_countermeasure",
       "output_schema": {},
       "parameters": [
         {
-          "description": "The author of the comment to associate to the countermeasure",
+          "description": "Deprecated parameter. Use comment parameter instead.",
           "editable": true,
           "name": "author",
           "required": false,
-          "title": "Author",
+          "title": "[Deprecated] Author",
           "type": "text",
           "visible": true
         },
         {
-          "description": "The content of the comment to associate to the countermeasure",
+          "description": "The unique identifier of the countermeasure.",
           "editable": true,
-          "name": "content",
+          "name": "cm_uuid",
           "required": true,
+          "title": "Countermeasure UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Comment object as a JSON string with content and optional author.",
+          "editable": true,
+          "name": "comment",
+          "required": false,
           "title": "Comment",
           "type": "text",
           "visible": true
         },
         {
-          "description": "The unique identifier of the countermeasure",
+          "description": "Deprecated parameter. Use comment parameter instead.",
+          "editable": true,
+          "name": "content",
+          "required": false,
+          "title": "[Deprecated] Content",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use cm_uuid parameter instead.",
           "editable": true,
           "name": "countermeasure_uuid",
           "required": true,
-          "title": "Countermeasure UUID",
+          "title": "[Deprecated] Countermeasure UUID",
           "type": "text",
           "visible": true
         }

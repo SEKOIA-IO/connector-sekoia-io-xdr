@@ -40,6 +40,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         - add `uuid` parameter
         - deprecate `alert_uuid` parameter in favor of `uuid`
         - deprecate `comment` parameter in favor of `content`
+    - `deny_countermeasure` operation:
+        - add `cm_uuid` parameter
+        - add `comment` parameter
+        - deprecate `author` parameter in favor of `comment`
+        - deprecate `content` parameter in favor of `comment`
+        - deprecate `countermeasure_uuid` parameter in favor of `cm_uuid`
     - `get_alert` operation:
         - add `include_cases` parameter
         - add `include_custom_status` parameter
