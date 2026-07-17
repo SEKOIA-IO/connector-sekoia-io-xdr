@@ -19,7 +19,7 @@ def test_deprecate_operation_parameter_with_replacement():
                         "name": "match[status_uuid]",
                         "title": "Match Status UUID",
                         "description": "canonical",
-                    }
+                    },
                 ],
             }
         ]

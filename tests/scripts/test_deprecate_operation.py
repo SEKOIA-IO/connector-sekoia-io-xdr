@@ -15,7 +15,7 @@ def test_deprecate_operation_with_replacement():
                 "title": "Revoke Asset",
                 "description": "Revoke an asset",
                 "parameters": [],
-            }
+            },
         ]
     }
 

@@ -8,9 +8,9 @@ import json
 import re
 from pathlib import Path
 
-from scripts.utils.cli_utils import configure_script_logger
 from scripts.deprecate_operation import deprecate_operation
 from scripts.deprecate_operation_parameter import deprecate_operation_parameter
+from scripts.utils.cli_utils import configure_script_logger
 from scripts.utils.deprecation_utils import strip_deprecated_title_prefix
 
 DEFAULT_PATH = "sekoia-io-xdr/info.json"
@@ -33,7 +33,9 @@ def extract_replacement_alias(description: str) -> str | None:
     return alias or None
 
 
-def resolve_replacement_parameter_name(operation: dict, replacement: str | None) -> str | None:
+def resolve_replacement_parameter_name(
+    operation: dict, replacement: str | None
+) -> str | None:
     if not replacement:
         return None
 
@@ -58,9 +60,7 @@ def resolve_replacement_parameter_name(operation: dict, replacement: str | None)
 
     for parameter in parameters:
         parameter_name = str(parameter.get("name", "")).strip()
-        parameter_title = strip_deprecated_title_prefix(
-            str(parameter.get("title", ""))
-        )
+        parameter_title = strip_deprecated_title_prefix(str(parameter.get("title", "")))
         if parameter_name and parameter_title.casefold() == replacement_folded:
             return parameter_name
 

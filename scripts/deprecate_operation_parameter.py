@@ -95,7 +95,9 @@ def deprecate_operation_parameter(
 
     changed = False
 
-    expected_description = build_deprecated_parameter_description(normalized_replacement)
+    expected_description = build_deprecated_parameter_description(
+        normalized_replacement
+    )
     if parameter.get("description") != expected_description:
         parameter["description"] = expected_description
         changed = True
