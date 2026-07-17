@@ -5,26 +5,17 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 from pathlib import Path
 
-from scripts.cli_utils import configure_script_logger
+from scripts.utils.cli_utils import configure_script_logger
+from scripts.utils.deprecation_utils import (
+    find_operation,
+    find_parameter,
+    normalize_deprecated_title,
+)
 
 DEFAULT_PATH = "sekoia-io-xdr/info.json"
 logger = configure_script_logger(Path(__file__).name)
-
-
-def normalize_deprecated_title(title: str, fallback_name: str) -> str:
-    cleaned = title.strip()
-
-    cleaned = re.sub(r"^\[\s*deprecated\s*\]\s*", "", cleaned, flags=re.IGNORECASE)
-    cleaned = re.sub(r"^\(\s*deprecated\s*\)\s*", "", cleaned, flags=re.IGNORECASE)
-    cleaned = re.sub(r"^deprecated\s*[:\-]?\s*", "", cleaned, flags=re.IGNORECASE)
-
-    if not cleaned:
-        cleaned = fallback_name
-
-    return f"[Deprecated] {cleaned}"
 
 
 def build_deprecated_parameter_description(replacement: str | None) -> str:
@@ -33,18 +24,51 @@ def build_deprecated_parameter_description(replacement: str | None) -> str:
     return "Deprecated alias. There is no replacement."
 
 
-def _find_operation(data: dict, operation_name: str) -> dict | None:
-    for operation in data.get("operations", []):
-        if operation.get("operation") == operation_name:
-            return operation
-    return None
+def _parse_replacement_reference(replacement: str) -> tuple[str | None, str]:
+    cleaned = replacement.strip()
+    if not cleaned:
+        raise ValueError("Replacement parameter cannot be empty")
+
+    if "." not in cleaned:
+        return None, cleaned
+
+    replacement_operation, replacement_parameter = cleaned.split(".", 1)
+    replacement_operation = replacement_operation.strip()
+    replacement_parameter = replacement_parameter.strip()
+    if not replacement_operation or not replacement_parameter:
+        raise ValueError(
+            "Replacement parameter reference must be '<parameter>' or "
+            "'<operation>.<parameter>'"
+        )
+    return replacement_operation, replacement_parameter
 
 
-def _find_parameter(operation: dict, parameter_name: str) -> dict | None:
-    for parameter in operation.get("parameters", []):
-        if parameter.get("name") == parameter_name:
-            return parameter
-    return None
+def _validate_replacement_parameter(
+    data: dict,
+    operation_name: str,
+    replacement: str | None,
+) -> str | None:
+    if replacement is None:
+        return None
+
+    replacement_operation_name, replacement_parameter_name = (
+        _parse_replacement_reference(replacement)
+    )
+    target_operation_name = replacement_operation_name or operation_name
+
+    target_operation = find_operation(data, target_operation_name)
+    if target_operation is None:
+        raise ValueError(f"Replacement operation not found: {target_operation_name}")
+
+    target_parameter = find_parameter(target_operation, replacement_parameter_name)
+    if target_parameter is None:
+        raise ValueError(
+            "Replacement parameter "
+            f"'{replacement_parameter_name}' not found in operation "
+            f"'{target_operation_name}'"
+        )
+
+    return replacement_parameter_name
 
 
 def deprecate_operation_parameter(
@@ -53,19 +77,25 @@ def deprecate_operation_parameter(
     parameter_name: str,
     replacement: str | None = None,
 ) -> bool:
-    operation = _find_operation(data, operation_name)
+    operation = find_operation(data, operation_name)
     if operation is None:
         raise ValueError(f"Operation not found: {operation_name}")
 
-    parameter = _find_parameter(operation, parameter_name)
+    parameter = find_parameter(operation, parameter_name)
     if parameter is None:
         raise ValueError(
             f"Parameter '{parameter_name}' not found in operation '{operation_name}'"
         )
 
+    normalized_replacement = _validate_replacement_parameter(
+        data,
+        operation_name=operation_name,
+        replacement=replacement,
+    )
+
     changed = False
 
-    expected_description = build_deprecated_parameter_description(replacement)
+    expected_description = build_deprecated_parameter_description(normalized_replacement)
     if parameter.get("description") != expected_description:
         parameter["description"] = expected_description
         changed = True

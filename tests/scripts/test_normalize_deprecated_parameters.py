@@ -54,6 +54,35 @@ def test_normalize_deprecated_parameters_matches_expected_fixture():
     assert data == _fixture_json("deprecated_params_expected.json")
 
 
+def test_normalize_deprecated_parameters_uses_replacement_name_not_title():
+    data = {
+        "operations": [
+            {
+                "operation": "add_comment_to_alert",
+                "parameters": [
+                    {
+                        "name": "alert_uuid",
+                        "title": "Alert Identifier",
+                        "description": "Deprecated parameter. Use UUID parameter instead.",
+                    },
+                    {
+                        "name": "uuid",
+                        "title": "UUID",
+                        "description": "Canonical uuid parameter",
+                    },
+                ],
+            }
+        ]
+    }
+
+    changed = normalize_deprecated_parameters(data)
+
+    assert changed is True
+    assert data["operations"][0]["parameters"][0]["description"] == (
+        "Deprecated parameter. Use uuid parameter instead."
+    )
+
+
 def test_normalize_file_check_only_then_write_then_check(tmp_path):
     file_path = tmp_path / "info.json"
     file_path.write_text(

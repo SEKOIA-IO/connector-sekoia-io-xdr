@@ -32,8 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `add_comment_to_alert` operation:
         - add `content` parameter
         - add `uuid` parameter
-        - deprecate `alert_uuid` parameter
-        - deprecate `comment` parameter
+        - deprecate `alert_uuid` parameter in favor of `uuid`
+        - deprecate `comment` parameter in favor of `content`
     - `get_alert` operation:
         - add `include_cases` parameter
         - add `include_custom_status` parameter
@@ -41,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         - add `uuid` parameter
         - add `with_compliance` parameter
         - add `with_telemetry` parameter
-        - deprecate `asset_uuid` parameter
+        - deprecate `asset_uuid` parameter in favor of `uuid`
     - `get_events` operation:
         - add `limit` parameter
     - `list_alerts` operation:
@@ -49,15 +49,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         - add `date[updated_at]` parameter
         - add `match[rule_uuid]` parameter
         - add `match[status_uuid]` parameter
-        - deprecate `creation_end_date` parameter
-        - deprecate `creation_start_date` parameter
-        - deprecate `rule_uuid` parameter
-        - deprecate `status_uuid` parameter
-        - deprecate `updated_end_date` parameter
-        - deprecate `updated_start_date` parameter
+        - deprecate `creation_end_date` parameter in favor of `date[created_at]`
+        - deprecate `creation_start_date` parameter in favor of `date[created_at]`
+        - deprecate `rule_uuid` parameter in favor of `match[rule_uuid]`
+        - deprecate `status_uuid` parameter in favor of `match[status_uuid]`
+        - deprecate `updated_end_date` parameter in favor of `date[updated_at]`
+        - deprecate `updated_start_date` parameter in favor of `date[updated_at]`
     - `update_alert_status` operation:
         - add `uuid` parameter
-        - deprecate `alert_uuid` parameter
+        - deprecate `alert_uuid` parameter in favor of `uuid`
 - Refactor source code and tests into operation-specific files organized under feature subdirectories:
     - `alerts`
     - `assets`

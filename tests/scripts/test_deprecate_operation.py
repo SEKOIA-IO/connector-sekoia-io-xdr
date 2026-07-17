@@ -9,6 +9,12 @@ def test_deprecate_operation_with_replacement():
                 "title": "Delete Asset",
                 "description": "Delete an asset",
                 "parameters": [],
+            },
+            {
+                "operation": "revoke_assetv2",
+                "title": "Revoke Asset",
+                "description": "Revoke an asset",
+                "parameters": [],
             }
         ]
     }
@@ -63,6 +69,12 @@ def test_deprecate_operation_in_file_check_then_write_then_check(tmp_path):
             "title": "Delete Asset",
             "description": "Delete an asset",
             "parameters": []
+        },
+        {
+            "operation": "revoke_assetv2",
+            "title": "Revoke Asset",
+            "description": "Revoke an asset",
+            "parameters": []
         }
     ]
 }
@@ -92,3 +104,27 @@ def test_deprecate_operation_in_file_check_then_write_then_check(tmp_path):
     assert check_before == 1
     assert write_exit == 0
     assert check_after == 0
+
+
+def test_deprecate_operation_raises_when_replacement_operation_not_found():
+    data = {
+        "operations": [
+            {
+                "operation": "delete_asset",
+                "title": "Delete Asset",
+                "description": "Delete an asset",
+                "parameters": [],
+            }
+        ]
+    }
+
+    try:
+        deprecate_operation(
+            data,
+            operation_name="delete_asset",
+            replacement="missing_operation",
+        )
+    except ValueError as exc:
+        assert str(exc) == "Replacement operation not found: missing_operation"
+    else:
+        raise AssertionError("Expected ValueError for unknown replacement operation")

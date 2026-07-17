@@ -8,9 +8,10 @@ import json
 import re
 from pathlib import Path
 
-from scripts.cli_utils import configure_script_logger
+from scripts.utils.cli_utils import configure_script_logger
 from scripts.deprecate_operation import deprecate_operation
 from scripts.deprecate_operation_parameter import deprecate_operation_parameter
+from scripts.utils.deprecation_utils import strip_deprecated_title_prefix
 
 DEFAULT_PATH = "sekoia-io-xdr/info.json"
 logger = configure_script_logger(Path(__file__).name)
@@ -30,6 +31,41 @@ def extract_replacement_alias(description: str) -> str | None:
     alias = match.group(1).strip()
     alias = alias.strip("`\"' ")
     return alias or None
+
+
+def resolve_replacement_parameter_name(operation: dict, replacement: str | None) -> str | None:
+    if not replacement:
+        return None
+
+    normalized_replacement = replacement.strip()
+    if not normalized_replacement:
+        return None
+
+    parameters = operation.get("parameters", [])
+
+    # Preferred path: replacement already matches a parameter name.
+    for parameter in parameters:
+        parameter_name = str(parameter.get("name", "")).strip()
+        if parameter_name == normalized_replacement:
+            return parameter_name
+
+    # Fallback path: replacement may be a title label (e.g. "UUID"), map it to name.
+    replacement_folded = normalized_replacement.casefold()
+    for parameter in parameters:
+        parameter_name = str(parameter.get("name", "")).strip()
+        if parameter_name and parameter_name.casefold() == replacement_folded:
+            return parameter_name
+
+    for parameter in parameters:
+        parameter_name = str(parameter.get("name", "")).strip()
+        parameter_title = strip_deprecated_title_prefix(
+            str(parameter.get("title", ""))
+        )
+        if parameter_name and parameter_title.casefold() == replacement_folded:
+            return parameter_name
+
+    # If no mapping was found, keep the parsed token unchanged.
+    return normalized_replacement
 
 
 def extract_replacement_operation(description: str) -> str | None:
@@ -86,7 +122,10 @@ def normalize_deprecated_parameters(data: dict) -> bool:
             if not operation_name or not parameter_name:
                 continue
 
-            replacement = extract_replacement_alias(description)
+            replacement = resolve_replacement_parameter_name(
+                operation,
+                extract_replacement_alias(description),
+            )
             changed |= deprecate_operation_parameter(
                 data,
                 operation_name=operation_name,

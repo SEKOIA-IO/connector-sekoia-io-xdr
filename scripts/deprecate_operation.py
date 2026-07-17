@@ -7,8 +7,8 @@ import argparse
 import json
 from pathlib import Path
 
-from scripts.cli_utils import configure_script_logger
-from scripts.deprecate_operation_parameter import normalize_deprecated_title
+from scripts.utils.cli_utils import configure_script_logger
+from scripts.utils.deprecation_utils import find_operation, normalize_deprecated_title
 
 DEFAULT_PATH = "sekoia-io-xdr/info.json"
 logger = configure_script_logger(Path(__file__).name)
@@ -20,11 +20,15 @@ def build_deprecated_operation_description(replacement: str | None) -> str:
     return "Deprecated operation. There is no replacement."
 
 
-def _find_operation(data: dict, operation_name: str) -> dict | None:
-    for operation in data.get("operations", []):
-        if operation.get("operation") == operation_name:
-            return operation
-    return None
+def _validate_replacement_operation(data: dict, replacement: str | None) -> None:
+    if replacement is None:
+        return
+
+    if not replacement.strip():
+        raise ValueError("Replacement operation cannot be empty")
+
+    if find_operation(data, replacement.strip()) is None:
+        raise ValueError(f"Replacement operation not found: {replacement}")
 
 
 def deprecate_operation(
@@ -32,9 +36,11 @@ def deprecate_operation(
     operation_name: str,
     replacement: str | None = None,
 ) -> bool:
-    operation = _find_operation(data, operation_name)
+    operation = find_operation(data, operation_name)
     if operation is None:
         raise ValueError(f"Operation not found: {operation_name}")
+
+    _validate_replacement_operation(data, replacement)
 
     changed = False
 

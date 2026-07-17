@@ -6,7 +6,7 @@
         {
           "name": "asset_uuid",
           "title": "[Deprecated] Asset UUID",
-          "description": "Deprecated parameter. Use UUID parameter instead."
+          "description": "Deprecated parameter. Use uuid parameter instead."
         },
         {
           "name": "uuid",
@@ -22,8 +22,19 @@
       "parameters": []
     },
     {
+      "operation": "revoke_assetv2",
+      "title": "Revoke Asset",
+      "description": "Revoke an asset",
+      "parameters": []
+    },
+    {
       "operation": "list_alerts",
       "parameters": [
+        {
+          "name": "match[status_uuid]",
+          "title": "Match Status UUID",
+          "description": "Canonical status UUID filter"
+        },
         {
           "name": "status_uuid",
           "title": "[Deprecated] Status UUID",

@@ -9,7 +9,7 @@ from pathlib import Path
 
 import libcst as cst
 
-from scripts.cli_utils import configure_script_logger
+from scripts.utils.cli_utils import configure_script_logger
 
 DEFAULT_GLOB = "sekoia-io-xdr/**/*.py"
 logger = configure_script_logger(Path(__file__).name)

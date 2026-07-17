@@ -92,7 +92,7 @@
       "output_schema": {},
       "parameters": [
         {
-          "description": "Deprecated parameter. Use UUID parameter instead.",
+          "description": "Deprecated parameter. Use uuid parameter instead.",
           "editable": true,
           "name": "alert_uuid",
           "required": false,
@@ -110,7 +110,7 @@
           "visible": true
         },
         {
-          "description": "Deprecated parameter. Use Content parameter instead.",
+          "description": "Deprecated parameter. Use content parameter instead.",
           "editable": true,
           "name": "comment",
           "required": false,
@@ -408,7 +408,7 @@
       "output_schema": {},
       "parameters": [
         {
-          "description": "Deprecated parameter. Use UUID parameter instead.",
+          "description": "Deprecated parameter. Use uuid parameter instead.",
           "editable": true,
           "name": "asset_uuid",
           "required": false,
@@ -1184,7 +1184,7 @@
           "visible": true
         },
         {
-          "description": "Deprecated parameter. Use UUID parameter instead.",
+          "description": "Deprecated parameter. Use uuid parameter instead.",
           "editable": true,
           "name": "alert_uuid",
           "required": false,

@@ -14,6 +14,11 @@ def test_deprecate_operation_parameter_with_replacement():
                         "name": "status_uuid",
                         "title": "Status UUID",
                         "description": "legacy",
+                    },
+                    {
+                        "name": "match[status_uuid]",
+                        "title": "Match Status UUID",
+                        "description": "canonical",
                     }
                 ],
             }
@@ -78,6 +83,11 @@ def test_deprecate_parameter_in_file_check_then_write_then_check(tmp_path):
                     "name": "status_uuid",
                     "title": "Status UUID",
                     "description": "legacy"
+                },
+                {
+                    "name": "match[status_uuid]",
+                    "title": "Match Status UUID",
+                    "description": "canonical"
                 }
             ]
         }
@@ -112,3 +122,64 @@ def test_deprecate_parameter_in_file_check_then_write_then_check(tmp_path):
     assert check_before == 1
     assert write_exit == 0
     assert check_after == 0
+
+
+def test_deprecate_operation_parameter_raises_when_replacement_parameter_not_found():
+    data = {
+        "operations": [
+            {
+                "operation": "list_alerts",
+                "parameters": [
+                    {
+                        "name": "status_uuid",
+                        "title": "Status UUID",
+                        "description": "legacy",
+                    }
+                ],
+            }
+        ]
+    }
+
+    try:
+        deprecate_operation_parameter(
+            data,
+            operation_name="list_alerts",
+            parameter_name="status_uuid",
+            replacement="match[status_uuid]",
+        )
+    except ValueError as exc:
+        assert (
+            str(exc)
+            == "Replacement parameter 'match[status_uuid]' not found in operation 'list_alerts'"
+        )
+    else:
+        raise AssertionError("Expected ValueError for unknown replacement parameter")
+
+
+def test_deprecate_operation_parameter_raises_when_replacement_operation_not_found():
+    data = {
+        "operations": [
+            {
+                "operation": "list_alerts",
+                "parameters": [
+                    {
+                        "name": "status_uuid",
+                        "title": "Status UUID",
+                        "description": "legacy",
+                    }
+                ],
+            }
+        ]
+    }
+
+    try:
+        deprecate_operation_parameter(
+            data,
+            operation_name="list_alerts",
+            parameter_name="status_uuid",
+            replacement="other_operation.match[status_uuid]",
+        )
+    except ValueError as exc:
+        assert str(exc) == "Replacement operation not found: other_operation"
+    else:
+        raise AssertionError("Expected ValueError for unknown replacement operation")
