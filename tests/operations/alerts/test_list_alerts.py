@@ -87,7 +87,7 @@ def test_list_alerts(connector_config):
 
         action.assert_called_once_with(
             connector_config,
-            "get",
+            "GET",
             "https://app.sekoia.io/api/v1/sic/alerts",
             params={
                 "match[community_uuid]": "8f45f26a-c8d0-483e-bf22-3044d85cd77b",

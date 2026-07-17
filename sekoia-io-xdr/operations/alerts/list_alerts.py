@@ -8,7 +8,7 @@ class ListAlertsParams(InputModel):
 
 
 class ListAlertsOperation(Operation):
-    http_method = "get"
+    http_method = "GET"
     payload_parameter = "params"
     input_model = ListAlertsParams
 

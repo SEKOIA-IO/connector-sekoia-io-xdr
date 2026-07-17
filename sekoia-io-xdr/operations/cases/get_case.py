@@ -12,7 +12,7 @@ class GetCaseParams(InputModel):
 
 
 class GetCaseOperation(Operation):
-    http_method = "get"
+    http_method = "GET"
     payload_parameter = "params"
     input_model = GetCaseParams
 

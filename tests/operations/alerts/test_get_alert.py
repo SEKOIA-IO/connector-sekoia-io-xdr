@@ -138,7 +138,7 @@ def test_get_alert(connector_config):
         assert result is not None
         action.assert_called_once_with(
             connector_config,
-            "get",
+            "GET",
             "https://app.sekoia.io/api/v1/sic/alerts/ALfghiw34ax",
             params={
                 "stix": True,
@@ -169,7 +169,7 @@ def test_get_alert_include_defaults(connector_config):
 
         action.assert_called_once_with(
             connector_config,
-            "get",
+            "GET",
             "https://app.sekoia.io/api/v1/sic/alerts/ALfghiw34ax",
             params={
                 "stix": False,

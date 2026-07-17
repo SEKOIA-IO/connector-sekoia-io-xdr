@@ -36,7 +36,7 @@ def test_get_custom_priority(connector_config):
         assert result is not None
         action.assert_called_once_with(
             connector_config,
-            "get",
+            "GET",
             "https://app.sekoia.io/api/v1/sic/custom_priorities/8cd62b13-fc72-48b1-99df-74ccd2dc8cd9",
         )
         assert result["uuid"] == "8cd62b13-fc72-48b1-99df-74ccd2dc8cd9"

@@ -62,7 +62,7 @@ def test_search_cases_defaults(connector_config):
 
         action.assert_called_once_with(
             connector_config,
-            "get",
+            "GET",
             "https://app.sekoia.io/api/v1/sic/cases",
             params={
                 "match[community_uuid]": None,

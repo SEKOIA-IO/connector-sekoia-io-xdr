@@ -8,7 +8,7 @@ class ListAssetsParams(InputModel):
 
 
 class ListAssetsOperation(Operation):
-    http_method = "get"
+    http_method = "GET"
     payload_parameter = "params"
     input_model = ListAssetsParams
 

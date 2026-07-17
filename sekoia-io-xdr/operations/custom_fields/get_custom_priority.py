@@ -8,7 +8,7 @@ class GetCustomPriorityParams(InputModel):
 
 
 class GetCustomPriorityOperation(Operation):
-    http_method = "get"
+    http_method = "GET"
     payload_parameter = None
     input_model = GetCustomPriorityParams
 

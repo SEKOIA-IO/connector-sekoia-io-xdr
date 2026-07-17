@@ -34,7 +34,7 @@ def test_get_case(connector_config):
         assert result is not None
         action.assert_called_once_with(
             connector_config,
-            "get",
+            "GET",
             "https://app.sekoia.io/api/v1/sic/cases/b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11",
             params={
                 "community_uuid": "7c0bac3f-f2ce-491b-b663-638145078516",
@@ -62,7 +62,7 @@ def test_get_case_default_render(connector_config):
 
         action.assert_called_once_with(
             connector_config,
-            "get",
+            "GET",
             "https://app.sekoia.io/api/v1/sic/cases/b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11",
             params={"render": False},
         )

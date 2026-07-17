@@ -73,7 +73,7 @@ def test_list_assets_defaults(connector_config):
 
         action.assert_called_once_with(
             connector_config,
-            "get",
+            "GET",
             "https://app.sekoia.io/api/v2/asset-management/assets",
             params={
                 "search": None,
