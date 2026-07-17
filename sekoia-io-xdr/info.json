@@ -86,17 +86,17 @@
     {
       "annotation": "add_comment_to_alert",
       "category": "investigation",
-      "description": "Add a new comment to the specific alert in SEKOIA.IO XDR based on the alert identifier, comment, and other input parameter you have specified.",
+      "description": "Attach a new comment on an alert in SEKOIA.IO XDR.",
       "enabled": true,
       "operation": "add_comment_to_alert",
       "output_schema": {},
       "parameters": [
         {
-          "description": "The unique identifier of the alert (uuid or short_id)",
+          "description": "Deprecated parameter. Use UUID parameter instead.",
           "editable": true,
           "name": "alert_uuid",
-          "required": true,
-          "title": "Alert Identifier",
+          "required": false,
+          "title": "[Deprecated] Alert Identifier",
           "type": "text",
           "visible": true
         },
@@ -110,11 +110,29 @@
           "visible": true
         },
         {
-          "description": "The content of the comment",
+          "description": "Deprecated parameter. Use Content parameter instead.",
           "editable": true,
           "name": "comment",
-          "required": true,
-          "title": "Comment",
+          "required": false,
+          "title": "[Deprecated] Comment",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Content of the comment. One of Content or Comment is required.",
+          "editable": true,
+          "name": "content",
+          "required": false,
+          "title": "Content",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The unique identifier of the alert. One of UUID or Alert Identifier is required.",
+          "editable": true,
+          "name": "uuid",
+          "required": false,
+          "title": "UUID",
           "type": "text",
           "visible": true
         }

@@ -29,6 +29,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `delete_asset` operation in favor of `revoke_assetv2` operation
     - `update_asset` operation in favor of `update_assets` operation
 - Update existing operations, based on Sekoia API 3.1 documentation and automation-library playbook action JSON files:
+    - `add_comment_to_alert` operation:
+        - add `content` parameter
+        - add `uuid` parameter
+        - deprecate `alert_uuid` parameter
+        - deprecate `comment` parameter
     - `get_alert` operation:
         - add `include_cases` parameter
         - add `include_custom_status` parameter
