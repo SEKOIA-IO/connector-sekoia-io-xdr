@@ -5,7 +5,7 @@ from django.conf import settings
 
 def test_revoke_assetv2(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.cases.revoke_assetv2 import revoke_assetv2
+    from connector_sekoia_io_xdr.operations.assets.revoke_assetv2 import revoke_assetv2
 
     with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = {

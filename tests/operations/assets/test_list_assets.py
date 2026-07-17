@@ -5,7 +5,7 @@ from django.conf import settings
 
 def test_list_assets(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.cases.list_assets import list_assets
+    from connector_sekoia_io_xdr.operations.assets.list_assets import list_assets
 
     with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = {
@@ -58,10 +58,10 @@ def test_list_assets(connector_config):
 
 def test_list_assets_defaults(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.cases.list_assets import list_assets
+    from connector_sekoia_io_xdr.operations.assets.list_assets import list_assets
 
     with patch(
-        "connector_sekoia_io_xdr.operations.cases.list_assets.GenericAPIAction"
+        "connector_sekoia_io_xdr.operations.assets.list_assets.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "total": 0,
