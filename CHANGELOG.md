@@ -26,9 +26,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Deprecate existing operations, based on Sekoia API 3.1 documentation and automation-library playbook action JSON files:
-    - `delete_asset` operation in favor of `revoke_assetv2` operation
-    - `update_asset` operation in favor of `update_assets` operation
+    - `delete_asset` operation in favor of `revoke_assetv2`
+    - `update_asset` operation in favor of `update_assets`
 - Update existing operations, based on Sekoia API 3.1 documentation and automation-library playbook action JSON files:
+    - `activate_countermeasure` operation:
+        - add `cm_uuid` parameter
+        - add `comment` parameter
+        - deprecate `author` parameter in favor of `comment`
+        - deprecate `content` parameter in favor of `comment`
+        - deprecate `countermeasure_uuid` parameter in favor of `cm_uuid`
     - `add_comment_to_alert` operation:
         - add `content` parameter
         - add `uuid` parameter
