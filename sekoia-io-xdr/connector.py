@@ -17,6 +17,7 @@ from .operations.cases.get_case import get_case
 from .operations.cases.search_cases import search_cases
 from .operations.countermeasures.activate_countermeasure import activate_countermeasure
 from .operations.countermeasures.deny_countermeasure import deny_countermeasure
+from .operations.custom_fields.comment_case import comment_case
 from .operations.custom_fields.get_custom_priority import get_custom_priority
 from .operations.custom_fields.get_custom_status import get_custom_status
 from .operations.custom_fields.get_custom_verdict import get_custom_verdict
@@ -31,6 +32,7 @@ class Sekoiaio(Connector):
         supported_operations = {
             "activate_countermeasure": activate_countermeasure,
             "add_comment_to_alert": add_comment_to_alert,
+            "comment_case": comment_case,
             "delete_asset": delete_asset,
             "deny_countermeasure": deny_countermeasure,
             "edit_alert": edit_alert,
