@@ -544,6 +544,26 @@
       "title": "Get custom priority"
     },
     {
+      "annotation": "get_custom_status",
+      "category": "investigation",
+      "description": "Get a single custom status based on its UUID.",
+      "enabled": true,
+      "operation": "get_custom_status",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "UUID of the custom status.",
+          "editable": true,
+          "name": "status_uuid",
+          "required": true,
+          "title": "Status UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Get custom status"
+    },
+    {
       "annotation": "get_events",
       "category": "investigation",
       "description": "Search events according the query from SEKOIA.IO XDR based on the query, earliest time, and latest time you have specified.",
