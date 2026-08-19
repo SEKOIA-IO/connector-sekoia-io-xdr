@@ -1,8 +1,9 @@
 from pathlib import Path
 
+import libcst as cst
 import pytest
 
-from scripts.sort_operation_payload_keys import sort_operation_payload_keys
+from scripts.sort_operation_payload_keys import _string_key, sort_operation_payload_keys
 
 
 def _write(file_path: Path, content: str) -> None:
@@ -61,3 +62,109 @@ class Demo:
     monkeypatch.chdir(tmp_path)
     pattern = "*.py"
     assert sort_operation_payload_keys(check_only=True, pattern=pattern) == 0
+
+
+def test_sort_operation_payload_keys_ignores_non_string_dict_keys(
+    tmp_path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    file_path = tmp_path / "sample_operation.py"
+    _write(
+        file_path,
+        """
+class Demo:
+    def build_payload(self, parsed_input):
+        return {
+            parsed_input.key: 2,
+            "a": 1,
+        }
+""",
+    )
+
+    monkeypatch.chdir(tmp_path)
+    pattern = "*.py"
+
+    assert sort_operation_payload_keys(check_only=True, pattern=pattern) == 0
+    assert sort_operation_payload_keys(check_only=False, pattern=pattern) == 0
+
+
+def test_string_key_returns_none_when_literal_eval_fails(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    import scripts.sort_operation_payload_keys as mod
+
+    element = cst.DictElement(
+        key=cst.SimpleString(value='"a"'),
+        value=cst.Integer(value="1"),
+    )
+
+    monkeypatch.setattr(
+        mod.ast, "literal_eval", lambda _v: (_ for _ in ()).throw(ValueError("bad"))
+    )
+
+    assert _string_key(element) is None
+
+
+def test_sort_operation_payload_keys_ignores_return_outside_build_payload(
+    tmp_path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    file_path = tmp_path / "sample_operation.py"
+    _write(
+        file_path,
+        """
+class Demo:
+    def not_build_payload(self, parsed_input):
+        return {
+            "b": 2,
+            "a": 1,
+        }
+""",
+    )
+
+    monkeypatch.chdir(tmp_path)
+    assert sort_operation_payload_keys(check_only=True, pattern="*.py") == 0
+
+
+def test_sort_operation_payload_keys_ignores_starred_dict_elements(
+    tmp_path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    file_path = tmp_path / "sample_operation.py"
+    _write(
+        file_path,
+        """
+class Demo:
+    def build_payload(self, parsed_input):
+        base = {"a": 1}
+        return {
+            **base,
+            "b": 2,
+        }
+""",
+    )
+
+    monkeypatch.chdir(tmp_path)
+    assert sort_operation_payload_keys(check_only=True, pattern="*.py") == 0
+
+
+def test_sort_operation_payload_keys_skips_pycache_files(
+    tmp_path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    cache_dir = tmp_path / "__pycache__"
+    cache_dir.mkdir()
+    _write(
+        cache_dir / "ignored.py",
+        """
+class Demo:
+    def build_payload(self, parsed_input):
+        return {
+            "b": 2,
+            "a": 1,
+        }
+""",
+    )
+
+    monkeypatch.chdir(tmp_path)
+    assert sort_operation_payload_keys(check_only=True, pattern="**/*.py") == 0

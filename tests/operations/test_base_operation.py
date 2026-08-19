@@ -1,3 +1,4 @@
+import pytest
 from sekoia_io_xdr.operations.base import (
     DeprecatedAliases,
     InputModel,
@@ -113,3 +114,17 @@ def test_resolve_payload_value_can_treat_falsy_as_missing():
         )
         == 20
     )
+
+
+def test_base_operation_wraps_action_errors_as_connector_error(connector_config):
+    class FailingAction:
+        def __init__(self, *_args, **_kwargs):
+            pass
+
+        def run(self):
+            raise RuntimeError("boom")
+
+    op = _NoopOperation(api_action_cls=FailingAction)
+
+    with pytest.raises(Exception, match="Error: boom"):
+        op.execute(connector_config, {"uuid": "abc"})

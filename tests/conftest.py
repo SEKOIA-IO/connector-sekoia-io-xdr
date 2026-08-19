@@ -16,6 +16,9 @@ sys.path.insert(0, str(REPO_ROOT))
 def _register_connectors_stub() -> None:
     """Provide the minimal FortiSOAR connector symbols used by this project."""
 
+    class Connector:
+        pass
+
     class ConnectorError(Exception):
         pass
 
@@ -29,6 +32,7 @@ def _register_connectors_stub() -> None:
     core_pkg.__path__ = []
 
     connector_mod = types.ModuleType("connectors.core.connector")
+    setattr(connector_mod, "Connector", Connector)
     setattr(connector_mod, "ConnectorError", ConnectorError)
     setattr(connector_mod, "get_logger", get_logger)
 

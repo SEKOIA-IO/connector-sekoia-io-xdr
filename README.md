@@ -56,6 +56,12 @@ uv lock
 uv run pytest tests/ --color=yes -vv
 ```
 
+Run the strict coverage gate locally (same threshold as CI):
+
+```bash
+PYTHONPATH=sekoia-io-xdr uv run --with pytest-cov pytest tests/ --cov=sekoia-io-xdr/sekoia_io_xdr --cov=scripts --cov-report=term-missing --cov-fail-under=100
+```
+
 ### Run linters (uv)
 
 Install dev and lint tools first:
@@ -255,10 +261,10 @@ Use the script `scripts.normalize_deprecated_parameters` (see `Scripts (uv)` > `
 GitHub Actions currently uses five independent workflows:
 
 - `lint.yml`: runs code linting and static quality checks in parallel.
-- `tests.yml`: runs the unit test suite on multiple Python versions (`3.9` to `3.14`).
+- `tests.yml`: runs the unit test suite on multiple Python versions (`3.9` to `3.14`) and enforces `100%` coverage on Python `3.12`.
 - `normalize_metadata.yml`: runs read-only validation on `sekoia-io-xdr/info.json` metadata rules.
 - `normalize_operations.yml`: runs read-only normalization checks on operation source files.
-- `prepare_package.yml`: runs package quality gates, builds a connector `.tgz`, and uploads it as a GitHub Actions artifact.
+- `prepare_package.yml`: runs package quality gates (including strict `100%` coverage), builds a connector `.tgz`, and uploads it as a GitHub Actions artifact.
 
 The `normalize_metadata` and `normalize_operations` stages are intentionally separated from linting, so repository normalization checks can evolve independently as new rules are added.
 

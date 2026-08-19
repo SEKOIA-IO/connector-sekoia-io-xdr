@@ -127,3 +127,157 @@ def test_update_assets_invalid_props(connector_config):
 
     assert "Error: Invalid parameters:" in str(exc_info.value)
     assert "Expected a JSON object." in str(exc_info.value)
+
+
+def test_update_assets_accepts_tags_json_array(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.assets.update_assets import update_assets
+
+    with patch(
+        "sekoia_io_xdr.operations.assets.update_assets.GenericAPIAction"
+    ) as action:
+        action.return_value.run.return_value = {"uuid": "asset-1"}
+
+        update_assets(
+            config=connector_config,
+            params={
+                "uuid": "asset-1",
+                "tags": '["critical", "dmz"]',
+            },
+        )
+
+        payload = action.call_args.kwargs["json"]
+        assert payload["tags"] == ["critical", "dmz"]
+
+
+def test_update_assets_accepts_empty_tags_string(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.assets.update_assets import update_assets
+
+    with patch(
+        "sekoia_io_xdr.operations.assets.update_assets.GenericAPIAction"
+    ) as action:
+        action.return_value.run.return_value = {"uuid": "asset-1"}
+
+        update_assets(
+            config=connector_config,
+            params={
+                "uuid": "asset-1",
+                "tags": "   ",
+            },
+        )
+
+        payload = action.call_args.kwargs["json"]
+        assert payload["tags"] == []
+
+
+def test_update_assets_rejects_invalid_tags_json(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.assets.update_assets import update_assets
+
+    with pytest.raises(Exception, match="Invalid `tags` format"):
+        update_assets(
+            config=connector_config,
+            params={
+                "uuid": "asset-1",
+                "tags": "[not-json]",
+            },
+        )
+
+
+def test_update_assets_rejects_non_string_tags_items(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.assets.update_assets import update_assets
+
+    with pytest.raises(Exception, match="Invalid `tags` format"):
+        update_assets(
+            config=connector_config,
+            params={
+                "uuid": "asset-1",
+                "tags": "[1, 2]",
+            },
+        )
+
+
+def test_update_assets_rejects_invalid_atoms_type(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.assets.update_assets import update_assets
+
+    with pytest.raises(Exception, match="Expected a JSON object"):
+        update_assets(
+            config=connector_config,
+            params={
+                "uuid": "asset-1",
+                "atoms": 123,
+            },
+        )
+
+
+def test_update_assets_rejects_props_json_array(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.assets.update_assets import update_assets
+
+    with pytest.raises(Exception, match="Expected a JSON object"):
+        update_assets(
+            config=connector_config,
+            params={
+                "uuid": "asset-1",
+                "props": "[]",
+            },
+        )
+
+
+def test_update_assets_accepts_tags_list(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.assets.update_assets import update_assets
+
+    with patch(
+        "sekoia_io_xdr.operations.assets.update_assets.GenericAPIAction"
+    ) as action:
+        action.return_value.run.return_value = {"uuid": "asset-1"}
+
+        update_assets(
+            config=connector_config,
+            params={
+                "uuid": "asset-1",
+                "tags": ["alpha", "beta"],
+            },
+        )
+
+        assert action.call_args.kwargs["json"]["tags"] == ["alpha", "beta"]
+
+
+def test_update_assets_rejects_invalid_tags_type(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.assets.update_assets import update_assets
+
+    with pytest.raises(Exception, match="Invalid `tags` format"):
+        update_assets(
+            config=connector_config,
+            params={
+                "uuid": "asset-1",
+                "tags": 1,
+            },
+        )
+
+
+def test_update_assets_params_accepts_none_props_and_tags():
+    settings.configure()
+    from sekoia_io_xdr.operations.assets.update_assets import UpdateAssetsParams
+
+    parsed = UpdateAssetsParams(
+        uuid="asset-1",
+        props=None,
+        tags=None,
+    )
+
+    assert parsed.props is None
+    assert parsed.tags is None
+
+
+def test_update_assets_params_accepts_dict_props():
+    settings.configure()
+    from sekoia_io_xdr.operations.assets.update_assets import UpdateAssetsParams
+
+    parsed = UpdateAssetsParams(uuid="asset-1", props={"k": "v"})
+    assert parsed.props == {"k": "v"}

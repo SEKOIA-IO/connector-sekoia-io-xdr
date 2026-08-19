@@ -81,3 +81,62 @@ def test_create_content_proposal_from_pdf_file_not_found(connector_config):
             config=connector_config,
             params={"file_path": "/tmp/does-not-exist.pdf"},
         )
+
+
+def test_create_content_proposal_from_pdf_returns_raw_response(
+    connector_config, tmp_path
+):
+    settings.configure()
+    from sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf import (
+        create_content_proposal_from_pdf,
+    )
+
+    pdf_file = tmp_path / "report-raw.pdf"
+    pdf_file.write_bytes(b"%PDF-1.4\n%raw\n")
+
+    with patch(
+        "sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf.GenericAPIAction"
+    ) as action:
+        action.return_value.run.return_value = {"status": "queued"}
+
+        result = create_content_proposal_from_pdf(
+            config=connector_config,
+            params={"file_path": str(pdf_file)},
+        )
+
+        assert result == {"status": "queued"}
+
+
+def test_create_content_proposal_from_pdf_wraps_api_exception(
+    connector_config, tmp_path
+):
+    settings.configure()
+    from sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf import (
+        create_content_proposal_from_pdf,
+    )
+
+    pdf_file = tmp_path / "report-error.pdf"
+    pdf_file.write_bytes(b"%PDF-1.4\n%error\n")
+
+    with patch(
+        "sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf.GenericAPIAction"
+    ) as action:
+        action.return_value.run.side_effect = RuntimeError("upload failed")
+
+        with pytest.raises(Exception, match="Error: upload failed"):
+            create_content_proposal_from_pdf(
+                config=connector_config,
+                params={"file_path": str(pdf_file)},
+            )
+
+
+def test_create_content_proposal_from_pdf_build_payload_is_none():
+    settings.configure()
+    from sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf import (
+        CreateContentProposalFromPdfOperation,
+        CreateContentProposalFromPdfParams,
+    )
+
+    op = CreateContentProposalFromPdfOperation()
+    parsed = CreateContentProposalFromPdfParams(file_path="/tmp/file.pdf")
+    assert op.build_payload(parsed) is None

@@ -38,7 +38,12 @@ jobs:
           uv run python -m scripts.sort_info_json --check
           uv run python -m scripts.normalize_deprecated_parameters --check
           uv run python -m scripts.sort_operation_payload_keys --check
-          PYTHONPATH=sekoia-io-xdr uv run pytest tests/ --color=yes -vv
+          PYTHONPATH=sekoia-io-xdr uv run --with pytest-cov \
+            pytest tests/ --color=yes -vv \
+            --cov=sekoia-io-xdr/sekoia_io_xdr \
+            --cov=scripts \
+            --cov-report=term-missing \
+            --cov-fail-under=100
 
   build_archive:
     name: "prepare_package / build-archive"

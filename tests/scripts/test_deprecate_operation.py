@@ -128,3 +128,63 @@ def test_deprecate_operation_raises_when_replacement_operation_not_found():
         assert str(exc) == "Replacement operation not found: missing_operation"
     else:
         raise AssertionError("Expected ValueError for unknown replacement operation")
+
+
+def test_deprecate_operation_raises_when_operation_not_found():
+    data = {"operations": []}
+
+    try:
+        deprecate_operation(data, operation_name="missing", replacement=None)
+    except ValueError as exc:
+        assert str(exc) == "Operation not found: missing"
+    else:
+        raise AssertionError("Expected ValueError for unknown operation")
+
+
+def test_deprecate_operation_raises_when_replacement_is_blank():
+    data = {
+        "operations": [
+            {
+                "operation": "delete_asset",
+                "title": "Delete Asset",
+                "description": "Delete an asset",
+                "parameters": [],
+            }
+        ]
+    }
+
+    try:
+        deprecate_operation(data, operation_name="delete_asset", replacement="   ")
+    except ValueError as exc:
+        assert str(exc) == "Replacement operation cannot be empty"
+    else:
+        raise AssertionError("Expected ValueError for blank replacement")
+
+
+def test_deprecate_operation_in_file_already_normalized_returns_success(tmp_path):
+    file_path = tmp_path / "info.json"
+    file_path.write_text(
+        """
+{
+    "operations": [
+        {
+            "operation": "delete_asset",
+            "title": "[Deprecated] Delete Asset",
+            "description": "Deprecated operation. There is no replacement.",
+            "parameters": []
+        }
+    ]
+}
+""".strip() + "\n",
+        encoding="utf-8",
+    )
+
+    assert (
+        deprecate_operation_in_file(
+            file_path,
+            operation_name="delete_asset",
+            replacement=None,
+            check_only=False,
+        )
+        == 0
+    )

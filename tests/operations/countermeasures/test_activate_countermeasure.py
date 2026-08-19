@@ -1,6 +1,7 @@
 import json
 from unittest.mock import patch
 
+import pytest
 from django.conf import settings
 
 
@@ -99,3 +100,118 @@ def test_activate_countermeasure_with_deprecated_parameters(connector_config):
         assert result is not None
         assert result["uuid"] == "82aa4cea-41fd-4381-8bb9-7100e7f97460"
         assert result["activated_at"] == "2026-07-17T00:00:00Z"
+
+
+def test_activate_countermeasure_rejects_invalid_comment_json(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
+        activate_countermeasure,
+    )
+
+    with pytest.raises(Exception, match="Expected a JSON object"):
+        activate_countermeasure(
+            config=connector_config,
+            params={
+                "cm_uuid": "82aa4cea-41fd-4381-8bb9-7100e7f97460",
+                "comment": "not-json",
+            },
+        )
+
+
+def test_activate_countermeasure_requires_comment_or_content(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
+        activate_countermeasure,
+    )
+
+    with pytest.raises(Exception, match="Either comment or content is required"):
+        activate_countermeasure(
+            config=connector_config,
+            params={"cm_uuid": "82aa4cea-41fd-4381-8bb9-7100e7f97460"},
+        )
+
+
+def test_activate_countermeasure_accepts_comment_dict(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
+        activate_countermeasure,
+    )
+
+    with patch("sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+        query.return_value = {"uuid": "cm-1"}
+
+        result = activate_countermeasure(
+            config=connector_config,
+            params={
+                "cm_uuid": "cm-1",
+                "comment": {"content": "Activate", "author": "bob"},
+            },
+        )
+
+        assert result["uuid"] == "cm-1"
+
+
+def test_activate_countermeasure_rejects_blank_comment_string(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
+        activate_countermeasure,
+    )
+
+    with pytest.raises(Exception, match="Expected a JSON object"):
+        activate_countermeasure(
+            config=connector_config,
+            params={"cm_uuid": "cm-1", "comment": "   "},
+        )
+
+
+def test_activate_countermeasure_rejects_comment_json_array(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
+        activate_countermeasure,
+    )
+
+    with pytest.raises(Exception, match="Expected a JSON object"):
+        activate_countermeasure(
+            config=connector_config,
+            params={"cm_uuid": "cm-1", "comment": "[]"},
+        )
+
+
+def test_activate_countermeasure_build_payload_guard_without_comment():
+    settings.configure()
+    from sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
+        ActivateCountermeasureOperation,
+        ActivateCountermeasureParams,
+    )
+
+    op = ActivateCountermeasureOperation()
+    parsed = ActivateCountermeasureParams.model_construct(
+        cm_uuid="cm-1",
+        comment=None,
+        content=None,
+        author=None,
+    )
+
+    with pytest.raises(ValueError, match="Either comment or content is required"):
+        op.build_payload(parsed)
+
+
+def test_activate_countermeasure_params_accepts_comment_none_with_content():
+    settings.configure()
+    from sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
+        ActivateCountermeasureParams,
+    )
+
+    parsed = ActivateCountermeasureParams(cm_uuid="cm-1", comment=None, content="ok")
+    assert parsed.comment is not None
+    assert parsed.comment.content == "ok"
+
+
+def test_activate_countermeasure_rejects_invalid_comment_type():
+    settings.configure()
+    from sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
+        ActivateCountermeasureParams,
+    )
+
+    with pytest.raises(Exception, match="Expected a JSON object"):
+        ActivateCountermeasureParams(cm_uuid="cm-1", comment=123)

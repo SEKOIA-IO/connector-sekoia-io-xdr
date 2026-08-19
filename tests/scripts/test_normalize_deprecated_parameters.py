@@ -6,6 +6,7 @@ from scripts.normalize_deprecated_parameters import (
     extract_replacement_operation,
     normalize_deprecated_parameters,
     normalize_file,
+    resolve_replacement_parameter_name,
 )
 
 FIXTURES_DIR = Path(__file__).resolve().parents[1] / "fixtures" / "scripts"
@@ -99,3 +100,88 @@ def test_normalize_file_check_only_then_write_then_check(tmp_path):
     assert json.loads(file_path.read_text(encoding="utf-8")) == _fixture_json(
         "deprecated_params_expected.json"
     )
+
+
+def test_resolve_replacement_parameter_name_by_title_fallback():
+    operation = {
+        "parameters": [
+            {
+                "name": "uuid",
+                "title": "UUID",
+            }
+        ]
+    }
+
+    assert resolve_replacement_parameter_name(operation, "UUID") == "uuid"
+
+
+def test_resolve_replacement_parameter_name_keeps_unmapped_value():
+    operation = {"parameters": []}
+
+    assert (
+        resolve_replacement_parameter_name(operation, "unknown_token")
+        == "unknown_token"
+    )
+
+
+def test_resolve_replacement_parameter_name_returns_none_for_blank_replacement():
+    operation = {"parameters": [{"name": "uuid", "title": "UUID"}]}
+
+    assert resolve_replacement_parameter_name(operation, "   ") is None
+
+
+def test_normalize_deprecated_parameters_skips_entries_without_required_names():
+    data = {
+        "operations": [
+            {
+                "operation": "",
+                "title": "[Deprecated] Missing operation name",
+                "description": "Deprecated operation.",
+                "parameters": [
+                    {
+                        "name": "",
+                        "title": "[Deprecated] Legacy",
+                        "description": "Deprecated parameter.",
+                    }
+                ],
+            }
+        ]
+    }
+
+    assert normalize_deprecated_parameters(data) is False
+
+
+def test_normalize_file_returns_success_when_already_normalized(tmp_path):
+    file_path = tmp_path / "info.json"
+    file_path.write_text(
+        _fixture_text("deprecated_params_expected.json"),
+        encoding="utf-8",
+    )
+
+    assert normalize_file(file_path, check_only=False) == 0
+
+
+def test_resolve_replacement_parameter_name_uses_deprecated_title_prefix_fallback():
+    operation = {
+        "parameters": [
+            {
+                "name": "uuid",
+                "title": "[Deprecated] UUID",
+            }
+        ]
+    }
+
+    assert resolve_replacement_parameter_name(operation, "UUID") == "uuid"
+
+
+def test_resolve_replacement_parameter_name_uses_title_when_name_does_not_match():
+    operation = {
+        "parameters": [
+            {
+                "name": "canonical_uuid",
+                "title": "[Deprecated] UUID",
+            }
+        ]
+    }
+
+    assert resolve_replacement_parameter_name(operation, "UUID") == "canonical_uuid"

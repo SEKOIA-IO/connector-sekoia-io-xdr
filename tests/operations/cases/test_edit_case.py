@@ -98,3 +98,87 @@ def test_edit_case_invalid_subscribers(connector_config):
 
     assert "Error: Invalid parameters:" in str(exc_info.value)
     assert "Invalid `subscribers` format" in str(exc_info.value)
+
+
+def test_edit_case_invalid_tags_type(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.cases.edit_case import edit_case
+
+    with pytest.raises(Exception) as exc_info:
+        edit_case(
+            config=connector_config,
+            params={
+                "uuid": "b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11",
+                "tags": 42,
+            },
+        )
+
+    assert "Error: Invalid parameters:" in str(exc_info.value)
+    assert "Invalid `tags` format" in str(exc_info.value)
+
+
+def test_edit_case_subscribers_must_be_json_array(connector_config):
+    settings.configure()
+    from sekoia_io_xdr.operations.cases.edit_case import edit_case
+
+    with pytest.raises(Exception) as exc_info:
+        edit_case(
+            config=connector_config,
+            params={
+                "uuid": "b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11",
+                "subscribers": "{}",
+            },
+        )
+
+    assert "Error: Invalid parameters:" in str(exc_info.value)
+    assert "Invalid `subscribers` format" in str(exc_info.value)
+
+
+def test_edit_case_params_accept_tags_list_and_none_subscribers():
+    settings.configure()
+    from sekoia_io_xdr.operations.cases.edit_case import EditCaseParams
+
+    parsed = EditCaseParams(
+        uuid="b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11",
+        tags=["tag1", "tag2"],
+        subscribers=None,
+    )
+
+    assert parsed.tags == ["tag1", "tag2"]
+    assert parsed.subscribers is None
+
+
+def test_edit_case_params_accept_subscribers_list_directly():
+    settings.configure()
+    from sekoia_io_xdr.operations.cases.edit_case import EditCaseParams
+
+    parsed = EditCaseParams(
+        uuid="b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11",
+        subscribers=[{"avatar_uuid": "a", "type": "assignee"}],
+    )
+
+    assert parsed.subscribers is not None
+    assert parsed.subscribers[0].avatar_uuid == "a"
+
+
+def test_edit_case_params_accepts_tags_none_explicitly():
+    settings.configure()
+    from sekoia_io_xdr.operations.cases.edit_case import EditCaseParams
+
+    parsed = EditCaseParams(
+        uuid="b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11",
+        tags=None,
+    )
+
+    assert parsed.tags is None
+
+
+def test_edit_case_params_rejects_invalid_subscribers_type():
+    settings.configure()
+    from sekoia_io_xdr.operations.cases.edit_case import EditCaseParams
+
+    with pytest.raises(Exception, match="Invalid `subscribers` format"):
+        EditCaseParams(
+            uuid="b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11",
+            subscribers=123,
+        )
