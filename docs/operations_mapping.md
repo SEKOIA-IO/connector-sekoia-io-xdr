@@ -6,7 +6,11 @@ This table lists all operations currently exposed by the connector (from sekoia-
 | --- | --- | --- | --- | --- | --- | --- |
 | activate_countermeasure | Activate a Countermeasure | PATCH | https://app.sekoia.io/api/v1/sic/alerts/countermeasures/{cm_uuid}/activate | action_activate_a_countermeasure.json | Activate Countermeasure | activate_countermeasure |
 | add_comment_to_alert | Add Comment to Alert | POST | https://app.sekoia.io/api/v1/sic/alerts/{uuid}/comments | action_post_a_comment_on_an_alert.json | Comment Alert | comment_alert |
+| add_to_ioc_collection | Add IOC to IOC Collection | POST | https://app.sekoia.io/api/v2/inthreat/ioc-collections/{ioc_collection_id}/indicators/text | action_add_ioc_to_ioc_collection.json | Add IOC to IOC Collection | add_to_ioc_collection |
 | comment_case | Comment Case | POST | https://app.sekoia.io/api/v1/sic/cases/{uuid}/comments | action_post_a_comment_on_a_case.json | Comment case | comment_case |
+| create_content_proposal | Create Content Proposal | POST | https://app.sekoia.io/api/v2/inthreat/bundles | action_inthreat_post_bundle.json | Create Content Proposal | create_content_proposal |
+| create_content_proposal_from_pdf | Create Content Proposal from PDF | POST | https://app.sekoia.io/api/v2/inthreat/reports/pdf | action_post_reports_pdf.json | Create Content Proposal from PDF | create_content_proposal_from_pdf |
+| create_content_proposal_from_url | Create Content Proposal from URL | POST | https://app.sekoia.io/api/v2/inthreat/reports/url | action_post_reports_url.json | Create Content Proposal from URL | create_content_proposal_from_url |
 | delete_asset | [Deprecated] Delete Asset | DELETE | https://app.sekoia.io/api/v1/asset-management/assets/{asset_uuid} | action_deletes_an_asset.json | [DEPRECATED] Delete an asset | delete_asset |
 | deny_countermeasure | Deny a Countermeasure | PATCH | https://app.sekoia.io/api/v1/sic/alerts/countermeasures/{cm_uuid}/deny | action_deny_a_countermeasure.json | Deny Countermeasure | deny_countermeasure |
 | edit_alert | Edit Alert | PATCH | https://app.sekoia.io/api/v1/sic/alerts/{uuid} | action_patch_an_alert.json | Edit Alert | edit_alert |
@@ -26,6 +30,7 @@ This table lists all operations currently exposed by the connector (from sekoia-
 | update_alert_status | Update Alert Status | PATCH | https://app.sekoia.io/api/v1/sic/alerts/{uuid}/workflow | action_trigger_an_action_on_the_alert_workflow.json | Update Alert Status | update_alert_status |
 | update_asset | [Deprecated] Update Asset | PUT | https://app.sekoia.io/api/v1/asset-management/assets/{asset_uuid} | action_update_asset.json | Update asset | update_assets |
 | update_assets | Update Assets | PUT | https://app.sekoia.io/api/v2/asset-management/assets/{uuid} | action_update_asset.json | Update asset | update_assets |
+| upload_observables | Upload Observables | POST | https://app.sekoia.io/api/v2/inthreat/observables/bulk | action_inthreat_upload_observables.json | Upload Observables | upload_observables |
 
 ## Notes
 

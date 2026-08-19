@@ -12,3 +12,5 @@ CASES_V1_BASE_URL = f"{BASE_URL}/api/v1/sic/cases"
 CUSTOM_PRIORITIES_V1_BASE_URL = f"{BASE_URL}/api/v1/sic/custom_priorities"
 CUSTOM_STATUSES_V1_BASE_URL = f"{BASE_URL}/api/v1/sic/custom_statuses"
 CUSTOM_VERDICTS_V1_BASE_URL = f"{BASE_URL}/api/v1/sic/custom_verdicts"
+
+INTHREAT_V2_BASE_URL = f"{BASE_URL}/api/v2/inthreat"

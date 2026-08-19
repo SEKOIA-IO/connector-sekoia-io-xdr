@@ -158,6 +158,62 @@
       "title": "Add Comment to Alert"
     },
     {
+      "annotation": "add_to_ioc_collection",
+      "category": "investigation",
+      "description": "Add indicators to an IOC collection in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "add_to_ioc_collection",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Single indicator to add to the IOC collection.",
+          "editable": true,
+          "name": "indicator",
+          "required": false,
+          "title": "Indicator",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Type of indicator to add (IP address, domain, url, email, hash).",
+          "editable": true,
+          "name": "indicator_type",
+          "required": true,
+          "title": "Indicator Type",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "List of indicators as a JSON array.",
+          "editable": true,
+          "name": "indicators",
+          "required": false,
+          "title": "Indicators",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Identifier of the target IOC collection.",
+          "editable": true,
+          "name": "ioc_collection_id",
+          "required": true,
+          "title": "IOC Collection ID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Validity period in days for created indicators.",
+          "editable": true,
+          "name": "valid_for",
+          "required": false,
+          "title": "Valid For (days)",
+          "type": "integer",
+          "visible": true
+        }
+      ],
+      "title": "Add IOC to IOC Collection"
+    },
+    {
       "annotation": "comment_case",
       "category": "investigation",
       "description": "Add a new comment to a case in SEKOIA.IO XDR.",
@@ -185,6 +241,140 @@
         }
       ],
       "title": "Comment Case"
+    },
+    {
+      "annotation": "create_content_proposal",
+      "category": "investigation",
+      "description": "Create a content proposal from a STIX bundle in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "create_content_proposal",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Avatar UUID assigned to the content proposal.",
+          "editable": true,
+          "name": "assigned_to",
+          "required": false,
+          "title": "Assigned To",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Whether uploaded bundle can be automatically merged into the consolidated database.",
+          "editable": true,
+          "name": "auto_merge",
+          "required": false,
+          "title": "Auto Merge",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "STIX bundle to upload as a JSON object.",
+          "editable": true,
+          "name": "bundle",
+          "required": false,
+          "title": "Bundle",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Path to a local JSON file containing the STIX bundle.",
+          "editable": true,
+          "name": "bundle_path",
+          "required": false,
+          "title": "Bundle Path",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Whether the uploaded bundle should be enriched.",
+          "editable": true,
+          "name": "enrich",
+          "required": false,
+          "title": "Enrich",
+          "type": "checkbox",
+          "value": true,
+          "visible": true
+        },
+        {
+          "description": "Name of the new content proposal.",
+          "editable": true,
+          "name": "name",
+          "required": false,
+          "title": "Name",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Create Content Proposal"
+    },
+    {
+      "annotation": "create_content_proposal_from_pdf",
+      "category": "investigation",
+      "description": "Create a content proposal from a PDF file in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "create_content_proposal_from_pdf",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Path to the local PDF file to upload.",
+          "editable": true,
+          "name": "file_path",
+          "required": true,
+          "title": "PDF File Path",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Optional name to assign to the content proposal.",
+          "editable": true,
+          "name": "name",
+          "required": false,
+          "title": "Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Optional source reference for the report.",
+          "editable": true,
+          "name": "source_ref",
+          "required": false,
+          "title": "Source Reference",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Create Content Proposal from PDF"
+    },
+    {
+      "annotation": "create_content_proposal_from_url",
+      "category": "investigation",
+      "description": "Create a content proposal from a URL in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "create_content_proposal_from_url",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Optional source reference for the report.",
+          "editable": true,
+          "name": "source_ref",
+          "required": false,
+          "title": "Source Reference",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "URL to analyze and convert into a content proposal.",
+          "editable": true,
+          "name": "url",
+          "required": true,
+          "title": "URL",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Create Content Proposal from URL"
     },
     {
       "annotation": "delete_asset",
@@ -1761,6 +1951,35 @@
         }
       ],
       "title": "Update Assets"
+    },
+    {
+      "annotation": "upload_observables",
+      "category": "investigation",
+      "description": "Upload observables to inThreat in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "upload_observables",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "List of observables or bundle to upload, as a JSON array or object.",
+          "editable": true,
+          "name": "observables",
+          "required": false,
+          "title": "Observables",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Path to a local JSON file containing observables to upload.",
+          "editable": true,
+          "name": "observables_path",
+          "required": false,
+          "title": "Observables Path",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Upload Observables"
     }
   ],
   "publisher": "SEKOIA.IO",
