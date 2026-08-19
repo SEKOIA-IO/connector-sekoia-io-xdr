@@ -31,7 +31,8 @@ lint = [
 # Run mypy on connector source and tests while excluding local/generated folders.
 [tool.mypy]
 python_version = "3.10"
-files = ["sekoia_io_xdr", "tests"]
+files = ["tests"]
+mypy_path = "sekoia-io-xdr"
 exclude = "(^|/)\\.venv/|(^|/)\\.pytest_cache/|(^|/)\\.tmp/"
 ignore_missing_imports = true
 follow_imports = "skip"

@@ -17,17 +17,17 @@ jobs:
         # Each entry defines one independent lint command.
         include:
           - check: black
-            command: uv run black --check .
-            fix_command: uv run black .
+            command: uv run black --check sekoia-io-xdr tests scripts
+            fix_command: uv run black sekoia-io-xdr tests scripts
           - check: isort
-            command: uv run isort --check-only .
-            fix_command: uv run isort .
+            command: uv run isort --check-only sekoia-io-xdr tests scripts
+            fix_command: uv run isort sekoia-io-xdr tests scripts
           - check: mypy
-            command: uv run mypy sekoia_io_xdr tests
-            fix_command: uv run mypy sekoia_io_xdr tests
+            command: MYPYPATH=sekoia-io-xdr uv run mypy -p sekoia_io_xdr && MYPYPATH=sekoia-io-xdr uv run mypy tests
+            fix_command: MYPYPATH=sekoia-io-xdr uv run mypy -p sekoia_io_xdr && MYPYPATH=sekoia-io-xdr uv run mypy tests
           - check: ruff
-            command: uv run ruff check .
-            fix_command: uv run ruff check . --fix
+            command: uv run ruff check sekoia-io-xdr tests scripts
+            fix_command: uv run ruff check sekoia-io-xdr tests scripts --fix
 
     steps:
       - name: Checkout

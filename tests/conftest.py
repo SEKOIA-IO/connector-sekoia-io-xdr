@@ -8,7 +8,9 @@ import pytest
 from django.conf import settings
 from django.utils.functional import empty
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+REPO_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO_ROOT / "sekoia-io-xdr"))
+sys.path.insert(0, str(REPO_ROOT))
 
 
 def _register_connectors_stub() -> None:
