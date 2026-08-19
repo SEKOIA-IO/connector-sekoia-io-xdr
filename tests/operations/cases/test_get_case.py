@@ -5,11 +5,9 @@ from django.conf import settings
 
 def test_get_case(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.cases.get_case import get_case
+    from sekoia_io_xdr.operations.cases.get_case import get_case
 
-    with patch(
-        "connector_sekoia_io_xdr.operations.cases.get_case.GenericAPIAction"
-    ) as action:
+    with patch("sekoia_io_xdr.operations.cases.get_case.GenericAPIAction") as action:
         action.return_value.run.return_value = {
             "uuid": "b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11",
             "short_id": "CASE-123",
@@ -46,11 +44,9 @@ def test_get_case(connector_config):
 
 def test_get_case_default_render(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.cases.get_case import get_case
+    from sekoia_io_xdr.operations.cases.get_case import get_case
 
-    with patch(
-        "connector_sekoia_io_xdr.operations.cases.get_case.GenericAPIAction"
-    ) as action:
+    with patch("sekoia_io_xdr.operations.cases.get_case.GenericAPIAction") as action:
         action.return_value.run.return_value = {
             "uuid": "b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11"
         }

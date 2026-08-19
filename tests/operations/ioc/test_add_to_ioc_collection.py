@@ -6,12 +6,12 @@ from django.conf import settings
 
 def test_add_to_ioc_collection_with_domain_indicators(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.ioc.add_to_ioc_collection import (
+    from sekoia_io_xdr.operations.ioc.add_to_ioc_collection import (
         add_to_ioc_collection,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.ioc.add_to_ioc_collection.GenericAPIAction"
+        "sekoia_io_xdr.operations.ioc.add_to_ioc_collection.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "task_id": "00000000-0000-0000-0000-000000000000"
@@ -41,12 +41,12 @@ def test_add_to_ioc_collection_with_domain_indicators(connector_config):
 
 def test_add_to_ioc_collection_splits_ipv4_and_ipv6(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.ioc.add_to_ioc_collection import (
+    from sekoia_io_xdr.operations.ioc.add_to_ioc_collection import (
         add_to_ioc_collection,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.ioc.add_to_ioc_collection.GenericAPIAction"
+        "sekoia_io_xdr.operations.ioc.add_to_ioc_collection.GenericAPIAction"
     ) as action:
         action.return_value.run.side_effect = [
             {"task_id": "ipv4-task"},
@@ -85,13 +85,11 @@ def test_add_to_ioc_collection_splits_ipv4_and_ipv6(connector_config):
 
 def test_add_to_ioc_collection_rejects_invalid_ip(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.ioc.add_to_ioc_collection import (
+    from sekoia_io_xdr.operations.ioc.add_to_ioc_collection import (
         add_to_ioc_collection,
     )
 
-    with patch(
-        "connector_sekoia_io_xdr.operations.ioc.add_to_ioc_collection.GenericAPIAction"
-    ):
+    with patch("sekoia_io_xdr.operations.ioc.add_to_ioc_collection.GenericAPIAction"):
         with pytest.raises(Exception, match="Invalid IP indicator"):
             add_to_ioc_collection(
                 config=connector_config,

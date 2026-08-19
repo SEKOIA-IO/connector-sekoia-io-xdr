@@ -17,10 +17,5 @@
 .devcontainer/
 .vscode/
 
-# SDK
-# FortiSOAR
-integrations_sdk/
-
-# Automation modules
-# Sekoia.io
-Sekoia.io/*
+# Local scratch files
+.tmp/

@@ -7,7 +7,7 @@ from django.conf import settings
 
 def test_create_content_proposal_with_inline_bundle(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.ioc.create_content_proposal import (
+    from sekoia_io_xdr.operations.ioc.create_content_proposal import (
         create_content_proposal,
     )
 
@@ -18,7 +18,7 @@ def test_create_content_proposal_with_inline_bundle(connector_config):
     }
 
     with patch(
-        "connector_sekoia_io_xdr.operations.ioc.create_content_proposal.GenericAPIAction"
+        "sekoia_io_xdr.operations.ioc.create_content_proposal.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "data": {
@@ -58,7 +58,7 @@ def test_create_content_proposal_with_inline_bundle(connector_config):
 
 def test_create_content_proposal_with_bundle_path(connector_config, tmp_path):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.ioc.create_content_proposal import (
+    from sekoia_io_xdr.operations.ioc.create_content_proposal import (
         create_content_proposal,
     )
 
@@ -71,7 +71,7 @@ def test_create_content_proposal_with_bundle_path(connector_config, tmp_path):
     bundle_file.write_text(json.dumps(bundle), encoding="utf-8")
 
     with patch(
-        "connector_sekoia_io_xdr.operations.ioc.create_content_proposal.GenericAPIAction"
+        "sekoia_io_xdr.operations.ioc.create_content_proposal.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "data": {"content_proposal_id": "cp-0002"}
@@ -97,7 +97,7 @@ def test_create_content_proposal_with_bundle_path(connector_config, tmp_path):
 
 def test_create_content_proposal_requires_bundle_input(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.ioc.create_content_proposal import (
+    from sekoia_io_xdr.operations.ioc.create_content_proposal import (
         create_content_proposal,
     )
 

@@ -5,12 +5,12 @@ from django.conf import settings
 
 def test_add_comment_to_alert(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.alerts.add_comment_to_alert import (
+    from sekoia_io_xdr.operations.alerts.add_comment_to_alert import (
         add_comment_to_alert,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.alerts.add_comment_to_alert.GenericAPIAction"
+        "sekoia_io_xdr.operations.alerts.add_comment_to_alert.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "unseen": False,
@@ -46,12 +46,12 @@ def test_add_comment_to_alert(connector_config):
 
 def test_add_comment_to_alert_accepts_deprecated_aliases(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.alerts.add_comment_to_alert import (
+    from sekoia_io_xdr.operations.alerts.add_comment_to_alert import (
         add_comment_to_alert,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.alerts.add_comment_to_alert.GenericAPIAction"
+        "sekoia_io_xdr.operations.alerts.add_comment_to_alert.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "uuid": "fbdeaba1-dd63-496f-b515-9f14a886a51a"

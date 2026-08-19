@@ -72,7 +72,10 @@ class CreateContentProposalOperation(Operation):
     def build_payload(self, parsed_input: CreateContentProposalParams) -> dict:
         bundle = parsed_input.bundle
         if bundle is None:
-            bundle = self._load_bundle_from_path(parsed_input.bundle_path)
+            bundle_path = parsed_input.bundle_path
+            if bundle_path is None:
+                raise ConnectorError("Either bundle or bundle_path is required.")
+            bundle = self._load_bundle_from_path(bundle_path)
         return {"data": bundle}
 
     def perform(

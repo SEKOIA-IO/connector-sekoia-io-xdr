@@ -65,9 +65,12 @@ class UploadObservablesOperation(Operation):
     def build_payload(self, parsed_input: UploadObservablesParams) -> dict:
         observables = parsed_input.observables
         if observables is None:
-            observables = self._load_observables_from_path(
-                parsed_input.observables_path
-            )
+            observables_path = parsed_input.observables_path
+            if observables_path is None:
+                raise ConnectorError(
+                    "Either observables or observables_path is required."
+                )
+            observables = self._load_observables_from_path(observables_path)
         return {"data": observables}
 
 

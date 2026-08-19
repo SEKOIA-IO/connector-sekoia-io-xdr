@@ -5,11 +5,9 @@ from django.conf import settings
 
 def test_edit_alert(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.alerts.edit_alert import edit_alert
+    from sekoia_io_xdr.operations.alerts.edit_alert import edit_alert
 
-    with patch(
-        "connector_sekoia_io_xdr.operations.alerts.edit_alert.GenericAPIAction"
-    ) as action:
+    with patch("sekoia_io_xdr.operations.alerts.edit_alert.GenericAPIAction") as action:
         action.return_value.run.return_value = {
             "uuid": "b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11",
             "status_uuid": "8b4d77f8-9c6d-4a67-8d1f-8f6f7c4f5d10",
@@ -61,11 +59,9 @@ def test_edit_alert(connector_config):
 
 def test_edit_alert_with_uuid_only(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.alerts.edit_alert import edit_alert
+    from sekoia_io_xdr.operations.alerts.edit_alert import edit_alert
 
-    with patch(
-        "connector_sekoia_io_xdr.operations.alerts.edit_alert.GenericAPIAction"
-    ) as action:
+    with patch("sekoia_io_xdr.operations.alerts.edit_alert.GenericAPIAction") as action:
         action.return_value.run.return_value = {
             "uuid": "b6ae1cf7-2f6d-4cb1-8f2d-2f6e37a2cc11"
         }
@@ -85,11 +81,9 @@ def test_edit_alert_with_uuid_only(connector_config):
 
 def test_edit_alert_accepts_alert_uuid_alias(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.alerts.edit_alert import edit_alert
+    from sekoia_io_xdr.operations.alerts.edit_alert import edit_alert
 
-    with patch(
-        "connector_sekoia_io_xdr.operations.alerts.edit_alert.GenericAPIAction"
-    ) as action:
+    with patch("sekoia_io_xdr.operations.alerts.edit_alert.GenericAPIAction") as action:
         action.return_value.run.return_value = {"uuid": "ALlegacy01"}
 
         edit_alert(

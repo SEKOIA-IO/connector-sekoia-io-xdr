@@ -6,10 +6,10 @@ from django.conf import settings
 
 def test_update_assets(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.assets.update_assets import update_assets
+    from sekoia_io_xdr.operations.assets.update_assets import update_assets
 
     with patch(
-        "connector_sekoia_io_xdr.operations.assets.update_assets.GenericAPIAction"
+        "sekoia_io_xdr.operations.assets.update_assets.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "uuid": "d4e84f5a-877a-41e8-8166-9691a9ecffa3",
@@ -70,10 +70,10 @@ def test_update_assets(connector_config):
 
 def test_update_assets_with_uuid_only(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.assets.update_assets import update_assets
+    from sekoia_io_xdr.operations.assets.update_assets import update_assets
 
     with patch(
-        "connector_sekoia_io_xdr.operations.assets.update_assets.GenericAPIAction"
+        "sekoia_io_xdr.operations.assets.update_assets.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "uuid": "d4e84f5a-877a-41e8-8166-9691a9ecffa3"
@@ -94,7 +94,7 @@ def test_update_assets_with_uuid_only(connector_config):
 
 def test_update_assets_rejects_legacy_parameters(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.assets.update_assets import update_assets
+    from sekoia_io_xdr.operations.assets.update_assets import update_assets
 
     with pytest.raises(Exception) as exc_info:
         update_assets(
@@ -114,7 +114,7 @@ def test_update_assets_rejects_legacy_parameters(connector_config):
 
 def test_update_assets_invalid_props(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.assets.update_assets import update_assets
+    from sekoia_io_xdr.operations.assets.update_assets import update_assets
 
     with pytest.raises(Exception) as exc_info:
         update_assets(

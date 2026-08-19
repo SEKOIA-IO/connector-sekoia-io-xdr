@@ -89,6 +89,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `cases`
   - `countermeasures`
   - `events`
+- Rename Python source package directory from `sekoia-io-xdr` to `sekoia_io_xdr`
 - Modernize dependency management with uv (`pyproject.toml` + `uv.lock`)
 - Move test execution to `uv run pytest` and align CI to run tests across supported Python versions
 - Refactor operation Python modules to a unified class-based architecture using Pydantic v2 input models

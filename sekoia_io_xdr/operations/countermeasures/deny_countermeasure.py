@@ -13,7 +13,7 @@ class CountermeasureComment(BaseModel):
     author: Optional[str] = None
 
 
-class ActivateCountermeasureParams(InputModel):
+class DenyCountermeasureParams(InputModel):
     cm_uuid: str = Field(
         validation_alias=AliasChoices("cm_uuid", "countermeasure_uuid")
     )
@@ -52,25 +52,28 @@ class ActivateCountermeasureParams(InputModel):
         return self
 
 
-class ActivateCountermeasureOperation(Operation):
+class DenyCountermeasureOperation(Operation):
     http_method = "PATCH"
     payload_parameter = "json"
-    input_model = ActivateCountermeasureParams
+    input_model = DenyCountermeasureParams
     deprecated_parameters = {
         "countermeasure_uuid": "cm_uuid",
         "content": "comment",
         "author": "comment",
     }
 
-    def build_endpoint(self, parsed_input: ActivateCountermeasureParams) -> str:
-        return f"{ALERTS_V1_BASE_URL}/countermeasures/{parsed_input.cm_uuid}/activate"
+    def build_endpoint(self, parsed_input: DenyCountermeasureParams) -> str:
+        return f"{ALERTS_V1_BASE_URL}/countermeasures/{parsed_input.cm_uuid}/deny"
 
-    def build_payload(self, parsed_input: ActivateCountermeasureParams) -> dict:
-        return {"comment": parsed_input.comment.model_dump(exclude_none=True)}
+    def build_payload(self, parsed_input: DenyCountermeasureParams) -> dict:
+        comment = parsed_input.comment
+        if comment is None:
+            raise ValueError("Either comment or content is required.")
+        return {"comment": comment.model_dump(exclude_none=True)}
 
 
-def activate_countermeasure(config, params):
-    """Activate a countermeasure."""
-    return ActivateCountermeasureOperation(api_action_cls=GenericAPIAction).execute(
+def deny_countermeasure(config, params):
+    """Deny a countermeasure."""
+    return DenyCountermeasureOperation(api_action_cls=GenericAPIAction).execute(
         config, params
     )

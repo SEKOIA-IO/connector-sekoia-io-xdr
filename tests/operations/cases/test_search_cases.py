@@ -5,9 +5,9 @@ from django.conf import settings
 
 def test_search_cases(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.cases.search_cases import search_cases
+    from sekoia_io_xdr.operations.cases.search_cases import search_cases
 
-    with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+    with patch("sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = {
             "total": 1,
             "has_more": False,
@@ -47,10 +47,10 @@ def test_search_cases(connector_config):
 
 def test_search_cases_defaults(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.cases.search_cases import search_cases
+    from sekoia_io_xdr.operations.cases.search_cases import search_cases
 
     with patch(
-        "connector_sekoia_io_xdr.operations.cases.search_cases.GenericAPIAction"
+        "sekoia_io_xdr.operations.cases.search_cases.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "total": 0,

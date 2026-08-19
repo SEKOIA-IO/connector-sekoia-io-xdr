@@ -5,10 +5,10 @@ from django.conf import settings
 
 def test_list_alerts(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.alerts.list_alerts import list_alerts
+    from sekoia_io_xdr.operations.alerts.list_alerts import list_alerts
 
     with patch(
-        "connector_sekoia_io_xdr.operations.alerts.list_alerts.GenericAPIAction"
+        "sekoia_io_xdr.operations.alerts.list_alerts.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "items": [
@@ -152,10 +152,10 @@ def test_list_alerts(connector_config):
 
 def test_list_alerts_backward_compatible_date_aliases(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.alerts.list_alerts import list_alerts
+    from sekoia_io_xdr.operations.alerts.list_alerts import list_alerts
 
     with patch(
-        "connector_sekoia_io_xdr.operations.alerts.list_alerts.GenericAPIAction"
+        "sekoia_io_xdr.operations.alerts.list_alerts.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {"items": [], "total": 0}
 

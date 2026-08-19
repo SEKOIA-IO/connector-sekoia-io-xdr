@@ -5,12 +5,12 @@ from django.conf import settings
 
 def test_get_custom_priority(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.custom_fields.get_custom_priority import (
+    from sekoia_io_xdr.operations.custom_fields.get_custom_priority import (
         get_custom_priority,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.custom_fields.get_custom_priority.GenericAPIAction"
+        "sekoia_io_xdr.operations.custom_fields.get_custom_priority.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "uuid": "8cd62b13-fc72-48b1-99df-74ccd2dc8cd9",

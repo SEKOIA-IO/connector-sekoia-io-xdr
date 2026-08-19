@@ -23,8 +23,8 @@ jobs:
             command: uv run isort --check-only .
             fix_command: uv run isort .
           - check: mypy
-            command: uv run mypy .
-            fix_command: uv run mypy .
+            command: uv run mypy sekoia_io_xdr tests
+            fix_command: uv run mypy sekoia_io_xdr tests
           - check: ruff
             command: uv run ruff check .
             fix_command: uv run ruff check . --fix

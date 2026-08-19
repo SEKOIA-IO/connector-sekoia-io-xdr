@@ -11,7 +11,7 @@ import libcst as cst
 
 from scripts.utils.cli_utils import configure_script_logger
 
-DEFAULT_GLOB = "sekoia-io-xdr/**/*.py"
+DEFAULT_GLOB = "sekoia_io_xdr/**/*.py"
 logger = configure_script_logger(Path(__file__).name)
 
 

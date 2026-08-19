@@ -18,7 +18,7 @@ from urllib3.util.retry import Retry
 
 from .constants import BASE_URL, INTEGRATION_NAME
 
-logger = get_logger("sekoia-io-xdr")
+logger = get_logger("sekoia_io_xdr")
 
 
 # logger.setLevel(logging.DEBUG) # Uncomment for connector specific debug

@@ -5,12 +5,12 @@ from django.conf import settings
 
 def test_get_custom_verdict(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.custom_fields.get_custom_verdict import (
+    from sekoia_io_xdr.operations.custom_fields.get_custom_verdict import (
         get_custom_verdict,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.custom_fields.get_custom_verdict.GenericAPIAction"
+        "sekoia_io_xdr.operations.custom_fields.get_custom_verdict.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "uuid": "c37221b2-5bbf-46eb-ba16-fb618f7b5282",

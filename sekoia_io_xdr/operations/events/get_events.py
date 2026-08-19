@@ -5,7 +5,7 @@ from connectors.core.connector import get_logger
 from ...utils import BaseGetEvents
 from ..base import InputModel, Operation
 
-logger = get_logger("sekoia-io-xdr")
+logger = get_logger("sekoia_io_xdr")
 
 
 class GetEventsParams(InputModel):

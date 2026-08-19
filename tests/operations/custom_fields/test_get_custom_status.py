@@ -5,12 +5,12 @@ from django.conf import settings
 
 def test_get_custom_status(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.custom_fields.get_custom_status import (
+    from sekoia_io_xdr.operations.custom_fields.get_custom_status import (
         get_custom_status,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.custom_fields.get_custom_status.GenericAPIAction"
+        "sekoia_io_xdr.operations.custom_fields.get_custom_status.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "uuid": "4ffb485e-cf15-46e9-a95d-66f941308002",

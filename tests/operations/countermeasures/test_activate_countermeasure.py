@@ -6,11 +6,11 @@ from django.conf import settings
 
 def test_activate_countermeasure(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
+    from sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
         activate_countermeasure,
     )
 
-    with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+    with patch("sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = {
             "alert_uuid": "2783b458-fa16-4869-a11e-6e9d505beb24",
             "uuid": "dc2e68d2-5978-4bd8-8840-89c7453f16f5",
@@ -52,11 +52,11 @@ def test_activate_countermeasure(connector_config):
 
 def test_activate_countermeasure_with_canonical_comment_json(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
+    from sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
         activate_countermeasure,
     )
 
-    with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+    with patch("sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = {
             "uuid": "82aa4cea-41fd-4381-8bb9-7100e7f97460",
             "activated_at": "2026-07-17T00:00:00Z",
@@ -77,11 +77,11 @@ def test_activate_countermeasure_with_canonical_comment_json(connector_config):
 
 def test_activate_countermeasure_with_deprecated_parameters(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
+    from sekoia_io_xdr.operations.countermeasures.activate_countermeasure import (
         activate_countermeasure,
     )
 
-    with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+    with patch("sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = {
             "uuid": "82aa4cea-41fd-4381-8bb9-7100e7f97460",
             "activated_at": "2026-07-17T00:00:00Z",

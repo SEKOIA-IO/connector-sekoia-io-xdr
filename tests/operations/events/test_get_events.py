@@ -5,11 +5,9 @@ from django.conf import settings
 
 def test_get_events(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.events.get_events import get_events
+    from sekoia_io_xdr.operations.events.get_events import get_events
 
-    with patch(
-        "connector_sekoia_io_xdr.operations.events.get_events.BaseGetEvents"
-    ) as base_cls:
+    with patch("sekoia_io_xdr.operations.events.get_events.BaseGetEvents") as base_cls:
         base = base_cls.return_value
         base.events_api_path = "https://app.sekoia.io/api/v1/sic/events"
         base.trigger_event_search_job.return_value = "job-123"
@@ -49,11 +47,9 @@ def test_get_events(connector_config):
 
 def test_get_events_default_limit(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.events.get_events import get_events
+    from sekoia_io_xdr.operations.events.get_events import get_events
 
-    with patch(
-        "connector_sekoia_io_xdr.operations.events.get_events.BaseGetEvents"
-    ) as base_cls:
+    with patch("sekoia_io_xdr.operations.events.get_events.BaseGetEvents") as base_cls:
         base = base_cls.return_value
         base.events_api_path = "https://app.sekoia.io/api/v1/sic/events"
         base.trigger_event_search_job.return_value = "job-123"

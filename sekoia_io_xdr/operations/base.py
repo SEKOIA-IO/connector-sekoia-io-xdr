@@ -9,7 +9,7 @@ from pydantic import BaseModel, ConfigDict, ValidationError
 
 from ..utils import GenericAPIAction
 
-logger = get_logger("sekoia-io-xdr")
+logger = get_logger("sekoia_io_xdr")
 
 
 class InputModel(BaseModel):

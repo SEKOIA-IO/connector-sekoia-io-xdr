@@ -5,11 +5,9 @@ from django.conf import settings
 
 def test_get_asset(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.assets.get_asset import get_asset
+    from sekoia_io_xdr.operations.assets.get_asset import get_asset
 
-    with patch(
-        "connector_sekoia_io_xdr.operations.assets.get_asset.GenericAPIAction"
-    ) as action:
+    with patch("sekoia_io_xdr.operations.assets.get_asset.GenericAPIAction") as action:
         action.return_value.run.return_value = {
             "name": "DMZ-01",
             "created_at": "2019-11-21T09:40:32.514254+00:00",
@@ -57,11 +55,9 @@ def test_get_asset(connector_config):
 
 def test_get_asset_defaults(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.assets.get_asset import get_asset
+    from sekoia_io_xdr.operations.assets.get_asset import get_asset
 
-    with patch(
-        "connector_sekoia_io_xdr.operations.assets.get_asset.GenericAPIAction"
-    ) as action:
+    with patch("sekoia_io_xdr.operations.assets.get_asset.GenericAPIAction") as action:
         action.return_value.run.return_value = {
             "uuid": "82aa4cea-41fd-4381-8bb9-7100e7f97460"
         }
@@ -81,11 +77,9 @@ def test_get_asset_defaults(connector_config):
 
 def test_get_asset_accepts_uuid(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.assets.get_asset import get_asset
+    from sekoia_io_xdr.operations.assets.get_asset import get_asset
 
-    with patch(
-        "connector_sekoia_io_xdr.operations.assets.get_asset.GenericAPIAction"
-    ) as action:
+    with patch("sekoia_io_xdr.operations.assets.get_asset.GenericAPIAction") as action:
         action.return_value.run.return_value = {
             "uuid": "82aa4cea-41fd-4381-8bb9-7100e7f97460"
         }

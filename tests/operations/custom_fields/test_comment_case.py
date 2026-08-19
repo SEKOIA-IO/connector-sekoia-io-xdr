@@ -5,12 +5,12 @@ from django.conf import settings
 
 def test_comment_case(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.custom_fields.comment_case import (
+    from sekoia_io_xdr.operations.custom_fields.comment_case import (
         comment_case,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.custom_fields.comment_case.GenericAPIAction"
+        "sekoia_io_xdr.operations.custom_fields.comment_case.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "uuid": "fbdeaba1-dd63-496f-b515-9f14a886a51a",
@@ -43,12 +43,12 @@ def test_comment_case(connector_config):
 
 def test_comment_case_accepts_case_uuid_alias(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.custom_fields.comment_case import (
+    from sekoia_io_xdr.operations.custom_fields.comment_case import (
         comment_case,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.custom_fields.comment_case.GenericAPIAction"
+        "sekoia_io_xdr.operations.custom_fields.comment_case.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "uuid": "fbdeaba1-dd63-496f-b515-9f14a886a51a"

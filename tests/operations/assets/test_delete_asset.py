@@ -5,9 +5,9 @@ from django.conf import settings
 
 def test_delete_asset(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.assets.delete_asset import delete_asset
+    from sekoia_io_xdr.operations.assets.delete_asset import delete_asset
 
-    with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+    with patch("sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = 201
         result = delete_asset(
             config=connector_config,

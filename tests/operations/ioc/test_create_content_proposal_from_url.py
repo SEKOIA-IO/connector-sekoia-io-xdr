@@ -5,12 +5,12 @@ from django.conf import settings
 
 def test_create_content_proposal_from_url(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.ioc.create_content_proposal_from_url import (
+    from sekoia_io_xdr.operations.ioc.create_content_proposal_from_url import (
         create_content_proposal_from_url,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.ioc.create_content_proposal_from_url.GenericAPIAction"
+        "sekoia_io_xdr.operations.ioc.create_content_proposal_from_url.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "data": {

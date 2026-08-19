@@ -7,12 +7,12 @@ from django.conf import settings
 
 def test_upload_observables_with_inline_json(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.ioc.upload_observables import (
+    from sekoia_io_xdr.operations.ioc.upload_observables import (
         upload_observables,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.ioc.upload_observables.GenericAPIAction"
+        "sekoia_io_xdr.operations.ioc.upload_observables.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {"status": "ok"}
 
@@ -44,7 +44,7 @@ def test_upload_observables_with_inline_json(connector_config):
 
 def test_upload_observables_with_path(connector_config, tmp_path):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.ioc.upload_observables import (
+    from sekoia_io_xdr.operations.ioc.upload_observables import (
         upload_observables,
     )
 
@@ -55,7 +55,7 @@ def test_upload_observables_with_path(connector_config, tmp_path):
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.ioc.upload_observables.GenericAPIAction"
+        "sekoia_io_xdr.operations.ioc.upload_observables.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {"status": "ok"}
 
@@ -74,7 +74,7 @@ def test_upload_observables_with_path(connector_config, tmp_path):
 
 def test_upload_observables_requires_input(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.ioc.upload_observables import (
+    from sekoia_io_xdr.operations.ioc.upload_observables import (
         upload_observables,
     )
 

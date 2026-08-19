@@ -5,12 +5,12 @@ from django.conf import settings
 
 def test_list_case_comments(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.custom_fields.list_case_comments import (
+    from sekoia_io_xdr.operations.custom_fields.list_case_comments import (
         list_case_comments,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.custom_fields.list_case_comments.GenericAPIAction"
+        "sekoia_io_xdr.operations.custom_fields.list_case_comments.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "items": [
@@ -59,12 +59,12 @@ def test_list_case_comments(connector_config):
 
 def test_list_case_comments_with_defaults(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.custom_fields.list_case_comments import (
+    from sekoia_io_xdr.operations.custom_fields.list_case_comments import (
         list_case_comments,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.custom_fields.list_case_comments.GenericAPIAction"
+        "sekoia_io_xdr.operations.custom_fields.list_case_comments.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {"items": [], "total": 0}
 
@@ -90,12 +90,12 @@ def test_list_case_comments_with_defaults(connector_config):
 
 def test_list_case_comments_accepts_uuid_alias(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.custom_fields.list_case_comments import (
+    from sekoia_io_xdr.operations.custom_fields.list_case_comments import (
         list_case_comments,
     )
 
     with patch(
-        "connector_sekoia_io_xdr.operations.custom_fields.list_case_comments.GenericAPIAction"
+        "sekoia_io_xdr.operations.custom_fields.list_case_comments.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {"items": [], "total": 0}
 

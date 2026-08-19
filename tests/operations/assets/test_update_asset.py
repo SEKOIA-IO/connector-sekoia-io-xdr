@@ -5,9 +5,9 @@ from django.conf import settings
 
 def test_update_asset(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.assets.update_asset import update_asset
+    from sekoia_io_xdr.operations.assets.update_asset import update_asset
 
-    with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+    with patch("sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = {
             "uuid": "d4e84f5a-877a-41e8-8166-9691a9ecffa3",
             "name": "test update 1",

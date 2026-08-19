@@ -6,11 +6,11 @@ from django.conf import settings
 
 def test_deny_countermeasure(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.countermeasures.deny_countermeasure import (
+    from sekoia_io_xdr.operations.countermeasures.deny_countermeasure import (
         deny_countermeasure,
     )
 
-    with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+    with patch("sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = {
             "alert_uuid": "2783b458-fa16-4869-a11e-6e9d505beb24",
             "uuid": "dc2e68d2-5978-4bd8-8840-89c7453f16f5",
@@ -51,11 +51,11 @@ def test_deny_countermeasure(connector_config):
 
 def test_deny_countermeasure_with_canonical_comment_json(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.countermeasures.deny_countermeasure import (
+    from sekoia_io_xdr.operations.countermeasures.deny_countermeasure import (
         deny_countermeasure,
     )
 
-    with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+    with patch("sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = {
             "uuid": "dc2e68d2-5978-4bd8-8840-89c7453f16f5",
             "denied_at": "2026-07-17T00:00:00Z",
@@ -76,11 +76,11 @@ def test_deny_countermeasure_with_canonical_comment_json(connector_config):
 
 def test_deny_countermeasure_with_deprecated_parameters(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.countermeasures.deny_countermeasure import (
+    from sekoia_io_xdr.operations.countermeasures.deny_countermeasure import (
         deny_countermeasure,
     )
 
-    with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+    with patch("sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = {
             "uuid": "dc2e68d2-5978-4bd8-8840-89c7453f16f5",
             "denied_at": "2026-07-17T00:00:00Z",

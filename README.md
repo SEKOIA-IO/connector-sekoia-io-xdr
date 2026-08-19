@@ -98,7 +98,7 @@ This repository includes utility scripts to normalize metadata and source files.
 uv run python -m scripts.sort_info_json
 ```
 
-This sorts `configuration.fields` and `operations` alphabetically in `sekoia-io-xdr/info.json`.
+This sorts `configuration.fields` and `operations` alphabetically in `sekoia_io_xdr/info.json`.
 
 For CI-style validation without writing changes:
 
@@ -148,7 +148,7 @@ uv run python -m scripts.deprecate_operation_parameter <operation> <parameter>
 
 ##### Normalize deprecated metadata
 
-Normalize deprecated operation and parameter metadata in `sekoia-io-xdr/info.json`:
+Normalize deprecated operation and parameter metadata in `sekoia_io_xdr/info.json`:
 
 ```bash
 uv run python -m scripts.normalize_deprecated_parameters
@@ -164,7 +164,7 @@ uv run python -m scripts.normalize_deprecated_parameters --check
 
 To minimize remapping in FortiSOAR, this connector follows a simple naming policy:
 
-- `operation` in `sekoia-io-xdr/info.json` is derived from the action `slug` in [automation-library/Sekoia.io/action_*.json](https://github.com/SEKOIA-IO/automation-library/tree/develop/Sekoia.io).
+- `operation` in `sekoia_io_xdr/info.json` is derived from the action `slug` in [automation-library/Sekoia.io/action_*.json](https://github.com/SEKOIA-IO/automation-library/tree/develop/Sekoia.io).
 - When multiple action definitions exist for the same capability, prefer the non-deprecated action as the functional source of truth.
 - `title` and `description` are aligned with action metadata (`name` and `description`) whenever possible.
 - The [Sekoia.io full OpenAPI 3.1 schema in JSON format](https://docs.sekoia.com/developer/api/) is the source of truth for HTTP method, endpoint, parameters, and constraints.
@@ -179,7 +179,7 @@ Scope rule:
 Example:
 
 - The action file can be named `action_lists_cases.json`, while its action `slug` is `search_cases`.
-- The connector operation key is therefore `search_cases` in `sekoia-io-xdr/info.json`.
+- The connector operation key is therefore `search_cases` in `sekoia_io_xdr/info.json`.
 - The Python module name can differ over time during refactors; the stable key exposed to FortiSOAR remains the action `slug`.
 
 ## Deprecation
@@ -189,7 +189,7 @@ Example:
 Use this migration rule when replacing an existing connector operation:
 
 1. Create the new operation using the current action slug.
-2. Deprecate the old operation in `sekoia-io-xdr/info.json` with a replacement message.
+2. Deprecate the old operation in `sekoia_io_xdr/info.json` with a replacement message.
 3. Keep the old operation implementation available until removal.
 
 Parameter compatibility policy:
@@ -200,7 +200,7 @@ Parameter compatibility policy:
 ### Deprecation conventions
 
 This repository uses explicit conventions for deprecated metadata in
-`sekoia-io-xdr/info.json`.
+`sekoia_io_xdr/info.json`.
 
 #### Deprecated operation
 
@@ -228,7 +228,7 @@ GitHub Actions currently uses four independent workflows:
 
 - `lint.yml`: runs code linting and static quality checks in parallel.
 - `tests.yml`: runs the unit test suite on multiple Python versions (`3.9` to `3.14`).
-- `normalize_info_json.yml`: runs read-only validation on `sekoia-io-xdr/info.json` metadata rules.
+- `normalize_info_json.yml`: runs read-only validation on `sekoia_io_xdr/info.json` metadata rules.
 - `normalize_operations.yml`: runs read-only normalization checks on operation source files.
 
 The `normalize_info_json` and `normalize_operations` stages are intentionally separated from linting, so repository normalization checks can evolve independently as new rules are added.

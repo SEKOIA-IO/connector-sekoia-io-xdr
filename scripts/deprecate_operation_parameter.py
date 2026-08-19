@@ -14,7 +14,7 @@ from scripts.utils.deprecation_utils import (
     normalize_deprecated_title,
 )
 
-DEFAULT_PATH = "sekoia-io-xdr/info.json"
+DEFAULT_PATH = "sekoia_io_xdr/info.json"
 logger = configure_script_logger(Path(__file__).name)
 
 

@@ -1,4 +1,4 @@
-from connector_sekoia_io_xdr.operations.base import (
+from sekoia_io_xdr.operations.base import (
     DeprecatedAliases,
     InputModel,
     Operation,

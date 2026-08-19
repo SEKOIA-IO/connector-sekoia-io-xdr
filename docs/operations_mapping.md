@@ -1,6 +1,6 @@
 # Operations mapping
 
-This table lists all operations currently exposed by the connector (from sekoia-io-xdr/info.json), their operation title, HTTP method, endpoint template, and associated playbook action source from [automation-library/Sekoia.io/action_*.json](https://github.com/SEKOIA-IO/automation-library/tree/develop/Sekoia.io).
+This table lists all operations currently exposed by the connector (from sekoia_io_xdr/info.json), their operation title, HTTP method, endpoint template, and associated playbook action source from [automation-library/Sekoia.io/action_*.json](https://github.com/SEKOIA-IO/automation-library/tree/develop/Sekoia.io).
 
 | Operation | Operation Title | HTTP Method | Endpoint | Playbook action JSON | Playbook action name | Playbook action slug |
 | --- | --- | --- | --- | --- | --- | --- |

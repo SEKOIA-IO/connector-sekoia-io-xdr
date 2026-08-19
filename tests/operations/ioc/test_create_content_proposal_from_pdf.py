@@ -6,7 +6,7 @@ from django.conf import settings
 
 def test_create_content_proposal_from_pdf(connector_config, tmp_path):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf import (
+    from sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf import (
         create_content_proposal_from_pdf,
     )
 
@@ -14,7 +14,7 @@ def test_create_content_proposal_from_pdf(connector_config, tmp_path):
     pdf_file.write_bytes(b"%PDF-1.4\n%test\n")
 
     with patch(
-        "connector_sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf.GenericAPIAction"
+        "sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "data": {"content_proposal_id": "cp-pdf-001", "file_name": "report.pdf"}
@@ -47,7 +47,7 @@ def test_create_content_proposal_from_pdf_accepts_file_alias(
     connector_config, tmp_path
 ):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf import (
+    from sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf import (
         create_content_proposal_from_pdf,
     )
 
@@ -55,7 +55,7 @@ def test_create_content_proposal_from_pdf_accepts_file_alias(
     pdf_file.write_bytes(b"%PDF-1.4\n%alias\n")
 
     with patch(
-        "connector_sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf.GenericAPIAction"
+        "sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf.GenericAPIAction"
     ) as action:
         action.return_value.run.return_value = {
             "data": {"content_proposal_id": "cp-pdf-002"}
@@ -72,7 +72,7 @@ def test_create_content_proposal_from_pdf_accepts_file_alias(
 
 def test_create_content_proposal_from_pdf_file_not_found(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf import (
+    from sekoia_io_xdr.operations.ioc.create_content_proposal_from_pdf import (
         create_content_proposal_from_pdf,
     )
 

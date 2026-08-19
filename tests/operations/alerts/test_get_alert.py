@@ -5,11 +5,9 @@ from django.conf import settings
 
 def test_get_alert(connector_config):
     settings.configure()
-    import connector_sekoia_io_xdr.operations.alerts.get_alert as get_alert
+    import sekoia_io_xdr.operations.alerts.get_alert as get_alert
 
-    with patch(
-        "connector_sekoia_io_xdr.operations.alerts.get_alert.GenericAPIAction"
-    ) as action:
+    with patch("sekoia_io_xdr.operations.alerts.get_alert.GenericAPIAction") as action:
         action.return_value.run.return_value = {
             "operation": None,
             "status": "Success",
@@ -155,11 +153,9 @@ def test_get_alert(connector_config):
 
 def test_get_alert_include_defaults(connector_config):
     settings.configure()
-    import connector_sekoia_io_xdr.operations.alerts.get_alert as get_alert
+    import sekoia_io_xdr.operations.alerts.get_alert as get_alert
 
-    with patch(
-        "connector_sekoia_io_xdr.operations.alerts.get_alert.GenericAPIAction"
-    ) as action:
+    with patch("sekoia_io_xdr.operations.alerts.get_alert.GenericAPIAction") as action:
         action.return_value.run.return_value = {"data": {}}
 
         get_alert.get_alert(

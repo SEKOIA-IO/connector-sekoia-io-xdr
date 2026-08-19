@@ -5,11 +5,11 @@ from django.conf import settings
 
 def test_update_alert_status(connector_config):
     settings.configure()
-    from connector_sekoia_io_xdr.operations.alerts.update_alert_status import (
+    from sekoia_io_xdr.operations.alerts.update_alert_status import (
         update_alert_status,
     )
 
-    with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+    with patch("sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = 200
 
         result = update_alert_status(
@@ -24,11 +24,11 @@ def test_update_alert_status(connector_config):
 
 
 def test_update_alert_status_with_uuid(connector_config):
-    from connector_sekoia_io_xdr.operations.alerts.update_alert_status import (
+    from sekoia_io_xdr.operations.alerts.update_alert_status import (
         update_alert_status,
     )
 
-    with patch("connector_sekoia_io_xdr.utils.GenericAPIAction.run") as query:
+    with patch("sekoia_io_xdr.utils.GenericAPIAction.run") as query:
         query.return_value = 200
 
         result = update_alert_status(

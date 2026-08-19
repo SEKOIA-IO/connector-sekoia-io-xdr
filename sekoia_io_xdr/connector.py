@@ -33,7 +33,7 @@ from .operations.ioc.create_content_proposal_from_url import (
 )
 from .operations.ioc.upload_observables import upload_observables
 
-logger = get_logger("sekoia-io-xdr")
+logger = get_logger("sekoia_io_xdr")
 
 
 class Sekoiaio(Connector):

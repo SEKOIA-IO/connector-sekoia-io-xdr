@@ -28,12 +28,13 @@ lint = [
     "ruff>=0.15.20",
 ]
 
-# Restrict mypy discovery to importable targets and skip non-package SDK/source folders.
+# Run mypy on connector source and tests while excluding local/generated folders.
 [tool.mypy]
 python_version = "3.10"
-files = ["connector_sekoia_io_xdr", "tests"]
-exclude = "(^|/)sekoia-io-xdr/|(^|/)Sekoia\\.io/|(^|/)\\.venv/|(^|/)\\.pytest_cache/"
+files = ["sekoia_io_xdr", "tests"]
+exclude = "(^|/)\\.venv/|(^|/)\\.pytest_cache/|(^|/)\\.tmp/"
 ignore_missing_imports = true
+follow_imports = "skip"
 show_column_numbers = true
 
 [tool.black]
