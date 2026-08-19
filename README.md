@@ -140,18 +140,22 @@ Check-only mode:
 uv run python -m scripts.sync_requirements_txt --check
 ```
 
-#### Build connector archive (.tgz)
+#### Build connector archives (.tgz + .zip)
 
-Generate the FortiSOAR connector archive from `sekoia-io-xdr/`:
+Generate both FortiSOAR connector archives (`.tgz` and `.zip`) from `sekoia-io-xdr/`:
 
 ```bash
-uv run python -m scripts.build_connector_archive
+uv run python -m scripts.build_connector_archives
 ```
+
+This repository builds a **Connector** package (not a Solution Pack).
+Upload it in FortiSOAR from `Content Hub > Manage > Upload > Upload Connector`.
+Do not use `Upload Solution Pack` for this artifact.
 
 Optional flags:
 
 ```bash
-uv run python -m scripts.build_connector_archive --output-dir dist --archive-name connector-sekoia-io-xdr-custom.tgz
+uv run python -m scripts.build_connector_archives --output-dir dist --tgz-name connector-sekoia-io-xdr-custom.tgz --zip-name connector-sekoia-io-xdr-custom.zip
 ```
 
 #### Deprecation actions

@@ -66,17 +66,19 @@ jobs:
         run: uv sync --group dev --group lint
 
       - name: Build connector archive
-        run: uv run python -m scripts.build_connector_archive
+        run: uv run python -m scripts.build_connector_archives
 
       - name: Upload connector archive artifact
         uses: actions/upload-artifact@v4
         with:
-          name: connector-sekoia-io-xdr-tgz
-          path: dist/*.tgz
+          name: connector-sekoia-io-xdr-archives
+          path: |
+            dist/*.tgz
+            dist/*.zip
           if-no-files-found: error
 
       - name: Print artifact download hint
         run: |
-          echo "Connector archive uploaded as GitHub artifact: connector-sekoia-io-xdr-tgz"
+          echo "Connector archives uploaded as GitHub artifact: connector-sekoia-io-xdr-archives"
           echo "Download it from this workflow run page:"
           echo "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"

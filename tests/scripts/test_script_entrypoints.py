@@ -13,12 +13,12 @@ def _run_script(module_file: str):
 
 
 def test_build_connector_archive_main_invalid_archive_name(monkeypatch):
-    from scripts import build_connector_archive as mod
+    from scripts import build_connector_archives as mod
 
     monkeypatch.setattr(
         sys,
         "argv",
-        ["build_connector_archive.py", "--archive-name", "bad-name.zip"],
+        ["build_connector_archives.py", "--tgz-name", "bad-name.tar"],
     )
 
     with pytest.raises(SystemExit, match="must end with .tgz"):
@@ -26,20 +26,50 @@ def test_build_connector_archive_main_invalid_archive_name(monkeypatch):
 
 
 def test_build_connector_archive_main_success(monkeypatch, tmp_path):
-    from scripts import build_connector_archive as mod
+    from scripts import build_connector_archives as mod
 
     output_dir = tmp_path / "out"
-    expected = output_dir / "archive.tgz"
+    expected_tgz = output_dir / "archive.tgz"
+    expected_zip = output_dir / "archive.zip"
 
     monkeypatch.setattr(
         mod,
-        "build_connector_archive",
-        lambda **_kwargs: expected,
+        "build_connector_archives",
+        lambda **_kwargs: (expected_tgz, expected_zip),
     )
     monkeypatch.setattr(
         sys,
         "argv",
-        ["build_connector_archive.py", "--output-dir", str(output_dir)],
+        ["build_connector_archives.py", "--output-dir", str(output_dir)],
+    )
+
+    assert mod.main() == 0
+
+
+def test_build_connector_archive_main_custom_names_success(monkeypatch, tmp_path):
+    from scripts import build_connector_archives as mod
+
+    output_dir = tmp_path / "out"
+    expected_tgz = output_dir / "connector-custom.tgz"
+    expected_zip = output_dir / "connector-custom.zip"
+
+    monkeypatch.setattr(
+        mod,
+        "build_connector_archives",
+        lambda **_kwargs: (expected_tgz, expected_zip),
+    )
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "build_connector_archives.py",
+            "--tgz-name",
+            "connector-custom.tgz",
+            "--zip-name",
+            "connector-custom.zip",
+            "--output-dir",
+            str(output_dir),
+        ],
     )
 
     assert mod.main() == 0
@@ -84,7 +114,11 @@ def test_build_connector_archive_entrypoint_module(monkeypatch, tmp_path):
         sys,
         "argv",
         [
-            "build_connector_archive.py",
+            "build_connector_archives.py",
+            "--tgz-name",
+            "x.tgz",
+            "--zip-name",
+            "x.zip",
             "--connector-dir",
             str(connector_dir),
             "--output-dir",
@@ -94,7 +128,7 @@ def test_build_connector_archive_entrypoint_module(monkeypatch, tmp_path):
     )
 
     with pytest.raises(SystemExit) as exc:
-        _run_script("build_connector_archive.py")
+        _run_script("build_connector_archives.py")
 
     assert exc.value.code == 0
 
