@@ -3,6 +3,7 @@
 *.py[cod]
 *.pyd
 *.so
+dist/
 
 # Virtual environments
 .venv/

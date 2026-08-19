@@ -23,8 +23,8 @@ jobs:
             command: uv run isort --check-only sekoia-io-xdr tests scripts
             fix_command: uv run isort sekoia-io-xdr tests scripts
           - check: mypy
-            command: MYPYPATH=sekoia-io-xdr uv run mypy -p sekoia_io_xdr && MYPYPATH=sekoia-io-xdr uv run mypy tests
-            fix_command: MYPYPATH=sekoia-io-xdr uv run mypy -p sekoia_io_xdr && MYPYPATH=sekoia-io-xdr uv run mypy tests
+            command: MYPYPATH=sekoia-io-xdr uv run mypy -p sekoia_io_xdr && MYPYPATH=sekoia-io-xdr uv run mypy tests && uv run mypy scripts
+            fix_command: MYPYPATH=sekoia-io-xdr uv run mypy -p sekoia_io_xdr && MYPYPATH=sekoia-io-xdr uv run mypy tests && uv run mypy scripts
           - check: ruff
             command: uv run ruff check sekoia-io-xdr tests scripts
             fix_command: uv run ruff check sekoia-io-xdr tests scripts --fix

@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add GitHub Actions:
   - `lint` stage to run `black`, `isort`, `mypy`, and `ruff` checks in parallel
   - `normalize_metadata` stage to run read-only checks dedicated to `info.json` metadata normalization
-  - `prepare_package` stage to run a read-only check ensuring `sekoia-io-xdr/requirements.txt` is synchronized with `uv.lock`
+  - `prepare_package` stage to run package quality gates (including requirements synchronization checks), build a `.tgz` connector archive, and publish it as a workflow artifact
   - `normalize_operations` stage to run read-only checks dedicated to operation source normalization
   - `tests` stage to run the unit test suite across multiple supported Python versions (`3.9` to `3.14`)
 
@@ -90,7 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `cases`
   - `countermeasures`
   - `events`
-- Rename Python source package directory from `sekoia-io-xdr` to `sekoia_io_xdr`
+- Align connector packaging layout with FortiSOAR requirements by using a top-level `sekoia-io-xdr` directory (matching `info.json` name) while keeping Python modules importable under `sekoia_io_xdr`
 - Modernize dependency management with uv (`pyproject.toml` + `uv.lock`)
 - Move test execution to `uv run pytest` and align CI to run tests across supported Python versions
 - Refactor operation Python modules to a unified class-based architecture using Pydantic v2 input models

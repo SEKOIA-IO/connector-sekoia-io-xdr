@@ -134,6 +134,20 @@ Check-only mode:
 uv run python -m scripts.sync_requirements_txt --check
 ```
 
+#### Build connector archive (.tgz)
+
+Generate the FortiSOAR connector archive from `sekoia-io-xdr/`:
+
+```bash
+uv run python -m scripts.build_connector_archive
+```
+
+Optional flags:
+
+```bash
+uv run python -m scripts.build_connector_archive --output-dir dist --archive-name connector-sekoia-io-xdr-custom.tgz
+```
+
 #### Deprecation actions
 
 ##### Deprecate one operation
@@ -244,11 +258,13 @@ GitHub Actions currently uses five independent workflows:
 - `tests.yml`: runs the unit test suite on multiple Python versions (`3.9` to `3.14`).
 - `normalize_metadata.yml`: runs read-only validation on `sekoia-io-xdr/info.json` metadata rules.
 - `normalize_operations.yml`: runs read-only normalization checks on operation source files.
-- `prepare_package.yml`: runs read-only validation on packaging prerequisites (requirements synchronization with `uv.lock`).
+- `prepare_package.yml`: runs package quality gates, builds a connector `.tgz`, and uploads it as a GitHub Actions artifact.
 
 The `normalize_metadata` and `normalize_operations` stages are intentionally separated from linting, so repository normalization checks can evolve independently as new rules are added.
 
 Any failure in one workflow marks the CI pipeline as failed.
+
+For `prepare_package.yml`, the generated archive is downloadable from the workflow run artifacts section.
 
 ### Current test limitations
 
