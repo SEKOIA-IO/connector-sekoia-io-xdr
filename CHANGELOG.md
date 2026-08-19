@@ -31,10 +31,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `upload_observables` operation
 - Add runtime, development, and lint dependency groups in `pyproject.toml` for reproducible local and CI environments
 - Add GitHub Actions:
-  - `lint` stage to run `black`, `isort`, `mypy` and `ruff`
-  - `normalize_info_json` stage to run read-only checks dedicated to `info.json`
+  - `lint` stage to run `black`, `isort`, `mypy`, and `ruff` checks in parallel
+  - `normalize_metadata` stage to run read-only checks dedicated to `info.json` metadata normalization
+  - `prepare_package` stage to run a read-only check ensuring `sekoia-io-xdr/requirements.txt` is synchronized with `uv.lock`
   - `normalize_operations` stage to run read-only checks dedicated to operation source normalization
-  - `tests` stage to run the unit test suite across multiple supported Python versions
+  - `tests` stage to run the unit test suite across multiple supported Python versions (`3.9` to `3.14`)
 
 ### Changed
 

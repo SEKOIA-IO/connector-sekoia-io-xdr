@@ -2,7 +2,7 @@
 
 [![Lint](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/lint.yml/badge.svg)](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/lint.yml)
 [![Tests](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/tests.yml/badge.svg)](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/tests.yml)
-[![Normalize Info JSON](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_info_json.yml/badge.svg)](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_info_json.yml)
+[![Normalize Metadata](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_metadata.yml/badge.svg)](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_metadata.yml)
 [![Normalize Operations](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_operations.yml/badge.svg)](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_operations.yml)
 
 This connector enable you to make full use of the SEKOIA.IO XDR platform.
@@ -120,6 +120,20 @@ Check-only mode:
 uv run python -m scripts.sort_operation_payload_keys --check
 ```
 
+#### Sync connector requirements.txt from uv.lock
+
+Regenerate the connector runtime requirements file from `uv.lock`:
+
+```bash
+uv run python -m scripts.sync_requirements_txt
+```
+
+Check-only mode:
+
+```bash
+uv run python -m scripts.sync_requirements_txt --check
+```
+
 #### Deprecation actions
 
 ##### Deprecate one operation
@@ -224,14 +238,15 @@ Use the script `scripts.normalize_deprecated_parameters` (see `Scripts (uv)` > `
 
 ## CI pipeline
 
-GitHub Actions currently uses four independent workflows:
+GitHub Actions currently uses five independent workflows:
 
 - `lint.yml`: runs code linting and static quality checks in parallel.
 - `tests.yml`: runs the unit test suite on multiple Python versions (`3.9` to `3.14`).
-- `normalize_info_json.yml`: runs read-only validation on `sekoia-io-xdr/info.json` metadata rules.
+- `normalize_metadata.yml`: runs read-only validation on `sekoia-io-xdr/info.json` metadata rules.
 - `normalize_operations.yml`: runs read-only normalization checks on operation source files.
+- `prepare_package.yml`: runs read-only validation on packaging prerequisites (requirements synchronization with `uv.lock`).
 
-The `normalize_info_json` and `normalize_operations` stages are intentionally separated from linting, so repository normalization checks can evolve independently as new rules are added.
+The `normalize_metadata` and `normalize_operations` stages are intentionally separated from linting, so repository normalization checks can evolve independently as new rules are added.
 
 Any failure in one workflow marks the CI pipeline as failed.
 
