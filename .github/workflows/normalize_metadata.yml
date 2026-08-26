@@ -1,0 +1,44 @@
+name: Connector Sekoia XDR Normalize Metadata Checks
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  normalize_metadata:
+    name: "normalize_metadata / ${{ matrix.check }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - check: sort
+            command: uv run python -m scripts.sort_info_json --check
+            fix_command: uv run python -m scripts.sort_info_json
+          - check: deprecated-metadata
+            command: uv run python -m scripts.normalize_deprecated_parameters --check
+            fix_command: uv run python -m scripts.normalize_deprecated_parameters
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Sync dependencies
+        run: uv sync --group dev --group lint
+
+      - name: Run metadata checks (read-only)
+        run: |
+          if ! ${{ matrix.command }}; then
+            printf '\033[1;31mPlease run this command locally to fix the errors above:\033[0m\n\n%s\n' "${{ matrix.fix_command }}"
+            exit 1
+          fi

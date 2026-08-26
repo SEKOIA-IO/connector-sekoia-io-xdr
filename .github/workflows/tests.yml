@@ -1,0 +1,51 @@
+name: Connector Sekoia XDR Test Suite
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  # Run the same test suite on all supported Python runtimes.
+  # This catches interpreter-specific regressions early.
+  tests:
+    name: "tests / py${{ matrix.python-version }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Keep this matrix aligned with [project].requires-python in pyproject.toml.
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+
+      # Install the exact dependency set defined in pyproject/uv.lock.
+      - name: Sync dependencies
+        run: |
+          uv sync --group dev
+
+      # Execute tests through uv to ensure the selected Python is used.
+      - name: Run tests
+        run: uv run pytest tests/ --color=yes -vv
+
+      # Enforce global coverage budget once on the reference runtime.
+      - name: Check coverage is 100%
+        if: matrix.python-version == '3.12'
+        run: |
+          uv run --with pytest-cov \
+            pytest tests/ --color=yes -vv \
+            --cov=sekoia_io_xdr \
+            --cov=scripts \
+            --cov-report=term-missing \
+            --cov-fail-under=100

@@ -4,15 +4,15 @@ SEKOIA.IO eXtended Detection and Response SaaS platform leverages Cyber Threat I
 
 ### Version information
 
-Connector Version: 1.1.0
+Connector Version: 2.0.0
 
 
 Authored By: SEKOIA.IO
 
 Certified: No
 
-## Release Notes for version 1.1.0
-Following enhancements have been made to the SEKOIA.IO XDR Connector in version 1.1.0:
+## Release Notes for version 2.0.0
+Following enhancements have been made to the SEKOIA.IO XDR Connector in version 2.0.0:
 <ul>
 <li>Added 'Updated Start Date', 'Updated End Date', 'Records Offset' and 'Records Per Page' in 'List Alerts' operation.</li>
 <li><p>Added the ability to configure data ingestion (using the Data Ingestion Wizard). The Data Ingestion Wizard also</p>
@@ -203,7 +203,7 @@ The following automated operations can be included in playbooks and you can also
 
 ## Included playbooks
 
-The `Sample - sekoia-io-xdr - 1.1.0` playbook collection comes bundled with the SEKOIA.IO XDR connector. These playbooks contain steps using which you can perform all supported actions. You can see bundled playbooks in the **Automation** > **Playbooks** section in FortiSOAR&trade; after importing the SEKOIA.IO XDR connector.
+The `Sample - sekoia-io-xdr - 2.0.0` playbook collection comes bundled with the SEKOIA.IO XDR connector. These playbooks contain steps using which you can perform all supported actions. You can see bundled playbooks in the **Automation** > **Playbooks** section in FortiSOAR&trade; after importing the SEKOIA.IO XDR connector.
 
 - > Sekoia.io > Fetch
 - Activate a Countermeasure

@@ -1,0 +1,56 @@
+{
+  "operations": [
+    {
+      "operation": "get_asset",
+      "parameters": [
+        {
+          "name": "asset_uuid",
+          "title": "Asset UUID",
+          "description": "Deprecated: use UUID instead. The unique identifier of the asset."
+        },
+        {
+          "name": "uuid",
+          "title": "UUID",
+          "description": "The unique identifier of the asset."
+        }
+      ]
+    },
+    {
+      "operation": "delete_asset",
+      "title": "Delete Asset",
+      "description": "Deprecated: use revoke_assetv2 operation instead.",
+      "parameters": []
+    },
+    {
+      "operation": "revoke_assetv2",
+      "title": "Revoke Asset",
+      "description": "Revoke an asset",
+      "parameters": []
+    },
+    {
+      "operation": "list_alerts",
+      "parameters": [
+        {
+          "name": "match[status_uuid]",
+          "title": "Match Status UUID",
+          "description": "Canonical status UUID filter"
+        },
+        {
+          "name": "status_uuid",
+          "title": "[Deprecated] Status UUID",
+          "description": "Deprecated parameter. Use match[status_uuid] parameter instead."
+        },
+        {
+          "name": "legacy",
+          "title": "(deprecated) Legacy Field",
+          "description": "deprecated old input"
+        },
+        {
+          "name": "regular",
+          "title": "Regular",
+          "description": "Normal"
+        }
+      ]
+    }
+  ]
+}

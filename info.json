@@ -1,0 +1,1987 @@
+{
+  "category": "Analytics & SIEM",
+  "configuration": {
+    "fields": [
+      {
+        "description": "Specify the API key used to access the SEKOIA.IO XDR server to which you will connect and perform the automated operations.",
+        "editable": true,
+        "name": "api_key",
+        "required": true,
+        "title": "API Key",
+        "type": "text",
+        "visible": true
+      },
+      {
+        "description": "Specifies whether the proxy for the server is to be verified or not.",
+        "editable": true,
+        "name": "proxy",
+        "required": false,
+        "title": "Proxy",
+        "type": "checkbox",
+        "visible": true
+      },
+      {
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not.",
+        "editable": true,
+        "name": "verify_certificate",
+        "required": false,
+        "title": "Verify Certificate",
+        "type": "checkbox",
+        "visible": true
+      }
+    ]
+  },
+  "cs_approved": false,
+  "cs_compatible": true,
+  "description": "SEKOIA.IO eXtended Detection and Response SaaS platform leverages Cyber Threat Intelligence to combine anticipation with automated incident response. SEKOIA.IO XDR offers open, transparent and flexible security oversight to break down silos and neutralise threats before impact, using intelligence. This connector facilitates automated operations related to alerts, assets and events.",
+  "help_online": "https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/blob/release/2.0.0/docs/SekoiaioXDR.md",
+  "icon_large_name": "large.png",
+  "icon_medium_name": "medium.png",
+  "icon_small_name": "small.png",
+  "ingestion_modes": [
+    "scheduled"
+  ],
+  "ingestion_supported": true,
+  "label": "SEKOIA.IO XDR",
+  "name": "sekoia-io-xdr",
+  "operations": [
+    {
+      "annotation": "activate_countermeasure",
+      "category": "investigation",
+      "description": "Activate a countermeasure in SEKOIA.IO XDR based on the countermeasure UUID and comment you have specified.",
+      "enabled": true,
+      "operation": "activate_countermeasure",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Deprecated parameter. Use comment parameter instead.",
+          "editable": true,
+          "name": "author",
+          "required": false,
+          "title": "[Deprecated] Author",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The unique identifier of the countermeasure.",
+          "editable": true,
+          "name": "cm_uuid",
+          "required": true,
+          "title": "Countermeasure UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Comment object as a JSON string with content and optional author.",
+          "editable": true,
+          "name": "comment",
+          "required": false,
+          "title": "Comment",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use comment parameter instead.",
+          "editable": true,
+          "name": "content",
+          "required": false,
+          "title": "[Deprecated] Content",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use cm_uuid parameter instead.",
+          "editable": true,
+          "name": "countermeasure_uuid",
+          "required": true,
+          "title": "[Deprecated] Countermeasure UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Activate a Countermeasure"
+    },
+    {
+      "annotation": "add_comment_to_alert",
+      "category": "investigation",
+      "description": "Attach a new comment on an alert in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "add_comment_to_alert",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Deprecated parameter. Use uuid parameter instead.",
+          "editable": true,
+          "name": "alert_uuid",
+          "required": false,
+          "title": "[Deprecated] Alert Identifier",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The author of the comment",
+          "editable": true,
+          "name": "author",
+          "required": false,
+          "title": "Author",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use content parameter instead.",
+          "editable": true,
+          "name": "comment",
+          "required": false,
+          "title": "[Deprecated] Comment",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Content of the comment. One of Content or Comment is required.",
+          "editable": true,
+          "name": "content",
+          "required": false,
+          "title": "Content",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The unique identifier of the alert. One of UUID or Alert Identifier is required.",
+          "editable": true,
+          "name": "uuid",
+          "required": false,
+          "title": "UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Add Comment to Alert"
+    },
+    {
+      "annotation": "add_to_ioc_collection",
+      "category": "investigation",
+      "description": "Add indicators to an IOC collection in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "add_to_ioc_collection",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Single indicator to add to the IOC collection.",
+          "editable": true,
+          "name": "indicator",
+          "required": false,
+          "title": "Indicator",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Type of indicator to add (IP address, domain, url, email, hash).",
+          "editable": true,
+          "name": "indicator_type",
+          "required": true,
+          "title": "Indicator Type",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "List of indicators as a JSON array.",
+          "editable": true,
+          "name": "indicators",
+          "required": false,
+          "title": "Indicators",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Identifier of the target IOC collection.",
+          "editable": true,
+          "name": "ioc_collection_id",
+          "required": true,
+          "title": "IOC Collection ID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Validity period in days for created indicators.",
+          "editable": true,
+          "name": "valid_for",
+          "required": false,
+          "title": "Valid For (days)",
+          "type": "integer",
+          "visible": true
+        }
+      ],
+      "title": "Add IOC to IOC Collection"
+    },
+    {
+      "annotation": "comment_case",
+      "category": "investigation",
+      "description": "Add a new comment to a case in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "comment_case",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Content of the comment.",
+          "editable": true,
+          "name": "content",
+          "required": true,
+          "title": "Content",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "UUID of the case.",
+          "editable": true,
+          "name": "uuid",
+          "required": true,
+          "title": "Case UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Comment Case"
+    },
+    {
+      "annotation": "create_content_proposal",
+      "category": "investigation",
+      "description": "Create a content proposal from a STIX bundle in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "create_content_proposal",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Avatar UUID assigned to the content proposal.",
+          "editable": true,
+          "name": "assigned_to",
+          "required": false,
+          "title": "Assigned To",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Whether uploaded bundle can be automatically merged into the consolidated database.",
+          "editable": true,
+          "name": "auto_merge",
+          "required": false,
+          "title": "Auto Merge",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "STIX bundle to upload as a JSON object.",
+          "editable": true,
+          "name": "bundle",
+          "required": false,
+          "title": "Bundle",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Path to a local JSON file containing the STIX bundle.",
+          "editable": true,
+          "name": "bundle_path",
+          "required": false,
+          "title": "Bundle Path",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Whether the uploaded bundle should be enriched.",
+          "editable": true,
+          "name": "enrich",
+          "required": false,
+          "title": "Enrich",
+          "type": "checkbox",
+          "value": true,
+          "visible": true
+        },
+        {
+          "description": "Name of the new content proposal.",
+          "editable": true,
+          "name": "name",
+          "required": false,
+          "title": "Name",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Create Content Proposal"
+    },
+    {
+      "annotation": "create_content_proposal_from_pdf",
+      "category": "investigation",
+      "description": "Create a content proposal from a PDF file in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "create_content_proposal_from_pdf",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Path to the local PDF file to upload.",
+          "editable": true,
+          "name": "file_path",
+          "required": true,
+          "title": "PDF File Path",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Optional name to assign to the content proposal.",
+          "editable": true,
+          "name": "name",
+          "required": false,
+          "title": "Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Optional source reference for the report.",
+          "editable": true,
+          "name": "source_ref",
+          "required": false,
+          "title": "Source Reference",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Create Content Proposal from PDF"
+    },
+    {
+      "annotation": "create_content_proposal_from_url",
+      "category": "investigation",
+      "description": "Create a content proposal from a URL in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "create_content_proposal_from_url",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Optional source reference for the report.",
+          "editable": true,
+          "name": "source_ref",
+          "required": false,
+          "title": "Source Reference",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "URL to analyze and convert into a content proposal.",
+          "editable": true,
+          "name": "url",
+          "required": true,
+          "title": "URL",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Create Content Proposal from URL"
+    },
+    {
+      "annotation": "delete_asset",
+      "category": "investigation",
+      "description": "Deprecated operation. Use revoke_assetv2 operation instead.",
+      "enabled": true,
+      "operation": "delete_asset",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "The unique identifier of the asset",
+          "editable": true,
+          "name": "asset_uuid",
+          "required": true,
+          "title": "Asset UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "[Deprecated] Delete Asset"
+    },
+    {
+      "annotation": "deny_countermeasure",
+      "category": "investigation",
+      "description": "Deny a countermeasure in SEKOIA.IO XDR based on the countermeasure UUID and comment you have specified.",
+      "enabled": true,
+      "operation": "deny_countermeasure",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Deprecated parameter. Use comment parameter instead.",
+          "editable": true,
+          "name": "author",
+          "required": false,
+          "title": "[Deprecated] Author",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The unique identifier of the countermeasure.",
+          "editable": true,
+          "name": "cm_uuid",
+          "required": true,
+          "title": "Countermeasure UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Comment object as a JSON string with content and optional author.",
+          "editable": true,
+          "name": "comment",
+          "required": false,
+          "title": "Comment",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use comment parameter instead.",
+          "editable": true,
+          "name": "content",
+          "required": false,
+          "title": "[Deprecated] Content",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use cm_uuid parameter instead.",
+          "editable": true,
+          "name": "countermeasure_uuid",
+          "required": true,
+          "title": "[Deprecated] Countermeasure UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Deny a Countermeasure"
+    },
+    {
+      "annotation": "edit_alert",
+      "category": "investigation",
+      "description": "Edit the details of an alert in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "edit_alert",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Category of the alert type.",
+          "editable": true,
+          "name": "alert_type_category",
+          "required": false,
+          "title": "Alert Type Category",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Name of the alert type.",
+          "editable": true,
+          "name": "alert_type_value",
+          "required": false,
+          "title": "Alert Type Value",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "User UUID assigned to the alert.",
+          "editable": true,
+          "name": "assignee",
+          "required": false,
+          "title": "Assignee UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "A comment to describe why the alert was updated.",
+          "editable": true,
+          "name": "comment",
+          "required": false,
+          "title": "Comment",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Custom status of the alert.",
+          "editable": true,
+          "name": "custom_status_uuid",
+          "required": false,
+          "title": "Custom Status UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Description of the alert.",
+          "editable": true,
+          "name": "details",
+          "required": false,
+          "title": "Details",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The ID of the kill chain step this alert denotes.",
+          "editable": true,
+          "name": "kill_chain_short_id",
+          "required": false,
+          "title": "Kill Chain Short ID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "UUID of the new alert status.",
+          "editable": true,
+          "name": "status_uuid",
+          "required": false,
+          "title": "Status UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Title of the alert.",
+          "editable": true,
+          "name": "title",
+          "required": false,
+          "title": "Title",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The urgency of the alert.",
+          "editable": true,
+          "name": "urgency",
+          "required": false,
+          "title": "Urgency",
+          "type": "integer",
+          "visible": true
+        },
+        {
+          "description": "UUID of the alert.",
+          "editable": true,
+          "name": "uuid",
+          "required": true,
+          "title": "Alert UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Description of the alert verdict.",
+          "editable": true,
+          "name": "verdict_analysis",
+          "required": false,
+          "title": "Verdict Analysis",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Confidence level of the alert verdict (0-100).",
+          "editable": true,
+          "name": "verdict_confidence",
+          "required": false,
+          "title": "Verdict Confidence",
+          "type": "integer",
+          "visible": true
+        },
+        {
+          "description": "Verdict of the alert.",
+          "editable": true,
+          "name": "verdict_uuid",
+          "required": false,
+          "title": "Verdict UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Edit Alert"
+    },
+    {
+      "annotation": "edit_case",
+      "category": "investigation",
+      "description": "Edit the properties of a case in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "edit_case",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Priority of the case.",
+          "editable": true,
+          "name": "custom_priority_uuid",
+          "required": false,
+          "title": "Custom Priority UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Custom status of the case.",
+          "editable": true,
+          "name": "custom_status_uuid",
+          "required": false,
+          "title": "Custom Status UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Description of the case.",
+          "editable": true,
+          "name": "description",
+          "required": false,
+          "title": "Description",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Priority of the case.",
+          "editable": true,
+          "name": "priority",
+          "required": false,
+          "title": "Priority",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Name of the status of the case.",
+          "editable": true,
+          "name": "status_name",
+          "required": false,
+          "title": "Status Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Identifier of the status of the case.",
+          "editable": true,
+          "name": "status_uuid",
+          "required": false,
+          "title": "Status UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "List of subscribers as a JSON array of objects with avatar_uuid and type.",
+          "editable": true,
+          "name": "subscribers",
+          "required": false,
+          "title": "Subscribers",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "List of tags to associate to the case (comma-separated).",
+          "editable": true,
+          "name": "tags",
+          "required": false,
+          "title": "Tags",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Title of the case.",
+          "editable": true,
+          "name": "title",
+          "required": false,
+          "title": "Title",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "UUID of the case.",
+          "editable": true,
+          "name": "uuid",
+          "required": true,
+          "title": "Case UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Description of the case verdict.",
+          "editable": true,
+          "name": "verdict_analysis",
+          "required": false,
+          "title": "Verdict Analysis",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Confidence level of the case verdict (0-100).",
+          "editable": true,
+          "name": "verdict_confidence",
+          "required": false,
+          "title": "Verdict Confidence",
+          "type": "integer",
+          "visible": true
+        },
+        {
+          "description": "Verdict of the case.",
+          "editable": true,
+          "name": "verdict_uuid",
+          "required": false,
+          "title": "Verdict UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Edit Case"
+    },
+    {
+      "annotation": "get_alert",
+      "category": "investigation",
+      "description": "Retrieves a specific alert from SEKOIA.IO XDR based on the alert UUID and other input parameters that you have specified.",
+      "enabled": true,
+      "operation": "get_alert",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "The unique identifier of the alert (uuid or short_id)",
+          "editable": true,
+          "name": "alert_uuid",
+          "required": true,
+          "title": "Alert UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Option to include related cases of the alert",
+          "editable": true,
+          "name": "include_cases",
+          "required": false,
+          "title": "Include Cases",
+          "type": "checkbox",
+          "visible": true
+        },
+        {
+          "description": "Option to include comments of the alert",
+          "editable": true,
+          "name": "include_comments",
+          "required": false,
+          "title": "Include Comments",
+          "type": "checkbox",
+          "visible": true
+        },
+        {
+          "description": "Option to include the countermeasures of the alert",
+          "editable": true,
+          "name": "include_countermeasures",
+          "required": false,
+          "title": "Include Countermeasures",
+          "type": "checkbox",
+          "visible": true
+        },
+        {
+          "description": "Option to include custom status and verdict information",
+          "editable": true,
+          "name": "include_custom_status",
+          "required": false,
+          "title": "Include Custom Status",
+          "type": "checkbox",
+          "visible": true
+        },
+        {
+          "description": "Option to include the history of the alert",
+          "editable": true,
+          "name": "include_history",
+          "required": false,
+          "title": "Include History",
+          "type": "checkbox",
+          "visible": true
+        },
+        {
+          "description": "Option to include the stix of the alert",
+          "editable": true,
+          "name": "include_stix",
+          "required": false,
+          "title": "Include STIX",
+          "type": "checkbox",
+          "visible": true
+        }
+      ],
+      "title": "Get Alert"
+    },
+    {
+      "annotation": "get_asset",
+      "category": "investigation",
+      "description": "Retrieve an asset from SEKOIA.IO XDR based on the asset UUID you have specified.",
+      "enabled": true,
+      "operation": "get_asset",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Deprecated parameter. Use uuid parameter instead.",
+          "editable": true,
+          "name": "asset_uuid",
+          "required": false,
+          "title": "[Deprecated] Asset UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The unique identifier of the asset. One of UUID or Asset UUID is required.",
+          "editable": true,
+          "name": "uuid",
+          "required": false,
+          "title": "UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Include compliance details in the response.",
+          "editable": true,
+          "name": "with_compliance",
+          "required": false,
+          "title": "With Compliance",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Include telemetry and hygiene details in the response.",
+          "editable": true,
+          "name": "with_telemetry",
+          "required": false,
+          "title": "With Telemetry",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        }
+      ],
+      "title": "Get Asset"
+    },
+    {
+      "annotation": "get_case",
+      "category": "investigation",
+      "description": "Retrieve the properties of a case from SEKOIA.IO XDR based on the case UUID you have specified.",
+      "enabled": true,
+      "operation": "get_case",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Identifier of the community",
+          "editable": true,
+          "name": "community_uuid",
+          "required": false,
+          "title": "Community UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "If set, the case is rendered without placeholder text in the description.",
+          "editable": true,
+          "name": "render",
+          "required": false,
+          "title": "Render",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "UUID of the case",
+          "editable": true,
+          "name": "uuid",
+          "required": true,
+          "title": "Case UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Get Case"
+    },
+    {
+      "annotation": "get_custom_priority",
+      "category": "investigation",
+      "description": "Get a single custom priority based on its UUID.",
+      "enabled": true,
+      "operation": "get_custom_priority",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "UUID of the custom priority.",
+          "editable": true,
+          "name": "priority_uuid",
+          "required": true,
+          "title": "Priority UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Get custom priority"
+    },
+    {
+      "annotation": "get_custom_status",
+      "category": "investigation",
+      "description": "Get a single custom status based on its UUID.",
+      "enabled": true,
+      "operation": "get_custom_status",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "UUID of the custom status.",
+          "editable": true,
+          "name": "status_uuid",
+          "required": true,
+          "title": "Status UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Get custom status"
+    },
+    {
+      "annotation": "get_custom_verdict",
+      "category": "investigation",
+      "description": "Get a single custom verdict based on its UUID.",
+      "enabled": true,
+      "operation": "get_custom_verdict",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "UUID of the custom verdict.",
+          "editable": true,
+          "name": "verdict_uuid",
+          "required": true,
+          "title": "Verdict UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Get custom verdict"
+    },
+    {
+      "annotation": "get_events",
+      "category": "investigation",
+      "description": "Search events according the query from SEKOIA.IO XDR based on the query, earliest time, and latest time you have specified.",
+      "enabled": true,
+      "operation": "get_events",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "The earliest time of the time range of the search",
+          "editable": true,
+          "name": "earliest_time",
+          "required": true,
+          "title": "Earliest Time",
+          "type": "datetime",
+          "visible": true
+        },
+        {
+          "description": "The latest time of the time range of the search",
+          "editable": true,
+          "name": "latest_time",
+          "required": true,
+          "title": "Latest Time",
+          "type": "datetime",
+          "visible": true
+        },
+        {
+          "description": "Maximum number of events to retrieve (1-100).",
+          "editable": true,
+          "name": "limit",
+          "required": false,
+          "title": "Records Per Page",
+          "type": "integer",
+          "value": 100,
+          "visible": true
+        },
+        {
+          "description": "The query to search events",
+          "editable": true,
+          "name": "query",
+          "required": true,
+          "title": "Query",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Get Events"
+    },
+    {
+      "annotation": "list_alerts",
+      "category": "investigation",
+      "description": "Search alerts in SEKOIA.IO XDR based on the input filters you provide.",
+      "enabled": true,
+      "operation": "list_alerts",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "If set, include related case information in each alert.",
+          "editable": true,
+          "name": "cases",
+          "required": false,
+          "title": "Include Cases",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use date[created_at] parameter instead.",
+          "editable": true,
+          "name": "creation_end_date",
+          "required": false,
+          "title": "[Deprecated] Creation End Date",
+          "tooltip": "Time in ISO format (rfc3339)",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use date[created_at] parameter instead.",
+          "editable": true,
+          "name": "creation_start_date",
+          "required": false,
+          "title": "[Deprecated] Creation Start Date",
+          "tooltip": "Time in ISO format (rfc3339)",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter alerts by creation date range in RFC3339 format: start,end.",
+          "editable": true,
+          "name": "date[created_at]",
+          "required": false,
+          "title": "Created At Range",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter alerts by update date range in RFC3339 format: start,end.",
+          "editable": true,
+          "name": "date[updated_at]",
+          "required": false,
+          "title": "Updated At Range",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Direction of sort: asc or desc.",
+          "editable": true,
+          "name": "direction",
+          "required": false,
+          "title": "Direction",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter alerts assigned to a case.",
+          "editable": true,
+          "name": "is_assigned_to_case",
+          "required": false,
+          "title": "Assigned To Case",
+          "type": "checkbox",
+          "visible": true
+        },
+        {
+          "description": "Maximum number of alerts to return (1-100).",
+          "editable": true,
+          "name": "limit",
+          "required": false,
+          "title": "Records Per Page",
+          "type": "integer",
+          "value": 20,
+          "visible": true
+        },
+        {
+          "description": "Match alerts by rule name.",
+          "editable": true,
+          "name": "match[rule_name]",
+          "required": false,
+          "title": "Match Rule Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Match alerts by rule UUID.",
+          "editable": true,
+          "name": "match[rule_uuid]",
+          "required": false,
+          "title": "Match Rule UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Match alerts by short ID.",
+          "editable": true,
+          "name": "match[short_id]",
+          "required": false,
+          "title": "Match Short ID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Match alerts by status name.",
+          "editable": true,
+          "name": "match[status_name]",
+          "required": false,
+          "title": "Match Status Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Match alerts by status UUID.",
+          "editable": true,
+          "name": "match[status_uuid]",
+          "required": false,
+          "title": "Match Status UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Number of records to skip.",
+          "editable": true,
+          "name": "offset",
+          "required": false,
+          "title": "Records Offset",
+          "type": "integer",
+          "value": 0,
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use match[rule_name] parameter instead.",
+          "editable": true,
+          "name": "rule_name",
+          "required": false,
+          "title": "[Deprecated] Rule Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use match[rule_uuid] parameter instead.",
+          "editable": true,
+          "name": "rule_uuid",
+          "required": false,
+          "title": "[Deprecated] Rule UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use match[short_id] parameter instead.",
+          "editable": true,
+          "name": "short_id",
+          "required": false,
+          "title": "[Deprecated] Short ID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter alerts similar to the provided alert short ID.",
+          "editable": true,
+          "name": "similar_to",
+          "required": false,
+          "title": "Similar To",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Sort field for returned alerts.",
+          "editable": true,
+          "name": "sort",
+          "required": false,
+          "title": "Sort",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use match[status_name] parameter instead.",
+          "editable": true,
+          "name": "status_name",
+          "required": false,
+          "title": "[Deprecated] Status Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use match[status_uuid] parameter instead.",
+          "editable": true,
+          "name": "status_uuid",
+          "required": false,
+          "title": "[Deprecated] Status UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "If set, include STIX bundle object in the response.",
+          "editable": true,
+          "name": "stix",
+          "required": false,
+          "title": "Include STIX",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use date[updated_at] parameter instead.",
+          "editable": true,
+          "name": "updated_end_date",
+          "required": false,
+          "title": "[Deprecated] Updated End Date",
+          "tooltip": "Time in ISO format (rfc3339)",
+          "type": "datetime",
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use date[updated_at] parameter instead.",
+          "editable": true,
+          "name": "updated_start_date",
+          "required": false,
+          "title": "[Deprecated] Updated Start Date",
+          "tooltip": "Time in ISO format (rfc3339)",
+          "type": "datetime",
+          "visible": true
+        },
+        {
+          "description": "Filter alerts according to their visibility.",
+          "editable": true,
+          "name": "visible",
+          "required": false,
+          "title": "Visible",
+          "type": "checkbox",
+          "value": true,
+          "visible": true
+        },
+        {
+          "description": "Whether total count should be returned in the response.",
+          "editable": true,
+          "name": "with_count",
+          "required": false,
+          "title": "With Count",
+          "type": "checkbox",
+          "value": true,
+          "visible": true
+        }
+      ],
+      "title": "List Alerts"
+    },
+    {
+      "annotation": "list_assets",
+      "category": "investigation",
+      "description": "Return a list of assets from SEKOIA.IO XDR according to the input filters.",
+      "enabled": true,
+      "operation": "list_assets",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Search by attached detection properties too.",
+          "editable": true,
+          "name": "also_search_in_detection_properties",
+          "required": false,
+          "title": "Also Search In Detection Properties",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Search by asset tags too.",
+          "editable": true,
+          "name": "also_search_in_tags",
+          "required": false,
+          "title": "Also Search In Tags",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of asset categories.",
+          "editable": true,
+          "name": "category",
+          "required": false,
+          "title": "Category",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of community UUIDs.",
+          "editable": true,
+          "name": "community_uuids",
+          "required": false,
+          "title": "Community UUIDs",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of connector UUIDs.",
+          "editable": true,
+          "name": "connectors",
+          "required": false,
+          "title": "Connectors",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of connector configuration UUIDs.",
+          "editable": true,
+          "name": "connectors_configuration",
+          "required": false,
+          "title": "Connectors Configuration",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter assets with higher criticality.",
+          "editable": true,
+          "name": "criticality",
+          "required": false,
+          "title": "Criticality",
+          "type": "integer",
+          "visible": true
+        },
+        {
+          "description": "Sort order: asc or desc.",
+          "editable": true,
+          "name": "direction",
+          "required": false,
+          "title": "Direction",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Return assets using legacy API v1 format.",
+          "editable": true,
+          "name": "format",
+          "required": false,
+          "title": "Format",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Enrich returned assets with their intake formats UUIDs.",
+          "editable": true,
+          "name": "include_intake_formats",
+          "required": false,
+          "title": "Include Intake Formats",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Include revoked assets in the search results.",
+          "editable": true,
+          "name": "include_revoked",
+          "required": false,
+          "title": "Include Revoked",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Enrich returned assets with their detection properties.",
+          "editable": true,
+          "name": "incorporate_atoms",
+          "required": false,
+          "title": "Incorporate Atoms",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of intake format UUIDs.",
+          "editable": true,
+          "name": "intake_format_uuids",
+          "required": false,
+          "title": "Intake Format UUIDs",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The number of assets to return (1-100).",
+          "editable": true,
+          "name": "limit",
+          "required": false,
+          "title": "Records Per Page",
+          "type": "integer",
+          "value": 20,
+          "visible": true
+        },
+        {
+          "description": "The position of the first asset to return.",
+          "editable": true,
+          "name": "offset",
+          "required": false,
+          "title": "Records Offset",
+          "type": "integer",
+          "value": 0,
+          "visible": true
+        },
+        {
+          "description": "Filter reviewed assets only.",
+          "editable": true,
+          "name": "reviewed",
+          "required": false,
+          "title": "Reviewed",
+          "type": "checkbox",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of asset discovery rule UUIDs.",
+          "editable": true,
+          "name": "rule_uuid",
+          "required": false,
+          "title": "Rule UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of asset discovery rule versions.",
+          "editable": true,
+          "name": "rule_version",
+          "required": false,
+          "title": "Rule Version",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Search assets by name.",
+          "editable": true,
+          "name": "search",
+          "required": false,
+          "title": "Search",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Sort criterion. Supported: name, type, created_at, criticality.",
+          "editable": true,
+          "name": "sort",
+          "required": false,
+          "title": "Sort",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of asset sources.",
+          "editable": true,
+          "name": "source",
+          "required": false,
+          "title": "Source",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of tags.",
+          "editable": true,
+          "name": "tags",
+          "required": false,
+          "title": "Tags",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of asset types.",
+          "editable": true,
+          "name": "type",
+          "required": false,
+          "title": "Type",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter by comma-separated list of asset UUIDs.",
+          "editable": true,
+          "name": "uuids",
+          "required": false,
+          "title": "Asset UUIDs",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Enrich returned assets with telemetry statistics.",
+          "editable": true,
+          "name": "with_telemetry",
+          "required": false,
+          "title": "With Telemetry",
+          "type": "checkbox",
+          "value": false,
+          "visible": true
+        }
+      ],
+      "title": "List Assets"
+    },
+    {
+      "annotation": "list_case_comments",
+      "category": "investigation",
+      "description": "List all comments of a case in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "list_case_comments",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "UUID of the case.",
+          "editable": true,
+          "name": "case_uuid",
+          "required": true,
+          "title": "Case UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Filter comments by creation date range in RFC3339 format: start,end.",
+          "editable": true,
+          "name": "date[created_at]",
+          "required": false,
+          "title": "Created At Range",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Direction of the sort (asc, desc).",
+          "editable": true,
+          "name": "direction",
+          "required": false,
+          "title": "Direction",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Maximum number of comments to return (1-100).",
+          "editable": true,
+          "name": "limit",
+          "required": false,
+          "title": "Limit",
+          "type": "integer",
+          "value": 20,
+          "visible": true
+        },
+        {
+          "description": "Match comments by their creator identifier.",
+          "editable": true,
+          "name": "match[created_by]",
+          "required": false,
+          "title": "Match Created By",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Number of comments to skip.",
+          "editable": true,
+          "name": "offset",
+          "required": false,
+          "title": "Offset",
+          "type": "integer",
+          "value": 0,
+          "visible": true
+        },
+        {
+          "description": "Sort returned comments (created_at, created_by, updated_at).",
+          "editable": true,
+          "name": "sort",
+          "required": false,
+          "title": "Sort",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "List Case Comments"
+    },
+    {
+      "annotation": "revoke_assetv2",
+      "category": "investigation",
+      "description": "Revoke an asset in SEKOIA.IO XDR based on the asset UUID you have specified.",
+      "enabled": true,
+      "operation": "revoke_assetv2",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "The identifier of the asset",
+          "editable": true,
+          "name": "uuid",
+          "required": true,
+          "title": "Asset UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Revoke an Asset (V2)"
+    },
+    {
+      "annotation": "search_cases",
+      "category": "investigation",
+      "description": "Find cases from SEKOIA.IO XDR that match the input filters.",
+      "enabled": true,
+      "operation": "search_cases",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Match cases by assigned subscribers.",
+          "editable": true,
+          "name": "assignees",
+          "required": false,
+          "title": "Assignees",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Match cases by their community UUID.",
+          "editable": true,
+          "name": "community_uuid",
+          "required": false,
+          "title": "Community UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Creation date range in RFC3339 date-range format: start,end.",
+          "editable": true,
+          "name": "created_at",
+          "required": false,
+          "title": "Creation Date Range",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Match cases by their creators.",
+          "editable": true,
+          "name": "created_by",
+          "required": false,
+          "title": "Created By",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Sort direction: asc or desc.",
+          "editable": true,
+          "name": "direction",
+          "required": false,
+          "title": "Direction",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Number of records to return per call (1-100).",
+          "editable": true,
+          "name": "limit",
+          "required": false,
+          "title": "Records Per Page",
+          "type": "integer",
+          "value": 20,
+          "visible": true
+        },
+        {
+          "description": "Number of records to skip.",
+          "editable": true,
+          "name": "offset",
+          "required": false,
+          "title": "Records Offset",
+          "type": "integer",
+          "value": 0,
+          "visible": true
+        },
+        {
+          "description": "Sort returned cases, for example created_at or title.",
+          "editable": true,
+          "name": "sort",
+          "required": false,
+          "title": "Sort",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Match cases by their status name.",
+          "editable": true,
+          "name": "status_name",
+          "required": false,
+          "title": "Status Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Match cases by their status UUID.",
+          "editable": true,
+          "name": "status_uuid",
+          "required": false,
+          "title": "Status UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Match cases by tags.",
+          "editable": true,
+          "name": "tags",
+          "required": false,
+          "title": "Tags",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Search Cases"
+    },
+    {
+      "annotation": "update_alert_status",
+      "category": "investigation",
+      "description": "Triggers an action on an alert workflow in SEKOIA.IO XDR to update its status.",
+      "enabled": true,
+      "operation": "update_alert_status",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "UUID of the action to trigger.",
+          "editable": true,
+          "name": "action_uuid",
+          "required": true,
+          "title": "Action UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Deprecated parameter. Use uuid parameter instead.",
+          "editable": true,
+          "name": "alert_uuid",
+          "required": false,
+          "title": "[Deprecated] Alert Identifier",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "A comment to describe why the alert status has changed.",
+          "editable": true,
+          "name": "comment",
+          "required": false,
+          "title": "Comment",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The unique identifier of the alert. One of UUID or Alert Identifier is required.",
+          "editable": true,
+          "name": "uuid",
+          "required": false,
+          "title": "UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Update Alert Status"
+    },
+    {
+      "annotation": "update_asset",
+      "category": "investigation",
+      "description": "Deprecated operation. Use update_assets operation instead.",
+      "enabled": true,
+      "operation": "update_asset",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "The attributes of the asset",
+          "editable": true,
+          "name": "asset_attributes",
+          "required": false,
+          "title": "Asset Attributes",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The criticity of the asset",
+          "editable": true,
+          "name": "asset_criticity",
+          "required": true,
+          "title": "Asset Criticity",
+          "type": "integer",
+          "visible": true
+        },
+        {
+          "description": "The description of the asset",
+          "editable": true,
+          "name": "asset_description",
+          "required": false,
+          "title": "Asset Description",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The keys of the assets",
+          "editable": true,
+          "name": "asset_keys",
+          "required": false,
+          "title": "Asset Keys",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The name of the asset",
+          "editable": true,
+          "name": "asset_name",
+          "required": true,
+          "title": "Asset Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "the owners of the assets",
+          "editable": true,
+          "name": "asset_owners",
+          "required": false,
+          "title": "Asset Owners",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The name of the asset type",
+          "editable": true,
+          "name": "asset_type_name",
+          "required": true,
+          "title": "Asset Type Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The uuid of the asset type",
+          "editable": true,
+          "name": "asset_type_uuid",
+          "required": true,
+          "title": "Asset Type UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "The unique identifier of the asset",
+          "editable": true,
+          "name": "asset_uuid",
+          "required": true,
+          "title": "Asset UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "[Deprecated] Update Asset"
+    },
+    {
+      "annotation": "update_assets",
+      "category": "investigation",
+      "description": "Edit the given asset attributes in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "update_assets",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "Attach detection properties as a JSON object.",
+          "editable": true,
+          "name": "atoms",
+          "required": false,
+          "title": "Atoms",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Category of the asset.",
+          "editable": true,
+          "name": "category",
+          "required": false,
+          "title": "Category",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Criticality of the asset (0-100).",
+          "editable": true,
+          "name": "criticality",
+          "required": false,
+          "title": "Criticality",
+          "type": "integer",
+          "visible": true
+        },
+        {
+          "description": "Description of the asset.",
+          "editable": true,
+          "name": "description",
+          "required": false,
+          "title": "Description",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Entity UUID linked to the asset.",
+          "editable": true,
+          "name": "entity_uuid",
+          "required": false,
+          "title": "Entity UUID",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Name of the asset.",
+          "editable": true,
+          "name": "name",
+          "required": false,
+          "title": "Name",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Attach contextual properties as a JSON object.",
+          "editable": true,
+          "name": "props",
+          "required": false,
+          "title": "Props",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Mark the asset as reviewed.",
+          "editable": true,
+          "name": "reviewed",
+          "required": false,
+          "title": "Reviewed",
+          "type": "checkbox",
+          "visible": true
+        },
+        {
+          "description": "Mark the asset as revoked.",
+          "editable": true,
+          "name": "revoked",
+          "required": false,
+          "title": "Revoked",
+          "type": "checkbox",
+          "visible": true
+        },
+        {
+          "description": "Tags to associate to the asset (comma-separated or JSON array).",
+          "editable": true,
+          "name": "tags",
+          "required": false,
+          "title": "Tags",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Type of the asset (host, account, network).",
+          "editable": true,
+          "name": "type",
+          "required": false,
+          "title": "Type",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "UUID of the asset.",
+          "editable": true,
+          "name": "uuid",
+          "required": true,
+          "title": "UUID",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Update Assets"
+    },
+    {
+      "annotation": "upload_observables",
+      "category": "investigation",
+      "description": "Upload observables to inThreat in SEKOIA.IO XDR.",
+      "enabled": true,
+      "operation": "upload_observables",
+      "output_schema": {},
+      "parameters": [
+        {
+          "description": "List of observables or bundle to upload, as a JSON array or object.",
+          "editable": true,
+          "name": "observables",
+          "required": false,
+          "title": "Observables",
+          "type": "text",
+          "visible": true
+        },
+        {
+          "description": "Path to a local JSON file containing observables to upload.",
+          "editable": true,
+          "name": "observables_path",
+          "required": false,
+          "title": "Observables Path",
+          "type": "text",
+          "visible": true
+        }
+      ],
+      "title": "Upload Observables"
+    }
+  ],
+  "publisher": "SEKOIA.IO",
+  "version": "2.0.0"
+}
