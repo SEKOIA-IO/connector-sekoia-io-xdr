@@ -6,7 +6,9 @@ from pathlib import Path
 import pytest
 
 from scripts.build_connector_archives import (
+    _collect_git_ignored_relpaths,
     _is_git_ignored,
+    _iter_package_paths,
     _read_connector_metadata,
     _should_skip,
     build_connector_archives,
@@ -103,12 +105,63 @@ def test_is_git_ignored_outside_repo_root_returns_false(tmp_path):
     assert _is_git_ignored(outside, repo_root) is False
 
 
+def test_collect_git_ignored_relpaths_empty_input_returns_empty_set(tmp_path):
+    repo_root = tmp_path / "repo"
+    repo_root.mkdir()
+    assert _collect_git_ignored_relpaths([], repo_root) == set()
+
+
+def test_collect_git_ignored_relpaths_oserror_returns_empty_set(monkeypatch, tmp_path):
+    repo_root = tmp_path / "repo"
+    repo_root.mkdir()
+
+    def _raise_oserror(*_args, **_kwargs):
+        raise OSError("git unavailable")
+
+    monkeypatch.setattr(
+        "scripts.build_connector_archives.subprocess.run", _raise_oserror
+    )
+    result = _collect_git_ignored_relpaths([Path("a.txt")], repo_root)
+    assert result == set()
+
+
+def test_collect_git_ignored_relpaths_parses_git_stdout(monkeypatch, tmp_path):
+    repo_root = tmp_path / "repo"
+    repo_root.mkdir()
+
+    class Proc:
+        returncode = 0
+        stdout = b"a.txt\0nested/b.txt\0"
+
+    monkeypatch.setattr(
+        "scripts.build_connector_archives.subprocess.run",
+        lambda *_args, **_kwargs: Proc(),
+    )
+
+    result = _collect_git_ignored_relpaths(
+        [Path("a.txt"), Path("nested/b.txt")], repo_root
+    )
+    assert result == {Path("a.txt"), Path("nested/b.txt")}
+
+
+def test_iter_package_paths_yields_root_and_nested_paths(tmp_path):
+    connector_dir = tmp_path / "connector"
+    (connector_dir / "sub").mkdir(parents=True)
+    (connector_dir / "sub" / "f.txt").write_text("x", encoding="utf-8")
+
+    paths = list(_iter_package_paths(connector_dir))
+    assert connector_dir in paths
+    assert (connector_dir / "sub") in paths
+    assert (connector_dir / "sub" / "f.txt") in paths
+
+
 def test_build_connector_archives_generate_tgz_and_zip(monkeypatch, tmp_path):
     connector_dir = tmp_path / "repo-root"
     dist_dir = tmp_path / "dist"
     _create_minimal_connector(connector_dir)
     (connector_dir / "CHANGELOG.md").write_text("# Changelog\n", encoding="utf-8")
     (connector_dir / "README.md").write_text("# Readme\n", encoding="utf-8")
+    (connector_dir / ".gitignore").write_text(".tmp/\n", encoding="utf-8")
     (connector_dir / "tests").mkdir()
     (connector_dir / "tests" / "test_dummy.py").write_text("pass\n", encoding="utf-8")
     (connector_dir / "scripts").mkdir()
@@ -144,6 +197,7 @@ def test_build_connector_archives_generate_tgz_and_zip(monkeypatch, tmp_path):
     assert "sekoia-io-xdr/README.md" in names
     assert "sekoia-io-xdr/tests/test_dummy.py" in names
     assert "sekoia-io-xdr/scripts/build.py" in names
+    assert "sekoia-io-xdr/.gitignore" not in names
     assert all("/.github/" not in name for name in names)
     assert all("__pycache__" not in name for name in names)
 
@@ -157,6 +211,7 @@ def test_build_connector_archives_generate_tgz_and_zip(monkeypatch, tmp_path):
     assert "sekoia-io-xdr/README.md" in zip_names
     assert "sekoia-io-xdr/tests/test_dummy.py" in zip_names
     assert "sekoia-io-xdr/scripts/build.py" in zip_names
+    assert "sekoia-io-xdr/.gitignore" not in zip_names
     assert all("/.github/" not in name for name in zip_names)
     assert all("__pycache__" not in name for name in zip_names)
 
@@ -208,6 +263,39 @@ def test_build_connector_archives_with_custom_names(monkeypatch, tmp_path):
 
     assert tgz_archive.name == "connector-custom.tgz"
     assert zip_archive.name == "connector-custom.zip"
+
+
+def test_build_connector_archives_without_parent_dir(monkeypatch, tmp_path):
+    connector_dir = tmp_path / "repo-root"
+    dist_dir = tmp_path / "dist"
+    _create_minimal_connector(connector_dir)
+    (connector_dir / "README.md").write_text("# Readme\n", encoding="utf-8")
+
+    monkeypatch.setattr(
+        "scripts.build_connector_archives.sync_requirements_txt",
+        lambda *_args, **_kwargs: 0,
+    )
+
+    tgz_archive, zip_archive = build_connector_archives(
+        connector_dir=connector_dir,
+        output_dir=dist_dir,
+        tgz_name="flat.tgz",
+        zip_name="flat.zip",
+        check_requirements=True,
+        include_parent_dir=False,
+    )
+
+    with tarfile.open(tgz_archive, "r:gz") as tar:
+        tgz_names = tar.getnames()
+    assert "info.json" in tgz_names
+    assert "README.md" in tgz_names
+    assert "sekoia-io-xdr/info.json" not in tgz_names
+
+    with zipfile.ZipFile(zip_archive, "r") as zf:
+        zip_names = zf.namelist()
+    assert "info.json" in zip_names
+    assert "README.md" in zip_names
+    assert "sekoia-io-xdr/info.json" not in zip_names
 
 
 def test_build_connector_archives_reject_invalid_tgz_name(monkeypatch, tmp_path):

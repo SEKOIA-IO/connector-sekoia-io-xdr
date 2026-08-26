@@ -76,19 +76,19 @@ uv sync --group dev --group lint
 Run formatting/fix commands locally on connector, tests, and scripts:
 
 ```bash
-uv run black connector.py health_check.py sekoia_io_xdr tests scripts
-uv run isort connector.py health_check.py sekoia_io_xdr tests scripts
+uv run black connector.py sekoia_io_xdr tests scripts
+uv run isort connector.py sekoia_io_xdr tests scripts
 uv run mypy sekoia_io_xdr tests scripts
-uv run ruff check connector.py health_check.py sekoia_io_xdr tests scripts --fix
+uv run ruff check connector.py sekoia_io_xdr tests scripts --fix
 ```
 
 Run lint checks in read-only mode (CI-equivalent):
 
 ```bash
-uv run black --check connector.py health_check.py sekoia_io_xdr tests scripts
-uv run isort --check-only connector.py health_check.py sekoia_io_xdr tests scripts
+uv run black --check connector.py sekoia_io_xdr tests scripts
+uv run isort --check-only connector.py sekoia_io_xdr tests scripts
 uv run mypy sekoia_io_xdr tests scripts
-uv run ruff check connector.py health_check.py sekoia_io_xdr tests scripts
+uv run ruff check connector.py sekoia_io_xdr tests scripts
 ```
 
 Notes:

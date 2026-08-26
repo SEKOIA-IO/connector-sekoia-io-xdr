@@ -17,17 +17,17 @@ jobs:
         # Each entry defines one independent lint command.
         include:
           - check: black
-            command: uv run black --check connector.py health_check.py sekoia_io_xdr tests scripts
-            fix_command: uv run black connector.py health_check.py sekoia_io_xdr tests scripts
+            command: uv run black --check connector.py sekoia_io_xdr tests scripts
+            fix_command: uv run black connector.py sekoia_io_xdr tests scripts
           - check: isort
-            command: uv run isort --check-only connector.py health_check.py sekoia_io_xdr tests scripts
-            fix_command: uv run isort connector.py health_check.py sekoia_io_xdr tests scripts
+            command: uv run isort --check-only connector.py sekoia_io_xdr tests scripts
+            fix_command: uv run isort connector.py sekoia_io_xdr tests scripts
           - check: mypy
             command: uv run mypy -p sekoia_io_xdr && uv run mypy tests && uv run mypy scripts
             fix_command: uv run mypy -p sekoia_io_xdr && uv run mypy tests && uv run mypy scripts
           - check: ruff
-            command: uv run ruff check connector.py health_check.py sekoia_io_xdr tests scripts
-            fix_command: uv run ruff check connector.py health_check.py sekoia_io_xdr tests scripts --fix
+            command: uv run ruff check connector.py sekoia_io_xdr tests scripts
+            fix_command: uv run ruff check connector.py sekoia_io_xdr tests scripts --fix
 
     steps:
       - name: Checkout

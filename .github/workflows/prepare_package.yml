@@ -32,9 +32,9 @@ jobs:
           uv run mypy -p sekoia_io_xdr
           uv run mypy tests
           uv run mypy scripts
-          uv run ruff check connector.py health_check.py sekoia_io_xdr tests scripts
-          uv run black --check connector.py health_check.py sekoia_io_xdr tests scripts
-          uv run isort --check-only connector.py health_check.py sekoia_io_xdr tests scripts
+          uv run ruff check connector.py sekoia_io_xdr tests scripts
+          uv run black --check connector.py sekoia_io_xdr tests scripts
+          uv run isort --check-only connector.py sekoia_io_xdr tests scripts
           uv run python -m scripts.sort_info_json --check
           uv run python -m scripts.normalize_deprecated_parameters --check
           uv run python -m scripts.sort_operation_payload_keys --check
