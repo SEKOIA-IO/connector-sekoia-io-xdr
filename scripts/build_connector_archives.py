@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import tarfile
 import zipfile
 from pathlib import Path
@@ -12,15 +13,16 @@ from pathlib import Path
 from scripts.sync_requirements_txt import sync_requirements_txt
 from scripts.utils.cli_utils import configure_script_logger
 
-DEFAULT_CONNECTOR_DIR = Path("sekoia-io-xdr")
+DEFAULT_CONNECTOR_DIR = Path(".")
 DEFAULT_DIST_DIR = Path("dist")
-IGNORED_PARTS = {
+FORCED_EXCLUDED_PARTS = {
+    ".git",
+    ".github",
     "__pycache__",
     ".pytest_cache",
     ".mypy_cache",
     ".ruff_cache",
     ".tmp",
-    ".git",
 }
 logger = configure_script_logger(Path(__file__).name)
 
@@ -39,38 +41,58 @@ def _read_connector_metadata(connector_dir: Path) -> tuple[str, str]:
     if not version:
         raise ValueError("Invalid info.json: missing 'version'")
 
-    if connector_dir.name != name:
-        raise ValueError(
-            "Invalid packaging layout: connector folder name "
-            f"'{connector_dir.name}' must match info.json name '{name}'"
-        )
-
     return name, version
 
 
-def _should_skip(path: Path) -> bool:
-    if any(part in IGNORED_PARTS for part in path.parts):
+def _is_git_ignored(path: Path, repo_root: Path) -> bool:
+    try:
+        relative = path.relative_to(repo_root)
+    except ValueError:
+        return False
+
+    proc = subprocess.run(
+        ["git", "-C", str(repo_root), "check-ignore", "-q", str(relative)],
+        check=False,
+        capture_output=True,
+    )
+    return proc.returncode == 0
+
+
+def _should_skip(path: Path, repo_root: Path) -> bool:
+    if any(part in FORCED_EXCLUDED_PARTS for part in path.parts):
         return True
     if path.name.endswith(".pyc"):
         return True
+    if _is_git_ignored(path, repo_root):
+        return True
     return False
+
+
+def _iter_package_paths(connector_dir: Path):
+    if connector_dir.exists():
+        yield connector_dir
+        for path in sorted(connector_dir.rglob("*")):
+            yield path
 
 
 def _build_tgz_archive(
     connector_dir: Path,
     output_dir: Path,
+    connector_name: str,
     archive_name: str,
 ) -> Path:
     archive_path = output_dir / archive_name
-    root_parent = connector_dir.parent
+    repo_root = connector_dir.resolve()
 
     with tarfile.open(archive_path, mode="w:gz") as tar:
-        tar.add(connector_dir, arcname=connector_dir.name, recursive=False)
-
-        for path in sorted(connector_dir.rglob("*")):
-            if _should_skip(path):
+        for path in _iter_package_paths(connector_dir):
+            if _should_skip(path, repo_root):
                 continue
-            arcname = str(path.relative_to(root_parent))
+            relative = path.relative_to(repo_root)
+            if relative == Path("."):
+                arcname = connector_name
+            else:
+                arcname = str(Path(connector_name) / relative)
             tar.add(path, arcname=arcname, recursive=False)
 
     return archive_path
@@ -79,20 +101,22 @@ def _build_tgz_archive(
 def _build_zip_archive(
     connector_dir: Path,
     output_dir: Path,
+    connector_name: str,
     archive_name: str,
 ) -> Path:
     archive_path = output_dir / archive_name
-    root_parent = connector_dir.parent
+    repo_root = connector_dir.resolve()
 
     with zipfile.ZipFile(
         archive_path, mode="w", compression=zipfile.ZIP_DEFLATED
     ) as zf:
-        for path in sorted(connector_dir.rglob("*")):
-            if _should_skip(path):
+        for path in _iter_package_paths(connector_dir):
+            if _should_skip(path, repo_root):
                 continue
             if path.is_dir():
                 continue
-            arcname = str(path.relative_to(root_parent))
+            relative = path.relative_to(repo_root)
+            arcname = str(Path(connector_name) / relative)
             zf.write(path, arcname=arcname)
 
     return archive_path
@@ -105,6 +129,8 @@ def build_connector_archives(
     zip_name: str | None,
     check_requirements: bool,
 ) -> tuple[Path, Path]:
+    connector_dir = connector_dir.resolve()
+
     if check_requirements:
         check_result = sync_requirements_txt(
             connector_dir / "requirements.txt", check_only=True
@@ -126,8 +152,12 @@ def build_connector_archives(
     if not final_zip_name.endswith(".zip"):
         raise ValueError("zip archive name must end with .zip")
 
-    tgz_path = _build_tgz_archive(connector_dir, output_dir, final_tgz_name)
-    zip_path = _build_zip_archive(connector_dir, output_dir, final_zip_name)
+    tgz_path = _build_tgz_archive(
+        connector_dir, output_dir, connector_name, final_tgz_name
+    )
+    zip_path = _build_zip_archive(
+        connector_dir, output_dir, connector_name, final_zip_name
+    )
     return tgz_path, zip_path
 
 

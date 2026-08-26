@@ -94,3 +94,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Modernize dependency management with uv (`pyproject.toml` + `uv.lock`)
 - Move test execution to `uv run pytest` and align CI to run tests across supported Python versions
 - Refactor operation Python modules to a unified class-based architecture using Pydantic v2 input models
+
+## [1.1.0] - 2023-07-27
+
+### Added
+
+- Add `Updated Start Date`, `Updated End Date`, `Records Offset` and `Records Per Page` in `List Alerts` operation
+- Add the ability to configure data ingestion (using the `Data Ingestion Wizard`)
+- The `Data Ingestion Wizard` also supports multiple configurations specified on the `Configurations` tab of the SEKOIA.IO XDR connector, ensuring respective global variables based on the selected configuration are used while ingesting data

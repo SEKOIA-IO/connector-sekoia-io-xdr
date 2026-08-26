@@ -1,8 +1,9 @@
 import pytest
+from connectors.core.connector import ConnectorError
+
 import sekoia_io_xdr.connector as connector_module
 import sekoia_io_xdr.health_check as health_module
 import sekoia_io_xdr.utils as utils_module
-from connectors.core.connector import ConnectorError
 
 
 def test_connector_execute_routes_operation(monkeypatch):

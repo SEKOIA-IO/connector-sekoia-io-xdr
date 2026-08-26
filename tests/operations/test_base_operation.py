@@ -1,4 +1,5 @@
 import pytest
+
 from sekoia_io_xdr.operations.base import (
     DeprecatedAliases,
     InputModel,

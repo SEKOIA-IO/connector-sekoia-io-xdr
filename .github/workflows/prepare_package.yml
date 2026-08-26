@@ -29,18 +29,18 @@ jobs:
       - name: Run quality gate checks
         run: |
           uv run python -m scripts.sync_requirements_txt --check
-          MYPYPATH=sekoia-io-xdr uv run mypy -p sekoia_io_xdr
-          MYPYPATH=sekoia-io-xdr uv run mypy tests
+          uv run mypy -p sekoia_io_xdr
+          uv run mypy tests
           uv run mypy scripts
-          uv run ruff check sekoia-io-xdr tests scripts
-          uv run black --check sekoia-io-xdr tests scripts
-          uv run isort --check-only sekoia-io-xdr tests scripts
+          uv run ruff check connector.py health_check.py sekoia_io_xdr tests scripts
+          uv run black --check connector.py health_check.py sekoia_io_xdr tests scripts
+          uv run isort --check-only connector.py health_check.py sekoia_io_xdr tests scripts
           uv run python -m scripts.sort_info_json --check
           uv run python -m scripts.normalize_deprecated_parameters --check
           uv run python -m scripts.sort_operation_payload_keys --check
-          PYTHONPATH=sekoia-io-xdr uv run --with pytest-cov \
+          uv run --with pytest-cov \
             pytest tests/ --color=yes -vv \
-            --cov=sekoia-io-xdr/sekoia_io_xdr \
+            --cov=sekoia_io_xdr \
             --cov=scripts \
             --cov-report=term-missing \
             --cov-fail-under=100
@@ -71,7 +71,7 @@ jobs:
       - name: Upload connector archive artifact
         uses: actions/upload-artifact@v4
         with:
-          name: connector-sekoia-io-xdr-archives
+          name: sekoia-io-xdr-archives
           path: |
             dist/*.tgz
             dist/*.zip
@@ -79,6 +79,6 @@ jobs:
 
       - name: Print artifact download hint
         run: |
-          echo "Connector archives uploaded as GitHub artifact: connector-sekoia-io-xdr-archives"
+          echo "Connector archives uploaded as GitHub artifact: sekoia-io-xdr-archives"
           echo "Download it from this workflow run page:"
           echo "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"

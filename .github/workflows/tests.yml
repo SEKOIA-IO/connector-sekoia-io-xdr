@@ -37,15 +37,15 @@ jobs:
 
       # Execute tests through uv to ensure the selected Python is used.
       - name: Run tests
-        run: PYTHONPATH=sekoia-io-xdr uv run pytest tests/ --color=yes -vv
+        run: uv run pytest tests/ --color=yes -vv
 
       # Enforce global coverage budget once on the reference runtime.
       - name: Check coverage is 100%
         if: matrix.python-version == '3.12'
         run: |
-          PYTHONPATH=sekoia-io-xdr uv run --with pytest-cov \
+          uv run --with pytest-cov \
             pytest tests/ --color=yes -vv \
-            --cov=sekoia-io-xdr/sekoia_io_xdr \
+            --cov=sekoia_io_xdr \
             --cov=scripts \
             --cov-report=term-missing \
             --cov-fail-under=100

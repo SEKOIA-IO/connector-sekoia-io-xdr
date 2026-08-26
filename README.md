@@ -5,7 +5,7 @@
 [![Normalize Metadata](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_metadata.yml/badge.svg)](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_metadata.yml)
 [![Normalize Operations](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_operations.yml/badge.svg)](https://github.com/fortinet-fortisoar/connector-sekoia-io-xdr/actions/workflows/normalize_operations.yml)
 
-This connector enable you to make full use of the SEKOIA.IO XDR platform.
+This connector enables you to make full use of the SEKOIA.IO XDR platform.
 
 It includes the following actions:
 
@@ -30,6 +30,9 @@ More details could be found in the fortisoar_sdk `README.md` file
 ## Local development with uv
 
 This repository now supports `uv` for local dependency management.
+
+All commands below assume you run from the repository root
+(`connector-sekoia-io-xdr/`).
 
 ### Python compatibility
 
@@ -59,7 +62,7 @@ uv run pytest tests/ --color=yes -vv
 Run the strict coverage gate locally (same threshold as CI):
 
 ```bash
-PYTHONPATH=sekoia-io-xdr uv run --with pytest-cov pytest tests/ --cov=sekoia-io-xdr/sekoia_io_xdr --cov=scripts --cov-report=term-missing --cov-fail-under=100
+uv run --with pytest-cov pytest tests/ --cov=sekoia_io_xdr --cov=scripts --cov-report=term-missing --cov-fail-under=100
 ```
 
 ### Run linters (uv)
@@ -70,22 +73,22 @@ Install dev and lint tools first:
 uv sync --group dev --group lint
 ```
 
-Run formatting/fix commands locally on connector and tests:
+Run formatting/fix commands locally on connector, tests, and scripts:
 
 ```bash
-uv run black .
-uv run isort .
-uv run mypy .
-uv run ruff check . --fix
+uv run black connector.py health_check.py sekoia_io_xdr tests scripts
+uv run isort connector.py health_check.py sekoia_io_xdr tests scripts
+uv run mypy sekoia_io_xdr tests scripts
+uv run ruff check connector.py health_check.py sekoia_io_xdr tests scripts --fix
 ```
 
 Run lint checks in read-only mode (CI-equivalent):
 
 ```bash
-uv run black --check .
-uv run isort --check-only .
-uv run mypy .
-uv run ruff check .
+uv run black --check connector.py health_check.py sekoia_io_xdr tests scripts
+uv run isort --check-only connector.py health_check.py sekoia_io_xdr tests scripts
+uv run mypy sekoia_io_xdr tests scripts
+uv run ruff check connector.py health_check.py sekoia_io_xdr tests scripts
 ```
 
 Notes:
@@ -104,7 +107,7 @@ This repository includes utility scripts to normalize metadata and source files.
 uv run python -m scripts.sort_info_json
 ```
 
-This sorts `configuration.fields` and `operations` alphabetically in `sekoia-io-xdr/info.json`.
+This sorts `configuration.fields` and `operations` alphabetically in `info.json`.
 
 For CI-style validation without writing changes:
 
@@ -142,11 +145,17 @@ uv run python -m scripts.sync_requirements_txt --check
 
 #### Build connector archives (.tgz + .zip)
 
-Generate both FortiSOAR connector archives (`.tgz` and `.zip`) from `sekoia-io-xdr/`:
+Generate both FortiSOAR connector archives (`.tgz` and `.zip`) from the repository root:
 
 ```bash
 uv run python -m scripts.build_connector_archives
 ```
+
+Archive behavior:
+
+- Archive root folder is always `sekoia-io-xdr/`.
+- `.github/` is excluded.
+- Files and directories ignored by `.gitignore` are excluded.
 
 This repository builds a **Connector** package (not a Solution Pack).
 Upload it in FortiSOAR from `Content Hub > Manage > Upload > Upload Connector`.
@@ -155,7 +164,7 @@ Do not use `Upload Solution Pack` for this artifact.
 Optional flags:
 
 ```bash
-uv run python -m scripts.build_connector_archives --output-dir dist --tgz-name connector-sekoia-io-xdr-custom.tgz --zip-name connector-sekoia-io-xdr-custom.zip
+uv run python -m scripts.build_connector_archives --output-dir dist --tgz-name sekoia-io-xdr-custom.tgz --zip-name sekoia-io-xdr-custom.zip
 ```
 
 #### Deprecation actions
@@ -186,7 +195,7 @@ uv run python -m scripts.deprecate_operation_parameter <operation> <parameter>
 
 ##### Normalize deprecated metadata
 
-Normalize deprecated operation and parameter metadata in `sekoia-io-xdr/info.json`:
+Normalize deprecated operation and parameter metadata in `info.json`:
 
 ```bash
 uv run python -m scripts.normalize_deprecated_parameters
@@ -202,7 +211,7 @@ uv run python -m scripts.normalize_deprecated_parameters --check
 
 To minimize remapping in FortiSOAR, this connector follows a simple naming policy:
 
-- `operation` in `sekoia-io-xdr/info.json` is derived from the action `slug` in [automation-library/Sekoia.io/action_*.json](https://github.com/SEKOIA-IO/automation-library/tree/develop/Sekoia.io).
+- `operation` in `info.json` is derived from the action `slug` in [automation-library/Sekoia.io/action_*.json](https://github.com/SEKOIA-IO/automation-library/tree/develop/Sekoia.io).
 - When multiple action definitions exist for the same capability, prefer the non-deprecated action as the functional source of truth.
 - `title` and `description` are aligned with action metadata (`name` and `description`) whenever possible.
 - The [Sekoia.io full OpenAPI 3.1 schema in JSON format](https://docs.sekoia.com/developer/api/) is the source of truth for HTTP method, endpoint, parameters, and constraints.
@@ -217,7 +226,7 @@ Scope rule:
 Example:
 
 - The action file can be named `action_lists_cases.json`, while its action `slug` is `search_cases`.
-- The connector operation key is therefore `search_cases` in `sekoia-io-xdr/info.json`.
+- The connector operation key is therefore `search_cases` in `info.json`.
 - The Python module name can differ over time during refactors; the stable key exposed to FortiSOAR remains the action `slug`.
 
 ## Deprecation
@@ -227,7 +236,7 @@ Example:
 Use this migration rule when replacing an existing connector operation:
 
 1. Create the new operation using the current action slug.
-2. Deprecate the old operation in `sekoia-io-xdr/info.json` with a replacement message.
+2. Deprecate the old operation in `info.json` with a replacement message.
 3. Keep the old operation implementation available until removal.
 
 Parameter compatibility policy:
@@ -238,7 +247,7 @@ Parameter compatibility policy:
 ### Deprecation conventions
 
 This repository uses explicit conventions for deprecated metadata in
-`sekoia-io-xdr/info.json`.
+`info.json`.
 
 #### Deprecated operation
 
@@ -266,7 +275,7 @@ GitHub Actions currently uses five independent workflows:
 
 - `lint.yml`: runs code linting and static quality checks in parallel.
 - `tests.yml`: runs the unit test suite on multiple Python versions (`3.9` to `3.14`) and enforces `100%` coverage on Python `3.12`.
-- `normalize_metadata.yml`: runs read-only validation on `sekoia-io-xdr/info.json` metadata rules.
+- `normalize_metadata.yml`: runs read-only validation on `info.json` metadata rules.
 - `normalize_operations.yml`: runs read-only normalization checks on operation source files.
 - `prepare_package.yml`: runs package quality gates (including strict `100%` coverage), builds a connector `.tgz`, and uploads it as a GitHub Actions artifact.
 

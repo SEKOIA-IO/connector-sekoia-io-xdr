@@ -9,7 +9,7 @@ from pathlib import Path
 
 from scripts.utils.cli_utils import configure_script_logger
 
-DEFAULT_PATH = "sekoia-io-xdr/info.json"
+DEFAULT_PATH = "info.json"
 logger = configure_script_logger(Path(__file__).name)
 
 
